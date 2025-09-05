@@ -8,15 +8,20 @@ description: Load context for a new agent session by analyzing codebase structur
 This command loads essential context for a new agent session by examining the codebase structure and reading the project README.
 
 ## Instructions
-- Run `git ls-files` to understand the codebase structure and file organization
+
+- Run `Ref`-mcp to understand the capabilites of the libraries used in the codebase.
+- Run `serena`-mcp to understand the codebase structure and file organization
 - Read the README.md to understand the project purpose, setup instructions, and key information
 - Provide a concise overview of the project based on the gathered context
 
 ## Context
+
 - Codebase structure git accessible: !`git ls-files`
 - Codebase structure all: !`eza . --tree`
+- Code Index and Memory: `serena`-MCP
+- Library context documentation: `Ref`-MCP
 - Project README: @README.md
-- Documentation: 
+- Documentation:
   - @ai_docs/cc_hooks_docs.md
   - @ai_docs/uv-single-file-scripts.md
 
