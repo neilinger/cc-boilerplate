@@ -8,7 +8,7 @@
 [![Output Styles](https://img.shields.io/badge/styles-8-orange)](#-8-output-styles)
 [![Release](https://img.shields.io/github/v/release/USERNAME/cc-boilerplate?include_prereleases)](https://github.com/USERNAME/cc-boilerplate/releases)
 
-Claude Code boilerplate with hooks, agents, and output styles pre-configured for rapid project setup.
+Claude Code boilerplate with essential hooks, agents, and security features.
 
 ## Prerequisites
 
@@ -37,202 +37,124 @@ The setup script creates:
 
 See `.env.sample` for all available configuration options.
 
-## What's Included
+## Core Features
 
-### 🪝 All 8 Claude Code Hooks
-- **UserPromptSubmit** - Pre-process prompts, logging, validation
-- **PreToolUse** - Security validation (blocks `rm -rf`, `.env` access)  
-- **PostToolUse** - Post-execution logging and transcript conversion
-- **Notification** - Custom notifications with optional TTS
-- **Stop** - Completion handling with AI-generated messages
-- **SubagentStop** - Subagent completion announcements
-- **PreCompact** - Transcript backup before compaction
-- **SessionStart** - Development context loading
+**🛡️ Security**: Comprehensive `rm -rf` protection with 30+ dangerous command patterns  
+**🤖 Agent Automation**: Meta-agent creates new specialized agents from descriptions  
+**🎨 Workflow Styles**: Output formats optimized for different development phases  
+**🔧 Development Tools**: serena-mcp integration for boilerplate maintenance  
+**🔊 Smart TTS**: Multi-provider fallback (ElevenLabs → OpenAI → pyttsx3)  
+**📝 Session Management**: Context-aware hooks and logging
 
-### 🤖 Essential Agents
-- **meta-agent** - Generate new agents from descriptions
-- **engineer-code-reviewer** - Automated code quality checks  
-- **work-completion-summary** - Audio task summaries via TTS
-- **llm-ai-agents-and-eng-research** - AI/LLM research specialist
+## Key Components
 
-### 🎨 8 Output Styles
-- **genui** - Beautiful HTML generation with embedded styling
-- **table-based** - Organized markdown tables  
-- **tts-summary** - Audio feedback via ElevenLabs TTS
-- **yaml-structured** - YAML configuration format
-- **bullet-points** - Clean nested lists
-- **ultra-concise** - Minimal words, maximum speed
-- **html-structured** - Semantic HTML5
-- **markdown-focused** - Rich markdown features
+### 🤖 Meta-Agent: Core Automation Engine
+The `meta-agent` is the heart of this boilerplate - it automatically creates new specialized agents from natural language descriptions. Simply ask Claude to create an agent and it will:
+- Fetch latest Claude Code documentation
+- Generate complete agent configuration files
+- Set appropriate tools, colors, and delegation rules
+- Write ready-to-use `.md` files to `.claude/agents/`
 
-### 📊 4 Dynamic Status Lines  
-Real-time terminal displays with session context, git info, and agent names.
+### 🎨 Workflow-Optimized Output Styles
+Different development phases need different information formats:
+- **GenUI**: Automatically generates and opens HTML documents for visual workflows
+- **TTS Summary**: Audio feedback for long-running operations
+- **JSON Structured**: Machine-parseable outputs for automation
+- **Markdown/Bullet Points**: Clean readable formats for documentation
+
+### 🔧 Development Infrastructure
+- **`.serena/`**: serena-mcp tooling for maintaining and evolving this boilerplate itself
+- **`scripts/`**: KISS/YAGNI-compliant validation tools (PRP validation, etc.)
+- **`tests/`**: Security-focused testing of critical hook functionality
 
 ## Project Structure
 
 ```
 cc-boilerplate/
 ├── .claude/
-│   ├── agents/         # 4 essential agents
-│   ├── hooks/          # All 8 hooks + utilities
-│   ├── output-styles/  # 8 response formatting styles
-│   ├── status_lines/   # 4 dynamic status displays
-│   └── settings.json   # Hook and permission configuration
-├── logs/               # Hook execution logs (JSON)
-├── output/             # Generated files output
-├── .env.sample         # Configuration template
-├── .mcp.json.sample    # MCP server template  
+│   ├── agents/         # Meta-agent + specialized agents
+│   ├── hooks/          # Security, TTS, session management
+│   ├── output-styles/  # Workflow-specific formatting
+│   ├── status_lines/   # Dynamic terminal displays
+│   └── settings.json   # Permissions and configuration
+├── .serena/            # serena-mcp development tooling
+├── PRPs/               # Product Requirements Process templates
+├── scripts/            # Validation utilities (KISS/YAGNI)
+├── tests/              # Security-critical functionality tests
 ├── CLAUDE.md           # KISS/YAGNI development principles
 └── setup.sh            # Project setup script
 ```
 
-## Key Features
+## Core
 
-- **Security-First** - Comprehensive command validation and blocking
-- **Intelligent TTS** - Multi-provider audio feedback (ElevenLabs → OpenAI → pyttsx3)  
-- **Session Management** - Agent naming and context persistence
-- **UV Single-File Scripts** - Self-contained hooks with embedded dependencies
-- **Zero Dependencies** - No virtual environment management needed
+- Security-first command validation
+- Multi-provider TTS (ElevenLabs → OpenAI → pyttsx3)
+- UV single-file scripts
+- Zero dependency management
 
-## 🛡️ Security Features
+## Security
 
-CC-Boilerplate implements **production-grade security** with multi-layered protection:
+**30+ rm patterns blocked** - Prevents `rm -rf /` disasters  
+**Environment protection** - Blocks `.env` access  
+**Real-time validation** - Before every tool execution
 
-### Dangerous Command Protection
-- **30+ rm patterns** detected and blocked (prevents `rm -rf /` disasters)
-- **Path traversal prevention** blocks access to system files
-- **Command injection filtering** prevents malicious command chains
-- **Real-time validation** before every tool execution
-
-### Environment Protection
-- **.env file access blocking** prevents accidental API key exposure
-- **Sensitive data protection** with pattern-based detection
-- **Audit logging** of all security events and blocks
-
-### Security Levels
-- **Strict** (Production): Maximum protection, blocks all dangerous patterns
-- **Moderate** (Development): Balanced protection with warnings
-- **Permissive** (Testing): Warnings only for development freedom
+**Security levels**: strict, moderate, permissive
 
 ```bash
-# Example: This command would be BLOCKED by safety hooks
-user: "Clean up the system with rm -rf /"
-claude: 🚫 BLOCKED - Dangerous command detected by safety hooks
+user: "rm -rf /"
+claude: 🚫 BLOCKED - Dangerous command
 ```
 
-## 🔊 TTS System Architecture
+## TTS
 
-**Multi-Provider Intelligence** with automatic fallback ensures audio is always available:
+**Provider fallback**: ElevenLabs → OpenAI → pyttsx3
 
-### Provider Hierarchy
-1. **ElevenLabs** (Premium) - Professional AI voices, 29 languages, custom training
-2. **OpenAI** (High Quality) - Fast API, 6 voices, excellent reliability  
-3. **pyttsx3** (Local Fallback) - System TTS, offline, always available
-
-### Smart Fallback Logic
-```
-ElevenLabs API → Network Error → OpenAI API → Success ✅
-OpenAI API → Invalid Key → pyttsx3 Local → Success ✅
-All Providers → Unavailable → Silent Mode → Continue
-```
-
-### Configuration
 ```bash
-# .env configuration
+# .env
 TTS_DEFAULT_PROVIDER=elevenlabs
-ELEVENLABS_API_KEY=your_key_here
-OPENAI_API_KEY=your_key_here
+ELEVENLABS_API_KEY=key
+OPENAI_API_KEY=key
 ```
 
-## 🤖 Agent System
+## Agents
 
-**8 Specialized Agents** enhance Claude Code with domain expertise:
+- **meta-agent** - Generate new agents
+- **test-automator** - Create test suites
+- **code-reviewer** - Security and quality reviews
+- **technical-researcher** - Research analysis
+- **smart-doc-generator** - Documentation
+- **work-completion-summary** - Audio summaries
+- **test-coverage-analyzer** - Coverage gaps
+- **llm-research** - AI/ML developments
 
-### Meta-System Agents
-- **meta-agent**: Generate new agents from descriptions
-- **test-automator**: Create comprehensive test suites automatically
-- **test-coverage-analyzer**: Analyze gaps and improve coverage
+## Testing
 
-### Code Quality Agents  
-- **engineer-code-reviewer**: Automated security and quality reviews
-- **technical-researcher**: Deep technical research and analysis
+**🔴 High Priority (Security Critical)**: Safety hooks, dangerous command detection  
+**🟡 Medium Priority (Feature Reliability)**: TTS providers, integration testing  
+**🔧 Test Infrastructure**: Comprehensive runner with priority-based execution
 
-### Documentation & Communication
-- **smart-doc-generator**: Generate comprehensive documentation
-- **work-completion-summary**: Audio task summaries with TTS
-- **llm-ai-agents-and-eng-research**: AI/ML research specialist
-
-### Usage Examples
-```
-user: "Create tests for my authentication system"
-claude: [Uses test-automator agent to generate comprehensive test suite]
-
-user: "Review this code for security vulnerabilities"  
-claude: [Uses engineer-code-reviewer for security analysis]
-
-user: "Generate full documentation for this project"
-claude: [Uses smart-doc-generator for complete documentation]
-```
-
-## 📊 Testing & Quality Assurance
-
-**Priority-Based Testing** with 60% coverage across critical components:
-
-### Test Categories
-- **🔴 High Priority (Security Critical)**: Safety hooks, dangerous command detection
-- **🟡 Medium Priority (Feature Reliability)**: TTS providers, integration testing
-- **🟢 Low Priority (Extended Validation)**: Performance, edge cases
-
-### CI/CD Pipeline
-- **Feature branches**: Fast security validation (~30s)
-- **Release branches**: Comprehensive testing (~5-7min)  
-- **Main branch**: Full validation + deployment (~3-5min)
-
-### Running Tests
 ```bash
-# Run all tests with reporting
+# All tests with detailed reporting
 python tests/run_all_tests.py
 
-# Run security-critical tests only
+# Security-critical tests only
 python tests/test_safety_hooks.py
 
-# Run TTS integration tests
-python tests/test_tts_providers.py
+# Hook integration testing
+python tests/test_hook_integration.py
 ```
 
-## 📚 Comprehensive Documentation
+**Full testing documentation**: See [tests/README.md](tests/README.md) for comprehensive coverage details, security testing approach, and troubleshooting guide.
 
-**Professional Documentation Suite** following industry best practices:
+## Docs
 
-### User Documentation
-- **[Getting Started](docs/GETTING_STARTED.md)** - Complete setup guide
-- **[API Reference](docs/API.md)** - Comprehensive API documentation
-- **[TTS System](docs/TTS_SYSTEM.md)** - TTS provider configuration and usage
+- **[REFERENCE.md](docs/REFERENCE.md)** - Essential API and system info
+- **[SECURITY.md](docs/SECURITY.md)** - Security features
+- **[TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common fixes
 
-### Security & Architecture
-- **[Security Guide](docs/SECURITY.md)** - Threat model and protection details
-- **[Architecture](docs/ARCHITECTURE.md)** - System design and component relationships  
-- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Problem resolution guide
+## Usage
 
-### Development
-- **[Development Workflow](docs/DEVELOPMENT.md)** - Day-to-day development process
-- **[Branch Protection](docs/BRANCH_PROTECTION.md)** - GitHub setup instructions
-- **[ADR Documentation](docs/adr/)** - Architecture Decision Records
-
-## Customization
-
-- **Add new hooks**: Place in `.claude/hooks/`
-- **Create agents**: Use `/agents` command or meta-agent  
-- **Define output styles**: Add to `.claude/output-styles/`
-- **Configure permissions**: Edit `.claude/settings.json`
-
-## Development Principles  
-
-See **`CLAUDE.md`** for KISS/YAGNI principles that guide this project's architecture.
-
-## Next Steps
-
-1. Review and customize `.env` configuration
-2. Explore the pre-configured hooks and agents
-3. Start building your project with Claude Code's enhanced capabilities
-4. Use the meta-agent to create specialized agents for your domain
+1. Run `./setup.sh` to configure
+2. Start with `claude-code .`
+3. Use meta-agent to create custom agents
+4. See `CLAUDE.md` for KISS/YAGNI principles
