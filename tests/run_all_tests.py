@@ -107,6 +107,9 @@ def main():
     # Define test suites with priorities
     test_suites = [
         # HIGH PRIORITY - Security and Core Functionality
+        (tests_dir / "test_safety_unit.py", "Safety Unit Testing (Tier 1)", "HIGH PRIORITY"),
+        (tests_dir / "test_ci_integration.py", "CI Integration Testing (Tier 2A)", "HIGH PRIORITY"),
+        (tests_dir / "test_portable_functionality.py", "Portable Functionality Testing (Tier 2B)", "HIGH PRIORITY"),
         (tests_dir / "test_safety_hooks.py", "Safety Hook Testing", "HIGH PRIORITY"),
         (tests_dir / "test_hook_integration.py", "Hook Integration Testing", "HIGH PRIORITY"),
         (tests_dir / "test_prp_edge_cases.py", "PRP Edge Case Testing", "HIGH PRIORITY"),
@@ -230,9 +233,12 @@ def main():
     print("-" * 40)
     
     coverage_areas = {
-        "Safety Hooks (rm command detection)": high_priority_results[0][1] if len(high_priority_results) > 0 else False,
-        "Hook Integration Pipeline": high_priority_results[1][1] if len(high_priority_results) > 1 else False,
-        "PRP Edge Case Validation": high_priority_results[2][1] if len(high_priority_results) > 2 else False,
+        "Safety Logic Unit Tests (Tier 1)": high_priority_results[0][1] if len(high_priority_results) > 0 else False,
+        "CI Integration Tests (Tier 2A)": high_priority_results[1][1] if len(high_priority_results) > 1 else False,
+        "Portable Functionality (Tier 2B)": high_priority_results[2][1] if len(high_priority_results) > 2 else False,
+        "Safety Hooks (rm command detection)": high_priority_results[3][1] if len(high_priority_results) > 3 else False,
+        "Hook Integration Pipeline": high_priority_results[4][1] if len(high_priority_results) > 4 else False,
+        "PRP Edge Case Validation": high_priority_results[5][1] if len(high_priority_results) > 5 else False,
         "TTS Provider Fallback": medium_priority_results[0][1] if len(medium_priority_results) > 0 else False,
         "PRP System Core": existing_results[0][1] if len(existing_results) > 0 else False,
     }
