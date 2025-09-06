@@ -21,6 +21,9 @@
     "command": "uv run .claude/status_lines/status_line_v3.py",
     "padding": 0
   },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": ["ElevenLabs"],
+  "outputStyle": "TTS Summary",
   "hooks": {
     "PreToolUse": [
       {
