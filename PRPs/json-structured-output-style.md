@@ -17,13 +17,15 @@ description: |
 
 **Use Case**: Developer needs Claude responses in machine-parseable format for processing by external tools, logging systems, or API integrations
 
-**User Journey**: 
+**User Journey**:
+
 1. Developer selects "json-structured" output style
 2. Makes request to Claude Code
 3. Receives response formatted as valid JSON with consistent structure
 4. Processes JSON programmatically while maintaining human readability
 
-**Pain Points Addressed**: 
+**Pain Points Addressed**:
+
 - Inconsistent response formatting makes automation difficult
 - Manual parsing of free-form text responses is error-prone
 - Need for both human-readable and machine-parseable output
@@ -38,6 +40,7 @@ description: |
 ## What
 
 A Claude Code output style that structures all responses as valid JSON with:
+
 - Consistent schema with type/content/metadata pattern
 - Human-readable formatting with proper indentation
 - Error handling following RFC 7807 standards

@@ -1,4 +1,4 @@
-# DELETE_FILE_CONTENT
+# TTS System Reference
 
 ## Table of Contents
 
@@ -19,7 +19,7 @@ The CC-Boilerplate TTS system provides **intelligent audio feedback** with autom
 
 ```
 🔊 **Multi-Provider Support** - ElevenLabs, OpenAI, pyttsx3
-⚡ **Intelligent Fallback** - Automatic provider switching  
+⚡ **Intelligent Fallback** - Automatic provider switching
 🎯 **Quality Optimization** - Best available quality selection
 🔒 **API Key Management** - Secure credential handling
 🌍 **Multi-Language Support** - 29+ languages supported
@@ -64,6 +64,7 @@ The CC-Boilerplate TTS system provides **intelligent audio feedback** with autom
 | **Reliability** | ⭐⭐⭐⭐ | High uptime, professional service |
 
 **Pros**:
+
 - Exceptional voice quality and naturalness
 - Custom voice training capabilities
 - Extensive language and accent support
@@ -71,12 +72,14 @@ The CC-Boilerplate TTS system provides **intelligent audio feedback** with autom
 - Advanced voice controls (stability, similarity)
 
 **Cons**:
+
 - Requires paid API subscription
 - Internet connection required
 - Higher latency than local options
 - Usage costs can accumulate
 
 **Configuration**:
+
 ```bash
 # .env configuration
 ELEVENLABS_API_KEY=your_api_key_here
@@ -100,6 +103,7 @@ ELEVENLABS_SIMILARITY_BOOST=0.75      # Voice similarity (0-1)
 | **Reliability** | ⭐⭐⭐⭐⭐ | Excellent uptime and service stability |
 
 **Pros**:
+
 - Excellent balance of quality and cost
 - Fast API response times
 - Reliable service with high uptime
@@ -107,12 +111,14 @@ ELEVENLABS_SIMILARITY_BOOST=0.75      # Voice similarity (0-1)
 - Simple integration and configuration
 
 **Cons**:
+
 - Limited voice customization options
 - Requires paid API subscription
 - Internet connection required
 - Fewer voices than ElevenLabs
 
 **Configuration**:
+
 ```bash
 # .env configuration
 OPENAI_API_KEY=your_api_key_here
@@ -135,6 +141,7 @@ OPENAI_TTS_SPEED=1.0                  # Speech speed (0.25-4.0)
 | **Reliability** | ⭐⭐⭐⭐⭐ | Always available offline |
 
 **Pros**:
+
 - Completely free and offline
 - No API keys or internet required
 - Instant audio generation
@@ -142,6 +149,7 @@ OPENAI_TTS_SPEED=1.0                  # Speech speed (0.25-4.0)
 - No usage limits or costs
 
 **Cons**:
+
 - Lower audio quality than cloud providers
 - Limited voice options
 - System-dependent functionality
@@ -149,8 +157,9 @@ OPENAI_TTS_SPEED=1.0                  # Speech speed (0.25-4.0)
 - Platform-specific voice availability
 
 **Configuration**:
+
 ```bash
-# .env configuration  
+# .env configuration
 PYTTSX3_RATE=150                      # Words per minute (50-400)
 PYTTSX3_VOLUME=0.8                    # Volume level (0.0-1.0)
 PYTTSX3_VOICE_ID=default              # System voice ID
@@ -161,6 +170,7 @@ PYTTSX3_VOICE_ID=default              # System voice ID
 ### ElevenLabs Setup
 
 #### 1. Account Creation
+
 ```bash
 # Visit https://elevenlabs.io and create account
 # Navigate to Profile → API Key
@@ -168,6 +178,7 @@ PYTTSX3_VOICE_ID=default              # System voice ID
 ```
 
 #### 2. API Key Configuration
+
 ```bash
 # Add to .env file
 ELEVENLABS_API_KEY=sk-your-api-key-here
@@ -177,6 +188,7 @@ uv run .claude/hooks/utils/tts/elevenlabs_tts.py --text "ElevenLabs test" --debu
 ```
 
 #### 3. Voice Selection
+
 ```bash
 # List available voices
 uv run .claude/hooks/utils/tts/elevenlabs_tts.py --list-voices
@@ -188,13 +200,14 @@ uv run .claude/hooks/utils/tts/elevenlabs_tts.py \
 ```
 
 #### 4. Advanced Configuration
+
 ```python
 # Advanced ElevenLabs settings
 elevenlabs_config = {
     "voice_name": "Rachel",           # Voice selection
     "model_id": "eleven_multilingual_v2",  # Model selection
     "stability": 0.5,                 # Voice consistency (0-1)
-    "similarity_boost": 0.75,         # Voice similarity (0-1)  
+    "similarity_boost": 0.75,         # Voice similarity (0-1)
     "style": 0.0,                     # Style exaggeration (0-1)
     "use_speaker_boost": True         # Speaker similarity boost
 }
@@ -203,6 +216,7 @@ elevenlabs_config = {
 ### OpenAI Setup
 
 #### 1. Account Setup
+
 ```bash
 # Visit https://platform.openai.com
 # Create account and add payment method
@@ -211,6 +225,7 @@ elevenlabs_config = {
 ```
 
 #### 2. API Key Configuration
+
 ```bash
 # Add to .env file
 OPENAI_API_KEY=sk-your-api-key-here
@@ -220,6 +235,7 @@ uv run .claude/hooks/utils/tts/openai_tts.py --text "OpenAI test" --debug
 ```
 
 #### 3. Voice and Model Selection
+
 ```bash
 # Test different voices
 voices=("alloy" "echo" "fable" "onyx" "nova" "shimmer")
@@ -240,6 +256,7 @@ uv run .claude/hooks/utils/tts/openai_tts.py \
 #### 1. System Dependencies
 
 **macOS**:
+
 ```bash
 # macOS includes built-in TTS - no additional setup needed
 # Test system TTS
@@ -247,6 +264,7 @@ say "Testing macOS TTS"
 ```
 
 **Ubuntu/Debian**:
+
 ```bash
 # Install espeak
 sudo apt-get update
@@ -257,6 +275,7 @@ espeak "Testing Ubuntu TTS"
 ```
 
 **Windows**:
+
 ```bash
 # Windows includes built-in TTS (SAPI)
 # Test Windows TTS
@@ -264,6 +283,7 @@ powershell -c "Add-Type -AssemblyName System.Speech; (New-Object System.Speech.S
 ```
 
 #### 2. Voice Configuration
+
 ```bash
 # List available voices
 python -c "
@@ -297,7 +317,7 @@ def select_tts_provider():
                 return provider
         except APIException:
             log_provider_failure('elevenlabs', 'API connection failed')
-    
+
     # Priority 2: OpenAI (if API key available)
     if has_api_key('OPENAI_API_KEY') and test_network_connection():
         try:
@@ -306,7 +326,7 @@ def select_tts_provider():
                 return provider
         except APIException:
             log_provider_failure('openai', 'API connection failed')
-    
+
     # Priority 3: pyttsx3 (always available fallback)
     try:
         provider = Pyttsx3Provider()
@@ -314,7 +334,7 @@ def select_tts_provider():
             return provider
     except SystemException:
         log_provider_failure('pyttsx3', 'System TTS unavailable')
-    
+
     # No providers available
     raise TTSUnavailableException("No TTS providers available")
 ```
@@ -322,21 +342,25 @@ def select_tts_provider():
 ### Fallback Scenarios
 
 #### Network Connectivity Issues
+
 ```
 ElevenLabs API Call → Network Error → Retry (3x) → Switch to OpenAI → Success
 ```
 
 #### API Key Issues
+
 ```
 ElevenLabs API Call → Invalid Key → Skip to OpenAI → API Success
 ```
 
 #### Service Outages
+
 ```
 ElevenLabs API Call → Service Unavailable → OpenAI API Call → Service Unavailable → pyttsx3 → Success
 ```
 
 #### Complete Fallback
+
 ```
 All Providers Failed → Silent Mode → Continue Without Audio
 ```
@@ -358,10 +382,11 @@ TTS_FALLBACK_ENABLED=false
 ### ElevenLabs Voice Customization
 
 #### Voice Selection
+
 ```bash
 # Popular ElevenLabs voices
 ELEVENLABS_VOICE_NAME=Rachel          # Clear, professional female
-ELEVENLABS_VOICE_NAME=Adam            # Clear, professional male  
+ELEVENLABS_VOICE_NAME=Adam            # Clear, professional male
 ELEVENLABS_VOICE_NAME=Domi            # Warm, friendly female
 ELEVENLABS_VOICE_NAME=Fin             # Friendly, energetic male
 ELEVENLABS_VOICE_NAME=Josh            # Deep, authoritative male
@@ -369,12 +394,13 @@ ELEVENLABS_VOICE_NAME=Antoni          # Mature, wise male
 ```
 
 #### Voice Parameters
+
 ```python
 # Fine-tune voice characteristics
 voice_settings = {
     "stability": 0.5,        # Higher = more consistent, Lower = more expressive
     "similarity_boost": 0.75, # Higher = closer to original voice
-    "style": 0.0,           # Higher = more stylistic exaggeration  
+    "style": 0.0,           # Higher = more stylistic exaggeration
     "use_speaker_boost": True # Enhanced speaker similarity
 }
 ```
@@ -382,6 +408,7 @@ voice_settings = {
 ### OpenAI Voice Customization
 
 #### Available Voices
+
 ```bash
 # OpenAI TTS voices with characteristics
 OPENAI_TTS_VOICE=alloy        # Neutral, balanced
@@ -393,6 +420,7 @@ OPENAI_TTS_VOICE=shimmer      # Female, whispery
 ```
 
 #### Speech Parameters
+
 ```bash
 # Adjust speech characteristics
 OPENAI_TTS_SPEED=0.8          # Slower speech (0.25-4.0)
@@ -403,6 +431,7 @@ OPENAI_TTS_MODEL=tts-1-hd     # High definition model
 ### pyttsx3 Voice Customization
 
 #### System Voice Selection
+
 ```python
 # List and select system voices
 import pyttsx3
@@ -420,6 +449,7 @@ engine.setProperty('volume', 0.8)   # Volume level (0.0-1.0)
 ```
 
 #### Platform-Specific Voices
+
 ```bash
 # macOS voices
 say -v "Alex" "Testing Alex voice"
@@ -447,6 +477,7 @@ espeak -v en+m7 "Male voice variant 7"
 ### Caching Strategy
 
 #### File-Based Caching
+
 ```bash
 # Enable TTS file caching
 TTS_CACHE_ENABLED=true
@@ -456,6 +487,7 @@ TTS_CACHE_TTL=86400                   # Time to live (24 hours)
 ```
 
 #### Cache Management
+
 ```python
 class TTSCache:
     """
@@ -464,21 +496,21 @@ class TTSCache:
     def __init__(self, cache_dir, max_size_mb=100):
         self.cache_dir = Path(cache_dir)
         self.max_size = max_size_mb * 1024 * 1024
-        
+
     def get_cached_audio(self, text, provider, voice):
         """Get cached audio file if available."""
         cache_key = self.generate_cache_key(text, provider, voice)
         cache_file = self.cache_dir / f"{cache_key}.mp3"
-        
+
         if cache_file.exists() and self.is_cache_valid(cache_file):
             return str(cache_file)
         return None
-    
+
     def cache_audio(self, text, provider, voice, audio_file):
         """Cache audio file for future use."""
         cache_key = self.generate_cache_key(text, provider, voice)
         cache_file = self.cache_dir / f"{cache_key}.mp3"
-        
+
         shutil.copy2(audio_file, cache_file)
         self.cleanup_old_cache()
 ```
@@ -495,7 +527,7 @@ def parallel_tts_generation(messages, provider):
         for message in messages:
             future = executor.submit(provider.synthesize, message)
             futures.append(future)
-        
+
         results = []
         for future in as_completed(futures):
             try:
@@ -504,7 +536,7 @@ def parallel_tts_generation(messages, provider):
             except Exception as e:
                 log_error(f"TTS generation failed: {e}")
                 results.append(None)
-        
+
         return results
 ```
 
@@ -515,11 +547,13 @@ def parallel_tts_generation(messages, provider):
 #### Issue 1: "No TTS providers available"
 
 **Symptoms**:
+
 - Silent failures in notification system
 - No audio output from any provider
 - Error messages about TTS unavailability
 
 **Diagnostic**:
+
 ```bash
 # Test each provider individually
 echo "Testing ElevenLabs..." && uv run .claude/hooks/utils/tts/elevenlabs_tts.py --text "test" --debug
@@ -536,7 +570,9 @@ curl -I https://api.openai.com/v1/models
 ```
 
 **Solutions**:
+
 1. **Configure at least one provider properly**:
+
    ```bash
    # Minimum working configuration (free)
    # No API keys needed - pyttsx3 should always work
@@ -544,13 +580,14 @@ curl -I https://api.openai.com/v1/models
    ```
 
 2. **Check system TTS installation**:
+
    ```bash
    # macOS
    say "test"
-   
+
    # Linux
    espeak "test"
-   
+
    # Windows
    powershell -c "Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak('test')"
    ```
@@ -558,12 +595,15 @@ curl -I https://api.openai.com/v1/models
 #### Issue 2: Poor Audio Quality
 
 **Symptoms**:
+
 - Robotic or unnatural speech
 - Audio artifacts or distortion
 - Inconsistent voice quality
 
 **Solutions**:
+
 1. **Upgrade to premium provider**:
+
    ```bash
    # Switch from pyttsx3 to paid API
    ELEVENLABS_API_KEY=your_key_here
@@ -571,11 +611,12 @@ curl -I https://api.openai.com/v1/models
    ```
 
 2. **Adjust voice parameters**:
+
    ```bash
    # ElevenLabs optimization
    ELEVENLABS_STABILITY=0.7          # Increase stability
    ELEVENLABS_SIMILARITY_BOOST=0.8   # Increase similarity
-   
+
    # OpenAI optimization
    OPENAI_TTS_MODEL=tts-1-hd         # Use HD model
    OPENAI_TTS_SPEED=0.9              # Slightly slower for clarity
@@ -584,11 +625,13 @@ curl -I https://api.openai.com/v1/models
 #### Issue 3: Slow TTS Performance
 
 **Symptoms**:
+
 - Long delays before audio playback
 - Timeouts in TTS generation
 - Poor user experience due to latency
 
 **Diagnostic**:
+
 ```bash
 # Measure TTS performance
 time uv run .claude/hooks/utils/tts/elevenlabs_tts.py --text "performance test"
@@ -597,26 +640,30 @@ time uv run .claude/hooks/utils/tts/pyttsx3_tts.py --text "performance test"
 ```
 
 **Solutions**:
+
 1. **Enable caching**:
+
    ```bash
    TTS_CACHE_ENABLED=true
    TTS_CACHE_DIR=~/.cache/cc-boilerplate/tts
    ```
 
 2. **Use faster provider for development**:
+
    ```bash
    # Development: Use pyttsx3 for speed
    TTS_DEFAULT_PROVIDER=pyttsx3
-   
+
    # Production: Use ElevenLabs for quality
    TTS_DEFAULT_PROVIDER=elevenlabs
    ```
 
 3. **Optimize network settings**:
+
    ```bash
    # Increase timeout for slow connections
    TTS_TIMEOUT=60
-   
+
    # Use lower quality model for speed
    OPENAI_TTS_MODEL=tts-1            # Standard quality (faster)
    ```
@@ -661,7 +708,7 @@ class CustomTTSProvider:
     def __init__(self, config):
         self.config = config
         self.client = self.initialize_client()
-    
+
     def synthesize_speech(self, text, voice=None, **kwargs):
         """
         Convert text to speech using custom provider.
@@ -673,14 +720,14 @@ class CustomTTSProvider:
                 voice=voice or self.config.default_voice,
                 **kwargs
             )
-            
+
             # Save audio file
             audio_file = self.save_audio_file(audio_data)
             return audio_file
-            
+
         except Exception as e:
             raise TTSError(f"Custom TTS failed: {e}")
-    
+
     def is_available(self):
         """Check if provider is available and configured."""
         return bool(self.config.api_key) and self.test_connection()
@@ -695,11 +742,11 @@ def batch_tts_processing(messages, provider='auto'):
     """
     # Group messages by provider for optimization
     batches = group_messages_by_provider(messages, provider)
-    
+
     results = []
     for provider_name, batch_messages in batches.items():
         provider_instance = get_tts_provider(provider_name)
-        
+
         # Process batch with provider-specific optimization
         if provider_instance.supports_batch():
             batch_results = provider_instance.batch_synthesize(batch_messages)
@@ -709,9 +756,9 @@ def batch_tts_processing(messages, provider='auto'):
             for message in batch_messages:
                 result = provider_instance.synthesize(message)
                 batch_results.append(result)
-        
+
         results.extend(batch_results)
-    
+
     return results
 ```
 
@@ -729,16 +776,16 @@ class TTSAnalytics:
             'average_latency': defaultdict(list),
             'error_rates': defaultdict(int)
         }
-    
+
     def log_tts_request(self, provider, text_length, latency, success):
         """Log TTS request metrics."""
         self.metrics['total_requests'] += 1
         self.metrics['provider_usage'][provider] += 1
         self.metrics['average_latency'][provider].append(latency)
-        
+
         if not success:
             self.metrics['error_rates'][provider] += 1
-    
+
     def generate_report(self):
         """Generate TTS usage report."""
         report = {

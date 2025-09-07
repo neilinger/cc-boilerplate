@@ -32,6 +32,7 @@ claude-code .
 ## Configuration
 
 The setup script creates:
+
 - **`.env`** - Your personal configuration (API keys, user name)
 - **`.mcp.json`** - MCP server configuration (if using ElevenLabs)
 
@@ -39,30 +40,35 @@ See `.env.sample` for all available configuration options.
 
 ## Core Features
 
-**🛡️ Security**: Comprehensive `rm -rf` protection with 30+ dangerous command patterns  
-**🤖 Agent Automation**: Meta-agent creates new specialized agents from descriptions  
-**🎨 Workflow Styles**: Output formats optimized for different development phases  
-**🔧 Development Tools**: serena-mcp integration for boilerplate maintenance  
-**🔊 Smart TTS**: Multi-provider fallback (ElevenLabs → OpenAI → pyttsx3)  
+**🛡️ Security**: Comprehensive `rm -rf` protection with 30+ dangerous command patterns
+**🤖 Agent Automation**: Meta-agent creates new specialized agents from descriptions
+**🎨 Workflow Styles**: Output formats optimized for different development phases
+**🔧 Development Tools**: serena-mcp integration for boilerplate maintenance
+**🔊 Smart TTS**: Multi-provider fallback (ElevenLabs → OpenAI → pyttsx3)
 **📝 Session Management**: Context-aware hooks and logging
 
 ## Key Components
 
 ### 🤖 Meta-Agent: Core Automation Engine
+
 The `meta-agent` is the heart of this boilerplate - it automatically creates new specialized agents from natural language descriptions. Simply ask Claude to create an agent and it will:
+
 - Fetch latest Claude Code documentation
 - Generate complete agent configuration files
 - Set appropriate tools, colors, and delegation rules
 - Write ready-to-use `.md` files to `.claude/agents/`
 
 ### 🎨 Workflow-Optimized Output Styles
+
 Different development phases need different information formats:
+
 - **GenUI**: Automatically generates and opens HTML documents for visual workflows
 - **TTS Summary**: Audio feedback for long-running operations
 - **JSON Structured**: Machine-parseable outputs for automation
 - **Markdown/Bullet Points**: Clean readable formats for documentation
 
 ### 🔧 Development Infrastructure
+
 - **`.serena/`**: serena-mcp tooling for maintaining and evolving this boilerplate itself
 - **`scripts/`**: KISS/YAGNI-compliant validation tools (PRP validation, etc.)
 - **`tests/`**: Security-focused testing of critical hook functionality
@@ -94,8 +100,8 @@ cc-boilerplate/
 
 ## Security
 
-**30+ rm patterns blocked** - Prevents `rm -rf /` disasters  
-**Environment protection** - Blocks `.env` access  
+**30+ rm patterns blocked** - Prevents `rm -rf /` disasters
+**Environment protection** - Blocks `.env` access
 **Real-time validation** - Before every tool execution
 
 **Security levels**: strict, moderate, permissive
@@ -129,8 +135,8 @@ OPENAI_API_KEY=key
 
 ## Testing
 
-**🔴 High Priority (Security Critical)**: Safety hooks, dangerous command detection  
-**🟡 Medium Priority (Feature Reliability)**: TTS providers, integration testing  
+**🔴 High Priority (Security Critical)**: Safety hooks, dangerous command detection
+**🟡 Medium Priority (Feature Reliability)**: TTS providers, integration testing
 **🔧 Test Infrastructure**: Comprehensive runner with priority-based execution
 
 ```bash
@@ -144,13 +150,40 @@ python tests/test_safety_hooks.py
 python tests/test_hook_integration.py
 ```
 
-**Full testing documentation**: See [tests/README.md](tests/README.md) for comprehensive coverage details, security testing approach, and troubleshooting guide.
+**Full testing documentation**: See [Testing Guide](docs/guides/testing.md) for comprehensive coverage details, security testing approach, and troubleshooting guide.
 
-## Docs
+## Documentation
 
-- **[REFERENCE.md](docs/REFERENCE.md)** - Essential API and system info
-- **[SECURITY.md](docs/SECURITY.md)** - Security features
-- **[TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common fixes
+### Quick Start
+
+- **[Getting Started](docs/guides/getting-started.md)** - Installation and initial setup
+- **[Development Workflow](docs/guides/development.md)** - Daily development process
+
+### Guides
+
+- **[Architecture Overview](docs/guides/architecture.md)** - System design and components
+- **[Security Features](docs/guides/security.md)** - Safety hooks and protection
+- **[Branch Protection](docs/guides/branch-protection.md)** - Repository protection setup
+- **[Testing Guide](docs/guides/testing.md)** - 3-tier testing architecture and workflows
+
+### Reference
+
+- **[API Reference](docs/reference/api.md)** - Complete API documentation
+- **[System Reference](docs/reference/index.md)** - Essential system information
+- **[TTS System](docs/reference/tts-system.md)** - Audio notification system
+
+### Troubleshooting
+
+- **[Common Issues](docs/troubleshooting.md)** - Solutions to frequent problems
+
+### Architecture Decisions
+
+- **[ADR Index](docs/adr/README.md)** - All architectural decision records
+- **[ADR-001: Branching Strategy](docs/adr/adr-001-branching-strategy.md)**
+- **[ADR-002: CI/CD Pipeline](docs/adr/adr-002-cicd-pipeline.md)**
+- **[ADR-003: Testing Strategy](docs/adr/adr-003-testing-strategy.md)**
+- **[ADR-004: Documentation Standards](docs/adr/adr-004-documentation-standards.md)**
+- **[ADR-005: ADR/PRP Separation](docs/adr/adr-005-adr-prp-separation.md)**
 
 ## Usage
 

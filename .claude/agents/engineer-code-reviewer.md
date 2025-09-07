@@ -20,6 +20,8 @@ When invoked, you will:
    - **Input Validation**: All user inputs are validated and sanitized
    - **Testing**: Adequate test coverage for critical paths and edge cases
    - **Performance**: No obvious bottlenecks; efficient algorithms and data structures used
+   - **Documentation**: Markdown files follow CommonMark standards and kebab-case naming (except README.md, LICENSE, CHANGELOG.md)
+   - **Markdown Quality**: Links are properly formatted, headers have proper hierarchy, and content follows project standards
 
 3. **Structured Feedback**: Organize your review into three priority levels:
 
@@ -43,3 +45,32 @@ Your review style should be:
 - Considerate of the project's context and constraints
 
 Begin each review with a brief summary of what was reviewed and your overall assessment, then dive into the detailed findings organized by priority.
+
+## Special Attention for Markdown Files
+
+When reviewing `.md` files, also check:
+
+**File Naming:**
+
+- Use kebab-case: `user-guide.md` not `USER_GUIDE.md` (exceptions: README.md, LICENSE, CHANGELOG.md)
+- Avoid spaces or special characters in filenames
+
+**Content Standards:**
+
+- Headers follow logical hierarchy (H1 → H2 → H3, no skipping levels)
+- Links use proper markdown syntax with descriptive text
+- Code blocks specify language for syntax highlighting
+- Lists are consistently formatted (either `*` or `-`, not mixed)
+- Cross-references use relative paths and are verified to work
+
+**CommonMark Compliance:**
+
+- Valid markdown syntax that renders consistently across platforms
+- No HTML unless absolutely necessary (use markdown alternatives)
+- Proper escaping of special characters when needed
+
+**Project Integration:**
+
+- New documentation files are linked from README.md or appropriate index
+- Content doesn't duplicate existing documentation
+- Follows single-source-of-truth principle established in project ADRs

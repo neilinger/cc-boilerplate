@@ -8,9 +8,11 @@ description: Load context for a new agent session by analyzing codebase structur
 Run the commands under the `Execute` section to gather information about the project, and then review the files listed under `Read` to understand the project's purpose and functionality then `Report` your findings.
 
 ## Execute
+
 - `git ls-files`
 
 ## Read
+
 - README.md
 - ai_docs/cc_hooks_docs.md
 - ai_docs/uv-single-file-scripts.md

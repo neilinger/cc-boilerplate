@@ -1,6 +1,7 @@
 # Suggested Commands for Claude Code Hooks Mastery
 
 ## Development Commands
+
 ```bash
 # UV Package Management
 uv run <script.py>              # Run UV single-file script
@@ -15,9 +16,10 @@ git log --oneline -5            # Recent commits
 ```
 
 ## Claude Code Commands
+
 ```bash
 # Custom Commands (from .claude/commands/)
-/prime                          # Project analysis and understanding  
+/prime                          # Project analysis and understanding
 /crypto_research               # Cryptocurrency research workflows
 /cook                          # Advanced task execution
 /update_status_line            # Dynamic status updates
@@ -29,6 +31,7 @@ git log --oneline -5            # Recent commits
 ```
 
 ## System Commands (Darwin/macOS)
+
 ```bash
 # File Operations
 find . -name "*.py" -type f     # Find Python files
@@ -44,6 +47,7 @@ kill -9 <pid>                 # Force kill process
 ```
 
 ## Hook Testing
+
 ```bash
 # View hook logs
 cat logs/user_prompt_submit.json | jq '.'

@@ -6,9 +6,11 @@ This directory contains Architecture Decision Records for the cc-boilerplate pro
 
 | ADR | Title | Status | Date |
 |-----|-------|--------|------|
-| [ADR-001](ADR-001-branching-strategy.md) | Release/Feature Branching Strategy | Accepted | 2025-01-09 |
-| [ADR-002](ADR-002-cicd-pipeline.md) | Branch-Specific CI/CD Pipeline | Accepted | 2025-01-09 |
-| [ADR-003](ADR-003-testing-strategy.md) | Priority-Based Testing Strategy | Accepted | 2025-01-09 |
+| [ADR-001](adr-001-branching-strategy.md) | Release/Feature Branching Strategy | Accepted | 2025-01-09 |
+| [ADR-002](adr-002-cicd-pipeline.md) | Branch-Specific CI/CD Pipeline | Accepted | 2025-01-09 |
+| [ADR-003](adr-003-testing-strategy.md) | Priority-Based Testing Strategy | Accepted | 2025-01-09 |
+| [ADR-004](adr-004-documentation-standards.md) | Documentation Standards and Organization | Accepted | 2025-01-09 |
+| [ADR-005](adr-005-adr-prp-separation.md) | ADR vs PRP Separation of Concerns | Accepted | 2025-01-09 |
 
 ## What are ADRs?
 
@@ -18,7 +20,7 @@ Architecture Decision Records (ADRs) are short text documents that capture impor
 
 - **Context preservation**: Understanding why decisions were made
 - **Team communication**: Share reasoning across team members
-- **Decision tracking**: Maintain history of architectural evolution  
+- **Decision tracking**: Maintain history of architectural evolution
 - **Onboarding**: Help new team members understand project structure
 - **Change management**: Provide basis for evaluating future changes
 
@@ -37,7 +39,7 @@ All ADRs follow a consistent format defined in [template.md](template.md):
 ## Creating New ADRs
 
 1. Copy the [template.md](template.md) file
-2. Name it `ADR-XXX-brief-title.md` (increment the number)
+2. Name it `adr-XXX-brief-title.md` (increment the number)
 3. Fill out all sections completely
 4. Update this README.md index
 5. Commit and create pull request for review
@@ -52,14 +54,16 @@ All ADRs follow a consistent format defined in [template.md](template.md):
 
 ## Guidelines for Good ADRs
 
-### Do:
+### Do
+
 - Write clearly and concisely
 - Explain the business or technical context
 - List the specific decision made
 - Document both positive and negative consequences
 - Include alternatives considered
 
-### Don't:
+### Don't
+
 - Make decisions without documenting them
 - Write overly technical content without context
 - Skip the consequences section
@@ -68,6 +72,7 @@ All ADRs follow a consistent format defined in [template.md](template.md):
 ## Review Process
 
 All ADRs should be:
+
 1. Reviewed by at least one other team member
 2. Discussed if the decision impacts multiple areas
 3. Merged only after consensus is reached

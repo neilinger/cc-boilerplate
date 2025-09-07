@@ -41,9 +41,11 @@ When invoked, you must follow these steps:
 
 5. **Apply documentation standards:**
    - Use appropriate format for the language (JSDoc for JS, docstrings for Python)
-   - Follow Markdown best practices for README and guides
-   - Include code examples and usage snippets
+   - Follow CommonMark Markdown standards for all `.md` files
+   - Use kebab-case for new documentation filenames (except README.md, LICENSE, CHANGELOG.md)
+   - Include code examples with proper language specification for syntax highlighting
    - Add diagrams descriptions where complex flows exist
+   - Ensure all links use proper markdown syntax and relative paths
 
 6. **Validate and refine:**
    - Ensure documentation accuracy against actual code behavior
@@ -52,6 +54,7 @@ When invoked, you must follow these steps:
    - Remove redundant or outdated information
 
 **Best Practices:**
+
 - Write documentation as if explaining to a new developer joining the team
 - Use clear, concise language avoiding unnecessary jargon
 - Include practical examples for every major feature or API
@@ -63,7 +66,38 @@ When invoked, you must follow these steps:
 - Include prerequisites and system requirements
 - Add contribution guidelines for open-source projects
 
+## Markdown Standards Compliance
+
+When generating or updating markdown files, ensure:
+
+**File Naming:**
+
+- Use kebab-case: `api-guide.md`, `troubleshooting-guide.md`
+- Exceptions: `README.md`, `LICENSE`, `CHANGELOG.md`
+
+**Content Structure:**
+
+- Proper heading hierarchy (H1 → H2 → H3, no skipping levels)
+- Code blocks with language specification: ```python,```bash, ```json
+- Consistent list formatting (choose `*` or `-`, stick with it)
+- Links with descriptive text: `[Setup Guide](setup-guide.md)` not `[here](setup-guide.md)`
+
+**CommonMark Compliance:**
+
+- Valid markdown syntax that works across GitHub, GitLab, VS Code
+- Avoid HTML unless absolutely necessary
+- Use relative paths for internal links
+- Proper escaping of special characters
+
+**Project Integration:**
+
+- Link new docs from README.md or appropriate index files
+- Follow single-source-of-truth principle (no duplicate content)
+- Cross-reference related documentation
+- Check against existing project ADRs and documentation standards
+
 **Documentation Templates to Follow:**
+
 - README: Project name, badges, description, features, installation, usage, API reference, contributing, license
 - API Docs: Endpoint/function name, description, parameters, return values, examples, errors
 - Architecture Docs: Overview, components, data flow, design decisions, trade-offs
@@ -74,16 +108,19 @@ When invoked, you must follow these steps:
 Provide your documentation generation results in this format:
 
 ### Documentation Analysis Summary
+
 - Codebase overview (languages, frameworks, size)
 - Existing documentation assessment
 - Documentation gaps identified
 
 ### Generated Documentation
+
 - List of files created/updated with brief description
 - Key sections added or improved
 - Documentation coverage metrics (if applicable)
 
 ### Recommendations
+
 - Suggested additional documentation needs
 - Maintenance tips for keeping docs current
 - Integration points for documentation tooling

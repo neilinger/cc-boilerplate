@@ -1,11 +1,11 @@
-# DELETE_FILE_CONTENT
+# Branch Protection Setup
 
 ## Overview
 
-Based on [ADR-001 (Branching Strategy)](adr/ADR-001-branching-strategy.md), we implement different protection levels for each branch type:
+Based on [adr-001 (Branching Strategy)](../adr/adr-001-branching-strategy.md), we implement different protection levels for each branch type:
 
 - **`main`**: Maximum protection - production code
-- **`release/**`**: Medium protection - allow stabilization 
+- **`release/**`**: Medium protection - allow stabilization
 - **`feature/**`**: Minimal protection - development freedom
 
 ## GitHub Repository Setup
@@ -21,6 +21,7 @@ Based on [ADR-001 (Branching Strategy)](adr/ADR-001-branching-strategy.md), we i
 **Branch name pattern**: `main`
 
 **Protection settings to enable**:
+
 - ✅ **Require a pull request before merging**
   - ✅ **Require approvals**: 1 (or more for team)
   - ✅ **Dismiss stale PR approvals when new commits are pushed**
@@ -40,11 +41,12 @@ Based on [ADR-001 (Branching Strategy)](adr/ADR-001-branching-strategy.md), we i
 
 **Rationale**: Maximum protection for production-ready code. All changes must go through PR review and comprehensive testing.
 
-### Step 3: Release Branch Protection  
+### Step 3: Release Branch Protection
 
 **Branch name pattern**: `release/**`
 
 **Protection settings to enable**:
+
 - ✅ **Require status checks to pass before merging**
   - ✅ **Require branches to be up to date before merging**
   - **Required status checks**:
@@ -61,6 +63,7 @@ Based on [ADR-001 (Branching Strategy)](adr/ADR-001-branching-strategy.md), we i
 **Branch name pattern**: `feature/**`
 
 **Protection settings to enable**:
+
 - ✅ **Require status checks to pass before merging**
   - **Required status checks**:
     - `Security Critical Tests` (from ci-cd.yml)
@@ -94,7 +97,7 @@ gh api repos/:owner/:repo/branches/release/protection \
   --field allow_force_pushes=true \
   --field allow_deletions=true
 
-# Feature branch protection pattern  
+# Feature branch protection pattern
 gh api repos/:owner/:repo/branches/feature/protection \
   --method PUT \
   --field required_status_checks='{"strict":true,"contexts":["Security Critical Tests"]}' \
@@ -110,18 +113,21 @@ gh api repos/:owner/:repo/branches/feature/protection \
 ### Team Permissions (if applicable)
 
 **Maintainers/Owners**:
+
 - Can push to `release/**` branches
 - Can force push for release stabilization
 - Can delete old release branches
 - Can bypass protection rules in emergencies
 
 **Developers/Contributors**:
+
 - Can create `feature/**` branches
 - Can push to own feature branches
 - Must create PRs to `main`
 - Cannot force push to `main`
 
 **External Contributors**:
+
 - Can fork and create PRs
 - All changes must go through review
 - Cannot push directly to any protected branch
@@ -166,16 +172,19 @@ docs/adr/ @username @architecture-reviewer
 ### Troubleshooting Status Checks
 
 **Check not appearing in list**:
+
 1. Ensure workflow has run at least once on the branch
 2. Verify job names match exactly (case-sensitive)
 3. Check workflow trigger conditions
 
 **Check failing unexpectedly**:
+
 1. Review workflow logs in Actions tab
 2. Verify required environment variables/secrets
 3. Check test dependencies and setup
 
 **Check timeout**:
+
 1. Increase `timeout-minutes` in workflow
 2. Optimize test execution time
 3. Consider splitting large test suites
@@ -185,6 +194,7 @@ docs/adr/ @username @architecture-reviewer
 ### Bypassing Protection (Emergencies Only)
 
 **Main branch emergency fix**:
+
 ```bash
 # Create hotfix branch from main
 git checkout main
@@ -198,6 +208,7 @@ gh pr create --label "EMERGENCY" --title "Emergency: Critical security fix"
 ```
 
 **Release branch emergency fix**:
+
 ```bash
 # Direct push allowed on release branches
 git checkout release/v1.2.0
@@ -208,12 +219,14 @@ git push origin release/v1.2.0  # Will run comprehensive tests
 ### Recovery Procedures
 
 **Accidentally deleted main branch**:
+
 1. Find latest commit hash: `git log --oneline -n 10`
 2. Recreate branch: `git checkout -b main <commit-hash>`
 3. Force push: `git push --force-with-lease origin main`
 4. Re-apply branch protection rules
 
 **Failed merge to main**:
+
 1. Revert the merge: `git revert -m 1 <merge-commit-hash>`
 2. Fix issues in feature/release branch
 3. Create new PR with fixes
@@ -248,14 +261,15 @@ git push origin release/v1.2.0  # Will run comprehensive tests
 
 This branch protection strategy integrates with:
 
-- **[Development Workflow](DEVELOPMENT.md)**: Day-to-day development process
-- **[ADR-001](adr/ADR-001-branching-strategy.md)**: Branching strategy decisions
-- **[ADR-002](adr/ADR-002-cicd-pipeline.md)**: CI/CD pipeline configuration  
-- **[ADR-003](adr/ADR-003-testing-strategy.md)**: Testing strategy and priorities
+- **[Development Workflow](development.md)**: Day-to-day development process
+- **[adr-001](../adr/adr-001-branching-strategy.md)**: Branching strategy decisions
+- **[adr-002](../adr/adr-002-cicd-pipeline.md)**: CI/CD pipeline configuration
+- **[adr-003](../adr/adr-003-testing-strategy.md)**: Testing strategy and priorities
 
 ## Best Practices
 
 ### Do's ✅
+
 - Always require status checks on protected branches
 - Use meaningful commit messages for emergency fixes
 - Document any temporary protection rule changes
@@ -263,6 +277,7 @@ This branch protection strategy integrates with:
 - Monitor CI/CD performance and costs
 
 ### Don'ts ❌
+
 - Don't bypass protection rules without documentation
 - Don't disable required status checks without team approval
 - Don't force push to main branch (ever)

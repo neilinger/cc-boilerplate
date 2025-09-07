@@ -3,13 +3,15 @@
 ## When Task is Completed
 
 1. **Test the Implementation**
+
    ```bash
    # Run any relevant tests
    uv run test_script.py  # If tests exist
    python -m pytest      # If using pytest
    ```
 
-2. **Validate Hook Functionality** 
+2. **Validate Hook Functionality**
+
    ```bash
    # Check hook logs for proper execution
    cat logs/user_prompt_submit.json | jq '.'
@@ -24,6 +26,7 @@
    - Check that names are descriptive
 
 4. **Git Operations** (using gh CLI as required)
+
    ```bash
    git status
    git add .
@@ -42,6 +45,7 @@
    - Verify .gitignore covers logs and temporary files
 
 ## Quality Gates
+
 - Code must pass KISS test: explainable in one breath
 - No more than 3 moving parts per function
 - Must handle errors gracefully without blocking core functionality

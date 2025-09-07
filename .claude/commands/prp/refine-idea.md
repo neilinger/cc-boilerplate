@@ -31,23 +31,24 @@ Transform rough ideas into comprehensive PRDs with rich visual documentation.
 Using /PRPs/templates/prp_planning_base.md:
 
 ### Visual Documentation Plan
+
 ```yaml
 diagrams_needed:
   user_flows:
     - Happy path journey
     - Error scenarios
     - Edge cases
-  
+
   architecture:
     - System components
     - Data flow
     - Integration points
-  
+
   sequences:
     - API interactions
     - Event flows
     - State changes
-  
+
   data_models:
     - Entity relationships
     - Schema design
@@ -55,12 +56,14 @@ diagrams_needed:
 ```
 
 ### Research Integration
+
 - **Market Analysis**: Include findings in PRD
 - **Technical Options**: Compare approaches
 - **Risk Assessment**: With mitigation strategies
 - **Success Metrics**: Specific, measurable
 
 ### User Story Development
+
 ```markdown
 ## Epic: [High-level feature]
 
@@ -81,6 +84,7 @@ diagrams_needed:
 ```
 
 ### Implementation Strategy
+
 - Phases with dependencies (no dates)
 - Priority ordering
 - MVP vs enhanced features
@@ -104,12 +108,14 @@ diagrams_needed:
    - Success metric agreement
 
 ## Diagram Guidelines
+
 - Use Mermaid for all diagrams
 - Include legends where needed
 - Show error paths
 - Annotate complex flows
 
 ## Output Structure
+
 ```markdown
 1. Executive Summary
 2. Problem & Solution
@@ -126,6 +132,7 @@ diagrams_needed:
 Save as: `PRPs/{feature-name}-prd.md`
 
 ## Quality Checklist
+
 - [ ] Problem clearly articulated
 - [ ] Solution addresses problem
 - [ ] All user flows diagrammed

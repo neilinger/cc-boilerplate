@@ -35,6 +35,7 @@ Use this consistent schema for all JSON-formatted AI responses:
 ## Response Types
 
 ### 1. Standard Response
+
 ```json
 {
   "type": "response",
@@ -53,6 +54,7 @@ Use this consistent schema for all JSON-formatted AI responses:
 ```
 
 ### 2. Analysis Response
+
 ```json
 {
   "type": "analysis",
@@ -77,6 +79,7 @@ Use this consistent schema for all JSON-formatted AI responses:
 ```
 
 ### 3. Command Response
+
 ```json
 {
   "type": "command",
@@ -104,6 +107,7 @@ Use this consistent schema for all JSON-formatted AI responses:
 ```
 
 ### 4. Process Response (Multi-Step)
+
 ```json
 {
   "type": "process",
@@ -135,6 +139,7 @@ Use this consistent schema for all JSON-formatted AI responses:
 ## Error Handling (RFC 7807 Compliant)
 
 ### Standard Error Format
+
 ```json
 {
   "type": "error",
@@ -157,6 +162,7 @@ Use this consistent schema for all JSON-formatted AI responses:
 ```
 
 ### Error Categories
+
 - **400 Bad Request**: Malformed JSON or invalid syntax
 - **422 Unprocessable Entity**: Validation failures
 - **500 Internal Server Error**: AI model failures or system errors
@@ -164,12 +170,14 @@ Use this consistent schema for all JSON-formatted AI responses:
 ## Formatting Guidelines
 
 ### Human Readability
+
 - Use 2-space indentation for development/debugging
 - Include descriptive field names
 - Provide meaningful error messages
 - Add context for complex operations
 
 ### Machine Processing
+
 - Ensure 100% valid JSON syntax
 - Use consistent field names across responses
 - Include proper data types (strings, numbers, booleans, arrays)
@@ -178,11 +186,13 @@ Use this consistent schema for all JSON-formatted AI responses:
 ## Performance Considerations
 
 ### Size Optimization
+
 - Use abbreviated keys for high-frequency responses if needed
 - Implement field filtering for large responses
 - Consider compression for responses over 1KB
 
 ### Validation
+
 - All JSON must pass `JSON.parse()` validation
 - Schema validation using jsonschema library recommended
 - Include request/response IDs for tracing
@@ -190,6 +200,7 @@ Use this consistent schema for all JSON-formatted AI responses:
 ## Implementation Examples
 
 ### Python Validation
+
 ```python
 import json
 import jsonschema
@@ -215,6 +226,7 @@ jsonschema.validate(parsed, schema)
 ```
 
 ### JavaScript/Node.js Usage
+
 ```javascript
 // Parse and validate
 try {

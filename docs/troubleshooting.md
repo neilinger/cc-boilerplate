@@ -13,47 +13,51 @@ chmod +x .claude/hooks/*.py
 ## Common Issues
 
 **"Command not found: uv"**
+
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.bashrc
 ```
 
-**"Hook execution failed"**  
+**"Hook execution failed"**
 Security hook blocked dangerous command. Check `logs/security.log`.
 
 **"No module named 'dotenv'"**
+
 ```bash
 cd .claude/hooks && uv sync
 ```
 
 **".env file not found"**
+
 ```bash
 cp .env.sample .env
 # Edit with your API keys
 ```
 
 **"Permission denied"**
+
 ```bash
 chmod +x .claude/hooks/*.py
 ```
 
 ## TTS Issues
 
-**No audio output**  
-Check API keys: `echo $ELEVENLABS_API_KEY`  
-Fallback to local: `TTS_DEFAULT_PROVIDER=pyttsx3`
+**No audio output**
+Check API keys: `echo $ELEVENLABS_API_KEY`
+For comprehensive TTS troubleshooting, see [TTS System Reference](reference/tts-system.md#troubleshooting).
 
-**Commands blocked**  
-Review security patterns, use alternative commands, or set `SECURITY_LEVEL=moderate`
+**Commands blocked**
+For detailed security troubleshooting, see [Security Guide](guides/security.md).
 
-**Hook timeout**  
-Kill hanging processes: `pkill -f "hooks.*python"`  
+**Hook timeout**
+Kill hanging processes: `pkill -f "hooks.*python"`
 Use local TTS: `TTS_DEFAULT_PROVIDER=pyttsx3`
 
-**Import errors**  
+**Import errors**
 Reinstall dependencies: `uv sync --reinstall`
 
-**JSON errors**  
+**JSON errors**
 Test minimal input: `echo '{}' | uv run .claude/hooks/user_prompt_submit.py`
 
 ## Debug Mode
@@ -66,89 +70,37 @@ python tests/run_all_tests.py
 
 ### Legitimate Commands Blocked
 
-**Symptoms**:
-- Safe commands blocked by security hooks
-- False positive security alerts
-- Cannot execute necessary operations
+**Symptoms**: Safe commands blocked by security hooks, false positive alerts.
 
-**Diagnostic**:
-```bash
-# Test specific command blocking
-echo '{"tool_name": "Bash", "tool_input": {"command": "YOUR_COMMAND"}}' | \
-  uv run .claude/hooks/pre_tool_use.py --debug
+**Solution**: See comprehensive security troubleshooting in [Security Guide](guides/security.md#known-issues) including:
 
-# Review security patterns
-grep -n "patterns\|dangerous" .claude/hooks/pre_tool_use.py
-```
-
-**Solutions**:
-1. **Temporary bypass** (use carefully):
-   ```bash
-   # Set permissive mode temporarily
-   export SECURITY_LEVEL=permissive
-   ```
-
-2. **Update security patterns**:
-   ```python
-   # In pre_tool_use.py, add to whitelist_patterns:
-   whitelist_patterns = [
-       r'rm -rf \./build/',     # Allow build directory cleanup
-       r'rm -rf \./temp/',      # Allow temp directory cleanup
-   ]
-   ```
-
-3. **Use alternative commands**:
-   ```bash
-   # Instead of: rm -rf ./build/*
-   # Use: find ./build -type f -delete
-   ```
+- Diagnostic commands for testing specific patterns
+- Security level configuration options
+- Alternative command strategies
+- Whitelist pattern examples
 
 ### .env File Access Issues
 
-**Symptoms**:
-- Cannot read .env.sample
-- Blocked from creating .env file
-- Configuration files inaccessible
+**Symptoms**: Cannot access .env files, blocked configuration file operations.
 
-**Diagnostic**:
-```bash
-# Check .env file protection patterns
-grep -A 10 "is_env_file_access" .claude/hooks/pre_tool_use.py
+**Solution**: For complete .env protection details and workarounds, see [Security Guide](guides/security.md#blocked-commands) which covers:
 
-# Test .env access
-echo '{"tool_name": "Read", "tool_input": {"file_path": ".env.sample"}}' | \
-  uv run .claude/hooks/pre_tool_use.py
-```
-
-**Solutions**:
-1. **Use allowed file extensions**:
-   ```bash
-   # These are allowed:
-   .env.sample
-   .env.template  
-   .env.example
-   
-   # These are blocked:
-   .env
-   .environment
-   ```
-
-2. **Create .env from template**:
-   ```bash
-   # This works because it's a bash command, not direct .env access
-   cp .env.sample .env
-   ```
+- Allowed vs blocked file patterns
+- Diagnostic commands for .env access testing
+- Safe methods for configuration file management
 
 ## Performance Issues
 
 ### Slow Hook Execution
 
 **Symptoms**:
+
 - Claude Code responses delayed
 - Hook execution over 5 seconds
 - High CPU usage during hooks
 
 **Diagnostic**:
+
 ```bash
 # Profile hook execution time
 time echo '{"message": "test"}' | uv run .claude/hooks/notification.py
@@ -161,13 +113,16 @@ time uv run .claude/hooks/utils/tts/pyttsx3_tts.py --text "test"
 ```
 
 **Solutions**:
+
 1. **Optimize TTS provider selection**:
+
    ```bash
    # Use fastest local provider
    export TTS_DEFAULT_PROVIDER=pyttsx3
    ```
 
 2. **Reduce hook complexity**:
+
    ```python
    # In hooks, add early returns:
    if not message_important:
@@ -176,6 +131,7 @@ time uv run .claude/hooks/utils/tts/pyttsx3_tts.py --text "test"
    ```
 
 3. **Cache frequently used data**:
+
    ```python
    # Cache API key validation
    @lru_cache(maxsize=1)
@@ -186,11 +142,13 @@ time uv run .claude/hooks/utils/tts/pyttsx3_tts.py --text "test"
 ### High Memory Usage
 
 **Symptoms**:
+
 - System running out of memory
 - Claude Code becoming sluggish
 - OS memory warnings
 
 **Diagnostic**:
+
 ```bash
 # Check memory usage
 ps aux --sort=-%mem | head -10
@@ -200,7 +158,9 @@ ps -o pid,vsz,rss,comm -p $(pgrep claude-code)
 ```
 
 **Solutions**:
+
 1. **Limit concurrent hook executions**:
+
    ```json
    // settings.json
    {
@@ -211,6 +171,7 @@ ps -o pid,vsz,rss,comm -p $(pgrep claude-code)
    ```
 
 2. **Clear hook caches**:
+
    ```bash
    # Clear UV cache
    uv cache clean
@@ -352,16 +313,7 @@ nslookup api.elevenlabs.io
 
 ### System Integration Testing
 
-```bash
-# Full system test
-python tests/run_all_tests.py
-
-# Security-specific tests
-python tests/test_safety_hooks.py
-
-# TTS integration tests
-python tests/test_tts_providers.py
-```
+For comprehensive testing commands and strategies, see [Testing Guide](guides/testing.md#how-to-run-different-test-suites).
 
 ## Getting Additional Help
 
@@ -405,8 +357,9 @@ Before seeking help, please check:
 ### Resources
 
 - **Documentation**: [docs/](docs/) directory
-- **Security Guide**: [docs/SECURITY.md](docs/SECURITY.md)
-- **API Reference**: [docs/API.md](docs/API.md)
-- **Test Suite**: `python tests/run_all_tests.py`
+- **Security Guide**: [Security Guide](guides/security.md)
+- **API Reference**: [API Reference](reference/api.md)
+- **Testing Guide**: [Testing Guide](guides/testing.md)
+- **Development Workflow**: [Development Guide](guides/development.md)
 
 Remember: When in doubt, run the diagnostic commands and check the logs. Most issues have clear error messages that point to the solution.

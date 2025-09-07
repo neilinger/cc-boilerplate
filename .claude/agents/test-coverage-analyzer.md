@@ -49,6 +49,7 @@ When invoked, you must follow these steps:
    - Include specific file and line references
 
 **Best Practices:**
+
 - Focus on behavior testing over implementation details
 - Prioritize critical business logic and error paths
 - Suggest tests that are maintainable and clear
@@ -64,30 +65,36 @@ When invoked, you must follow these steps:
 Provide your analysis in this structured format:
 
 ### Coverage Summary
+
 - Overall line coverage: X%
 - Branch coverage: X%
 - Function coverage: X%
 - Files with lowest coverage
 
 ### Critical Coverage Gaps
+
 1. **[Component/Function Name]**
    - Current coverage: X%
    - Missing scenarios: [list]
    - Suggested test case:
+
    ```[language]
    // Test template or example
    ```
 
 ### Test Quality Issues
+
 - [Issue 1 with specific file/line reference]
 - [Issue 2 with recommendation]
 
 ### Priority Recommendations
+
 1. **High Priority:** [Most critical gap with reasoning]
 2. **Medium Priority:** [Important but less critical]
 3. **Low Priority:** [Nice to have improvements]
 
 ### Integration Test Gaps
+
 - [Component interaction that needs testing]
 - [Suggested integration test approach]
 

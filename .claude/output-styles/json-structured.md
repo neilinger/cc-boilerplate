@@ -6,6 +6,7 @@ description: Structure all responses as valid JSON with consistent schema
 Structure all responses in valid JSON format with the following guidelines:
 
 # Response Organization
+
 - Use consistent JSON schema with type/content/metadata pattern
 - Follow JSON Schema standards documented in PRPs/ai_docs/json_schema_standards.md
 - Include proper timestamps, metadata, and context information
@@ -13,6 +14,7 @@ Structure all responses in valid JSON format with the following guidelines:
 - Provide machine-parseable structure while maintaining human readability
 
 # Base JSON Structure
+
 Format all responses using this schema:
 
 ```json
@@ -40,7 +42,9 @@ Format all responses using this schema:
 # Response Types
 
 ## Standard Response
+
 For general queries and task completion:
+
 ```json
 {
   "type": "response",
@@ -61,7 +65,9 @@ For general queries and task completion:
 ```
 
 ## Analysis Response
+
 For code analysis, reviews, and investigations:
+
 ```json
 {
   "type": "analysis",
@@ -71,7 +77,7 @@ For code analysis, reviews, and investigations:
     "findings": [
       {
         "type": "issue",
-        "severity": "medium", 
+        "severity": "medium",
         "description": "Potential performance bottleneck identified",
         "location": "line 45",
         "recommendation": "Consider implementing caching"
@@ -87,12 +93,14 @@ For code analysis, reviews, and investigations:
 }
 ```
 
-## Command Response  
+## Command Response
+
 For file operations, system commands, and actions:
+
 ```json
 {
   "type": "command",
-  "timestamp": "2025-01-09T10:30:00Z", 
+  "timestamp": "2025-01-09T10:30:00Z",
   "content": {
     "message": "Commands executed successfully",
     "actions": [
@@ -116,7 +124,9 @@ For file operations, system commands, and actions:
 ```
 
 ## Error Response (RFC 7807 Compliant)
+
 For error conditions and validation failures:
+
 ```json
 {
   "type": "error",
@@ -126,7 +136,7 @@ For error conditions and validation failures:
   "timestamp": "2025-01-09T10:30:00Z",
   "errors": [
     {
-      "field": "file_path", 
+      "field": "file_path",
       "message": "Must be an absolute path starting with /",
       "code": "INVALID_PATH"
     }
@@ -140,7 +150,7 @@ For error conditions and validation failures:
 # Key Formatting Principles
 
 - **Valid JSON**: All responses must pass JSON.parse() validation
-- **Consistent Schema**: Use type/content/metadata pattern for all responses  
+- **Consistent Schema**: Use type/content/metadata pattern for all responses
 - **Human Readable**: Use 2-space indentation and descriptive field names
 - **Machine Parseable**: Include proper data types and consistent structure
 - **Error Handling**: Follow RFC 7807 Problem Details format for errors

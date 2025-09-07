@@ -3,6 +3,7 @@
 Please perform a comprehensive code review of the current changes or specified files.
 
 ## Review Scope
+
 $ARGUMENTS
 
 ## Review Process

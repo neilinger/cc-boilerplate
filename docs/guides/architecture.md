@@ -1,4 +1,4 @@
-# DELETE_FILE_CONTENT
+# Architecture Overview
 
 ## Table of Contents
 
@@ -18,7 +18,7 @@ CC-Boilerplate is a **comprehensive Claude Code configuration** that extends the
 
 ```
 🏗️ **LAYERED ARCHITECTURE** - Clear separation of concerns
-🔐 **SECURITY FIRST** - Built-in protection at every layer  
+🔐 **SECURITY FIRST** - Built-in protection at every layer
 🔌 **EXTENSIBLE DESIGN** - Easy to add new components
 ⚡ **PERFORMANCE FOCUSED** - Optimized execution paths
 🎯 **SINGLE RESPONSIBILITY** - Each component has one clear purpose
@@ -67,7 +67,7 @@ graph TD
     H --> I[notification 🔊]
     I --> J[stop]
     J --> K[session_start]
-    
+
     L[Subagent] --> M[subagent_stop]
     N[Compaction] --> O[pre_compact]
 ```
@@ -75,22 +75,23 @@ graph TD
 #### Hook Components
 
 ##### 1. Input Processing Layer
+
 - **user_prompt_submit.py**: Input validation and preprocessing
 - **session_start.py**: Context loading and environment setup
 
-##### 2. Security Validation Layer  
+##### 2. Security Validation Layer
+
 - **pre_tool_use.py**: **CRITICAL** - Security validation before execution
-  - Dangerous command detection (30+ patterns)
-  - .env file access protection
-  - Path traversal prevention
-  - Command injection filtering
+  For complete security patterns and protection details, see [Security Guide](../guides/security.md).
 
 ##### 3. Execution & Output Layer
+
 - **post_tool_use.py**: Result processing and logging
 - **notification.py**: Intelligent notifications with TTS
 - **stop.py**: Task completion handling
 
 ##### 4. Lifecycle Management Layer
+
 - **subagent_stop.py**: Subagent completion handling
 - **pre_compact.py**: Transcript archival before compaction
 
@@ -118,15 +119,18 @@ Agents implement the **Strategy Pattern** with specialized tool access.
 #### Agent Categories
 
 ##### Meta-Agents (System Enhancement)
+
 - **meta-agent**: Generates new agents from descriptions
-- **test-automator**: Creates comprehensive test suites  
+- **test-automator**: Creates comprehensive test suites
 - **test-coverage-analyzer**: Analyzes and improves test coverage
 
 ##### Code Quality Agents
+
 - **engineer-code-reviewer**: Automated code quality and security reviews
 - **technical-researcher**: In-depth technical research and analysis
 
 ##### Content & Communication Agents
+
 - **smart-doc-generator**: Comprehensive documentation generation
 - **work-completion-summary**: Audio task summaries
 - **llm-ai-agents-and-eng-research**: AI/ML research specialist
@@ -135,40 +139,9 @@ Agents implement the **Strategy Pattern** with specialized tool access.
 
 Multi-provider fallback system implementing **Chain of Responsibility** for audio output.
 
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   ElevenLabs    │    │     OpenAI      │    │    pyttsx3     │
-│                 │    │                 │    │                 │
-│ • High Quality  │    │ • Good Quality  │    │ • Basic Quality │
-│ • API Required  │    │ • API Required  │    │ • Local Only    │
-│ • 29 Languages  │    │ • Multi-voice   │    │ • System Voice  │
-│ • Cloud-based   │    │ • Cloud-based   │    │ • Offline       │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-        │                       │                       │
-        ▼                       ▼                       ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                TTS Provider Manager                             │
-│                                                                 │
-│  Provider Selection │ Fallback Logic │ Audio Management       │
-│                                                                 │
-│  Selection Order: ElevenLabs → OpenAI → pyttsx3               │
-└─────────────────────────────────────────────────────────────────┘
-```
+For detailed TTS architecture, provider comparison, and configuration details, see [TTS System Reference](../reference/tts-system.md).
 
-#### Provider Selection Logic
-
-```python
-def select_tts_provider():
-    """
-    Provider selection with intelligent fallback.
-    """
-    if has_api_key('ELEVENLABS_API_KEY') and is_online():
-        return ElevenLabsProvider()
-    elif has_api_key('OPENAI_API_KEY') and is_online():
-        return OpenAIProvider()
-    else:
-        return Pyttsx3Provider()  # Always available fallback
-```
+For detailed TTS provider selection logic and fallback implementation, see [TTS System Reference](../reference/tts-system.md#fallback-logic).
 
 ### Output Style System
 
@@ -201,13 +174,13 @@ sequenceDiagram
     U->>CC: User Prompt
     CC->>H: user_prompt_submit
     H->>CC: Validated Input
-    
+
     CC->>A: Agent Selection
     A->>CC: Tool Execution Plan
-    
+
     CC->>H: pre_tool_use (Security)
     H->>CC: Security Validation Result
-    
+
     alt Security Pass
         CC->>T: Execute Tool
         T->>CC: Tool Result
@@ -218,7 +191,7 @@ sequenceDiagram
     else Security Fail
         H->>CC: Block + Error Message
     end
-    
+
     CC->>U: Response with Audio
 ```
 
@@ -237,7 +210,7 @@ class HookPipeline:
             ('notification', self.send_notification),
             ('stop', self.handle_completion)
         ]
-        
+
         for stage_name, handler in stages:
             try:
                 result = handler(context)
@@ -245,7 +218,7 @@ class HookPipeline:
                     return BlockedResult(stage_name, result.reason)
             except Exception as e:
                 return ErrorResult(stage_name, str(e))
-        
+
         return SuccessResult()
 ```
 
@@ -270,7 +243,7 @@ class HookPipeline:
 └─────────────────┘
         │ ✅ Pass
         ▼
-┌─────────────────┐    ❌ Block  
+┌─────────────────┐    ❌ Block
 │ Dangerous Cmd   │ ──────────▶ Exit Code 1
 │ Detection       │
 └─────────────────┘
@@ -298,19 +271,19 @@ class AgentWorkflow:
     def execute_agent(self, agent_name, task):
         # 1. Load agent configuration
         config = self.load_agent_config(agent_name)
-        
+
         # 2. Initialize agent with tool access
         agent = Agent(config, tool_access=config.tools)
-        
+
         # 3. Execute with security validation
         for tool_call in agent.plan_execution(task):
             # Each tool call goes through security hooks
             if not self.security_validate(tool_call):
                 raise SecurityBlockedError(tool_call)
-            
+
             result = self.execute_tool(tool_call)
             agent.process_result(result)
-        
+
         # 4. Generate completion summary
         return agent.finalize_result()
 ```
@@ -361,24 +334,24 @@ class SecurityManager:
             InputSanitizationValidator()
         ]
         self.audit_logger = SecurityAuditLogger()
-    
+
     def validate_execution(self, tool_name, parameters):
         """
         Multi-layer security validation.
         """
         context = ExecutionContext(tool_name, parameters)
-        
+
         for validator in self.validators:
             result = validator.validate(context)
             self.audit_logger.log_validation(validator, result)
-            
+
             if result.is_blocked():
                 raise SecurityException(
                     validator=validator.__class__.__name__,
                     reason=result.reason,
                     details=result.details
                 )
-        
+
         return ValidationResult.success()
 ```
 
@@ -402,16 +375,16 @@ def main():
     try:
         # 1. Read JSON input
         input_data = json.load(sys.stdin)
-        
+
         # 2. Process hook logic
         result = process_hook_logic(input_data)
-        
+
         # 3. Output JSON result
         print(json.dumps(result))
-        
+
         # 4. Exit with appropriate code
         sys.exit(0 if result.get('success') else 1)
-        
+
     except Exception as e:
         print(json.dumps({"error": str(e)}), file=sys.stderr)
         sys.exit(2)
@@ -461,34 +434,34 @@ class CustomTTSProvider:
     def __init__(self, api_key=None):
         self.api_key = api_key
         self.is_available = self._check_availability()
-    
+
     def _check_availability(self):
         """Check if provider is available and configured."""
         return bool(self.api_key) and self._test_connection()
-    
+
     def synthesize_speech(self, text, voice=None, **kwargs):
         """
         Synthesize text to speech.
-        
+
         Args:
             text: Text to convert to speech
             voice: Voice selection (provider-specific)
             **kwargs: Additional provider-specific options
-        
+
         Returns:
             AudioFile: Generated audio file path
         """
         if not self.is_available:
             raise TTSProviderUnavailableError()
-        
+
         # Implement provider-specific synthesis logic
         audio_file = self._call_provider_api(text, voice, **kwargs)
         return AudioFile(audio_file)
-    
+
     def get_available_voices(self):
         """Return list of available voices."""
         pass
-    
+
     def _call_provider_api(self, text, voice, **kwargs):
         """Provider-specific API call implementation."""
         pass
@@ -506,10 +479,13 @@ class CustomTTSProvider:
 
 ## Template Structure
 ```
+
 Custom formatted output with:
+
 - Specific formatting rules
 - Template variables
 - Output structure
+
 ```
 
 ## Implementation
@@ -519,26 +495,31 @@ Custom formatted output with:
 ## Design Patterns
 
 ### 1. Chain of Responsibility (Hooks)
+
 - Each hook processes request and passes to next
 - Security hooks can break the chain by blocking
 - Error handling and logging at each step
 
 ### 2. Strategy Pattern (Agents & TTS)
+
 - Interchangeable implementations of same interface
 - Runtime selection based on context/availability
 - Easy extension with new providers/agents
 
 ### 3. Template Method (Output Styles)
+
 - Common structure with customizable details
 - Consistent output formatting framework
 - Easy style addition and modification
 
 ### 4. Observer Pattern (Event Logging)
+
 - Components emit events for monitoring
 - Centralized logging and audit trail
 - Performance monitoring and debugging
 
 ### 5. Factory Pattern (Component Creation)
+
 - Centralized creation of hooks, agents, TTS providers
 - Configuration-driven instantiation
 - Easy testing and mocking
@@ -573,16 +554,19 @@ Custom formatted output with:
 ### Scalability Considerations
 
 #### Horizontal Scaling
+
 - Hooks are stateless and parallelizable
 - TTS providers support concurrent synthesis
 - Agent execution can be distributed
 
-#### Vertical Scaling  
+#### Vertical Scaling
+
 - Memory usage scales with active components
 - CPU usage dominated by TTS and LLM operations
 - I/O performance critical for file operations
 
 #### Performance Optimization
+
 - Lazy loading of non-critical components
 - Caching of frequently used data
 - Asynchronous TTS synthesis where possible
@@ -591,11 +575,13 @@ Custom formatted output with:
 ## Architecture Evolution
 
 ### Current Architecture (v1.0)
+
 - Monolithic hooks with embedded utilities
 - Single-file UV script approach
 - Direct provider integration
 
 ### Future Architecture Considerations (v2.0+)
+
 - **Microservice Hooks**: Separate processes for complex hooks
 - **Plugin Architecture**: Dynamic loading of extensions
 - **Distributed TTS**: Remote TTS service deployment
@@ -603,6 +589,7 @@ Custom formatted output with:
 - **Performance Optimization**: Compiled hooks for speed
 
 ### Migration Strategy
+
 - Backward compatibility maintained
 - Incremental component modernization
 - Configuration-driven feature flags

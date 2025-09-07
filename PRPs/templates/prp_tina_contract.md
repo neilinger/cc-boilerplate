@@ -21,9 +21,11 @@ This template is populated by TINA's clarification process and serves as the def
 ## Scope Boundaries (YAGNI Enforcement)
 
 ### IN SCOPE
+
 {in_scope_items}
 
 ### EXPLICITLY OUT OF SCOPE (Critical)
+
 {out_of_scope_items}
 
 *Any implementation of out-of-scope items violates this contract and will cause scope creep.*
@@ -31,36 +33,42 @@ This template is populated by TINA's clarification process and serves as the def
 ## Technical Context
 
 **Tech Stack**: {tech_stack}
-**Target Audience**: {audience}  
+**Target Audience**: {audience}
 **Integration Points**: {integration_points}
 **Existing Patterns to Follow**: {existing_patterns}
 
 ## Constraints & Requirements
 
 ### Edge Cases (Must Handle)
+
 {edge_cases}
 
 ### Risk Tolerances
+
 {risk_tolerances}
 
 ### Must-Include Facts
+
 {must_include_facts}
 
 ## Validation Gates
 
 ### Success Validation
+
 - [ ] Goal achieved as specified
 - [ ] Deliverable meets exact specification
 - [ ] Success criteria demonstrably met
 - [ ] No out-of-scope features implemented
 
 ### Technical Validation
+
 - [ ] Tech stack requirements followed
 - [ ] Integration points working as specified
 - [ ] Edge cases handled per contract
 - [ ] Existing patterns properly followed
 
 ### Scope Validation
+
 - [ ] All in-scope items implemented
 - [ ] Zero out-of-scope items implemented
 - [ ] KISS and YAGNI principles followed
@@ -69,23 +77,27 @@ This template is populated by TINA's clarification process and serves as the def
 ## Implementation Notes
 
 ### Length/Format Requirements
+
 {length_format}
 
 ### Conversation History
+
 *Reference TINA clarification session for context*
 {conversation_summary}
 
 ## Contract Enforcement
 
-This contract represents the **iron-clad agreement** between human intent and AI implementation. 
+This contract represents the **iron-clad agreement** between human intent and AI implementation.
 
 **Violations that void the contract:**
+
 - Implementing any explicitly out-of-scope feature
-- Adding "nice-to-have" features beyond success criteria  
+- Adding "nice-to-have" features beyond success criteria
 - Ignoring specified tech stack or integration requirements
 - Changing success criteria without explicit contract amendment
 
 **When in doubt during implementation:**
+
 1. Check: "Is this explicitly out of scope?"
 2. Refer to success criteria: "Does this help achieve the goal?"
 3. Apply YAGNI: "Is this needed now or just 'in case'?"
@@ -93,8 +105,9 @@ This contract represents the **iron-clad agreement** between human intent and AI
 ## Post-Implementation Review
 
 After implementation, verify:
+
 - [ ] Original goal achieved
-- [ ] Deliverable matches specification  
+- [ ] Deliverable matches specification
 - [ ] Success criteria provably met
 - [ ] No scope creep occurred
 - [ ] Contract honored completely

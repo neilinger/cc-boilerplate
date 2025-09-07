@@ -30,7 +30,7 @@ gh pr create --base main --title "Release v1.1.0"  # Runs enhanced tests (~7-10m
 Our workflow uses **Release Flow** with three branch types:
 
 - **`feature/**`** - Development work, fast security feedback
-- **`release/**`** - Stabilization and comprehensive testing  
+- **`release/**`** - Stabilization and comprehensive testing
 - **`main`** - Production-ready code with deployment automation
 
 ## Detailed Workflow
@@ -58,6 +58,7 @@ git push origin feature/descriptive-name
 ```
 
 **CI/CD**: Runs **security-critical tests only** (~30 seconds)
+
 - Safety hooks (dangerous command detection)
 - Hook integration pipeline tests
 - PRP edge case security validation
@@ -84,6 +85,7 @@ git push origin release/v1.2.0
 ```
 
 **CI/CD**: Runs **comprehensive test suite** (~5-7 minutes)
+
 - All security-critical tests
 - Feature reliability tests (TTS providers)
 - Coverage reporting
@@ -123,12 +125,14 @@ gh pr create --base main --title "Release v1.2.0" --body "
 ```
 
 **CI/CD**: Runs **enhanced validation** (~7-10 minutes)
+
 - Complete test suite
 - Security scanning
 - Dependency vulnerability checks
 - Release notes validation
 
 **Deployment**: Automatic on main branch push
+
 - Creates semantic version tag (e.g., v1.2.0-20250109120000)
 - Updates repository badges
 - Generates release notes
@@ -146,39 +150,75 @@ gh pr create --base main --title "Release v1.2.0" --body "
 
 ### Test Priorities
 
-#### 🔴 **High Priority (Always Run)**
-- **Safety hooks**: Dangerous command detection (rm -rf protection)
-- **Hook integration**: End-to-end pipeline validation
-- **PRP security**: Input validation and security checks
-
-#### 🟡 **Medium Priority (Release+ Only)**  
-- **TTS providers**: Multi-provider fallback testing
-- **Feature reliability**: Status lines, output styles
-- **Performance**: Execution time benchmarks
-
-#### 🟢 **Low Priority (Manual/Extended)**
-- **External dependencies**: git, gh command validation
-- **Configuration**: Multiple environment testing
-- **Load testing**: Performance under stress
+For detailed test categories and execution strategy, see [Testing Guide](testing.md#test-categories-and-priorities).
 
 ## Development Best Practices
 
 ### Before You Start
-1. **Read ADRs**: Review [docs/adr/](docs/adr/) for architectural decisions
+
+1. **Read ADRs**: Review [docs/adr/](../adr/) for architectural decisions
 2. **Check CLAUDE.md**: Follow KISS/YAGNI principles
 3. **Review test coverage**: Understand what needs testing
 
 ### During Development
+
 1. **Small commits**: One logical change per commit
 2. **Test locally**: Run `python tests/test_safety_hooks.py` before pushing
 3. **Security first**: Never bypass safety validations
 4. **Document decisions**: Create ADRs for significant choices
 
 ### Before Release
+
 1. **Full test run**: Execute `python tests/run_all_tests.py`
 2. **Manual validation**: Test key user scenarios
 3. **Update documentation**: Keep README.md current
 4. **Version planning**: Follow semantic versioning
+
+### Documentation Standards
+
+For markdown files (`.md`), the project uses automated linting to ensure quality and consistency.
+
+#### Setup (First Time)
+
+```bash
+# Install pre-commit (using UV)
+uv pip install pre-commit
+
+# Install git hooks
+pre-commit install
+
+# Install VS Code extension (recommended)
+# Search for "markdownlint" by David Anson in VS Code Extensions
+```
+
+#### Usage
+
+```bash
+# Automatic: Runs on every commit (fixes issues automatically)
+git commit -m "docs: update API documentation"
+
+# Manual: Check all markdown files
+pre-commit run markdownlint --all-files
+
+# Manual: Check specific file
+markdownlint docs/reference/api.md --fix
+```
+
+#### Standards Enforced
+
+- **File naming**: Use kebab-case (`api-guide.md` not `API_GUIDE.md`)
+- **Exceptions**: `README.md`, `LICENSE`, `CHANGELOG.md` keep their standard names
+- **Link formatting**: `[Setup Guide](setup-guide.md)` not `[here](setup-guide.md)`
+- **Code blocks**: Specify language for syntax highlighting (```python,```bash)
+- **Consistent lists**: Use either `*` or `-` throughout document
+
+#### Configuration
+
+Project uses `.markdownlint.json` with pragmatic rules:
+
+- No line length limits (let editors wrap)
+- Allow HTML when needed
+- Focus on real quality issues, not pedantic formatting
 
 ## Repository Structure
 
@@ -189,10 +229,10 @@ cc-boilerplate/
 │       └── ci-cd.yml           # Branch-specific CI/CD pipeline
 ├── docs/
 │   ├── adr/                    # Architecture Decision Records
-│   │   ├── ADR-001-branching-strategy.md
-│   │   ├── ADR-002-cicd-pipeline.md
-│   │   └── ADR-003-testing-strategy.md
-│   └── DEVELOPMENT.md          # This file
+│   │   ├── adr-001-branching-strategy.md
+│   │   ├── adr-002-cicd-pipeline.md
+│   │   └── adr-003-testing-strategy.md
+│   └── development.md          # This file
 ├── tests/
 │   ├── test_safety_hooks.py    # 🔴 Security critical
 │   ├── test_hook_integration.py # 🔴 Security critical
@@ -205,6 +245,7 @@ cc-boilerplate/
 ## Common Scenarios
 
 ### Hot Fix
+
 ```bash
 # Critical bug found in production
 git checkout main
@@ -221,11 +262,12 @@ gh pr create --base main --title "Hotfix v1.2.1 - Critical security fix"
 ```
 
 ### Multiple Features in Parallel
+
 ```bash
 # Developer A
 git checkout -b feature/tts-enhancement
 
-# Developer B  
+# Developer B
 git checkout -b feature/new-hook
 
 # Both work independently, merge to same release branch
@@ -235,6 +277,7 @@ git merge feature/new-hook
 ```
 
 ### Failed Release Branch
+
 ```bash
 # If release/v1.2.0 tests fail badly
 git checkout main
@@ -250,7 +293,7 @@ git cherry-pick feature/working-feature
 The README badges reflect current status:
 
 - **CI/CD Status**: Overall workflow health
-- **Security Tests**: Safety hook validation status  
+- **Security Tests**: Safety hook validation status
 - **Test Coverage**: Current coverage percentage
 - **Hooks/Agents/Styles**: Static count badges
 - **Release**: Latest version tag
@@ -261,31 +304,62 @@ Update badges by editing the README.md links after repository setup.
 ## Troubleshooting
 
 ### Tests Failing on Feature Branch
+
 - Only security tests run on feature branches
 - Focus on safety hooks and dangerous command detection
 - Check `.env` access patterns and JSON validation
 
 ### Comprehensive Tests Failing on Release
+
 - Review all test categories (security + features)
 - TTS provider tests may fail without API keys (acceptable)
 - Check test timeout limits and performance
 
 ### Enhanced Validation Failing on PR
+
 - Most comprehensive test suite runs
 - Security scanning may flag new vulnerabilities
 - Dependency checks may find outdated packages
 - Manual review may be required
 
 ### Deployment Issues
+
 - Check semantic versioning format
 - Verify git credentials and permissions
 - Review badge update automation
 - Validate release notes generation
 
+## Documentation Guidelines
+
+### File Naming
+
+- Use kebab-case: `user-guide.md` not `USER_GUIDE.md` ([Google style](https://developers.google.com/style/filenames))
+- Exception: Standard files (README.md, LICENSE)
+
+### Structure
+
+- Guides go in `docs/guides/`
+- Reference material in `docs/reference/`
+- ADRs in `docs/adr/`
+
+### Before Adding New Docs
+
+1. Check if existing doc can be improved instead
+2. Ensure proper cross-referencing
+3. Update README.md navigation
+4. Follow single-source-of-truth principle
+
+### Review Checklist
+
+- [ ] Follows naming convention
+- [ ] Added to README navigation
+- [ ] Cross-referenced appropriately
+- [ ] No content duplication
+
 ## Getting Help
 
-1. **Review ADRs**: [docs/adr/](docs/adr/) explains architectural decisions
-2. **Check test docs**: [tests/README.md](../tests/README.md) for detailed test info
+1. **Review ADRs**: [docs/adr/](../adr/) explains architectural decisions
+2. **Check test docs**: [Testing Guide](testing.md) for detailed test info
 3. **KISS/YAGNI guidance**: [CLAUDE.md](../CLAUDE.md) for development principles
 4. **Create issue**: Use GitHub issues for bugs or enhancement requests
 

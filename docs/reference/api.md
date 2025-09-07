@@ -1,4 +1,4 @@
-# DELETE_FILE_CONTENT
+# API Reference
 
 ## Table of Contents
 
@@ -16,11 +16,11 @@ The CC-Boilerplate includes all 8 Claude Code hooks with security-focused enhanc
 
 ```
 1. user_prompt_submit    → Pre-process user input
-2. pre_tool_use         → Security validation before tool execution  
+2. pre_tool_use         → Security validation before tool execution
 3. post_tool_use        → Post-processing and logging
 4. notification         → Custom notifications with TTS
 5. stop                 → Task completion handling
-6. subagent_stop        → Subagent completion announcements  
+6. subagent_stop        → Subagent completion announcements
 7. pre_compact          → Transcript backup before compaction
 8. session_start        → Development context loading
 ```
@@ -30,20 +30,24 @@ The CC-Boilerplate includes all 8 Claude Code hooks with security-focused enhanc
 **Purpose**: Pre-processes user prompts with validation and logging.
 
 **Parameters**:
+
 - `prompt`: User input prompt (string)
 - `--logging-level`: Log verbosity (`debug`, `info`, `warn`, `error`)
 
 **Exit Codes**:
+
 - `0`: Success, continue processing
 - `1`: Validation failed, block prompt
 - `2`: System error
 
 **Usage Example**:
+
 ```bash
 echo '{"prompt": "Hello Claude"}' | uv run .claude/hooks/user_prompt_submit.py
 ```
 
 **Features**:
+
 - Input sanitization and validation
 - Prompt logging with session context
 - User configuration loading
@@ -53,56 +57,47 @@ echo '{"prompt": "Hello Claude"}' | uv run .claude/hooks/user_prompt_submit.py
 **Purpose**: Security validation before tool execution. **SECURITY CRITICAL**.
 
 **Parameters**:
+
 - `tool_name`: Name of tool being executed
 - `parameters`: Tool parameters (JSON object)
 - `--security-level`: Validation strictness (`strict`, `moderate`, `permissive`)
 
 **Exit Codes**:
+
 - `0`: Safe to proceed
 - `1`: **BLOCKED** - Dangerous command detected
 - `2`: Validation error
 
-**Dangerous Command Detection**:
-
-```python
-# Detected patterns include:
-patterns = [
-    r'\brm\s+.*-[a-z]*r[a-z]*f',     # rm -rf variations
-    r'\brm\s+.*-[a-z]*f[a-z]*r',     # rm -fr variations  
-    r'\brm\s+--recursive\s+--force',  # rm --recursive --force
-    r'\.env',                         # .env file access
-    r'rm\s+.*\*',                     # rm with wildcards
-]
-```
+**Dangerous Command Detection**: For complete security patterns and protection details, see [Security Guide](../guides/security.md#blocked-commands).
 
 **Usage Example**:
+
 ```bash
 echo '{"tool_name": "bash", "parameters": {"command": "rm -rf /"}}' | \
   uv run .claude/hooks/pre_tool_use.py
 # Exit code: 1 (BLOCKED)
 ```
 
-**Security Features**:
-- Dangerous rm command detection (30+ patterns)
-- .env file access protection
-- Path traversal validation
-- Command injection prevention
+**Security Features**: For detailed security validation features, see [Security Guide](../guides/security.md#threat-protection).
 
 ### 3. post_tool_use.py
 
 **Purpose**: Post-execution logging and transcript processing.
 
 **Parameters**:
+
 - `tool_name`: Executed tool name
 - `result`: Tool execution result (JSON)
 - `--transcript-format`: Output format (`json`, `markdown`)
 
 **Exit Codes**:
+
 - `0`: Success
 - `1`: Logging failed
 - `2`: Transcript processing error
 
 **Features**:
+
 - Execution result logging
 - Transcript format conversion
 - Performance timing
@@ -113,40 +108,35 @@ echo '{"tool_name": "bash", "parameters": {"command": "rm -rf /"}}' | \
 **Purpose**: Intelligent notifications with TTS provider fallback.
 
 **Parameters**:
+
 - `message`: Notification message
 - `--tts-provider`: Force specific provider (`elevenlabs`, `openai`, `pyttsx3`)
 - `--voice`: Voice selection (provider-specific)
 - `--no-audio`: Disable audio output
 
-**TTS Provider Fallback Logic**:
-```
-1. ElevenLabs (if ELEVENLABS_API_KEY available)
-2. OpenAI (if OPENAI_API_KEY available)  
-3. pyttsx3 (local fallback, always available)
-```
+**TTS Provider Fallback Logic**: For complete TTS provider configuration and fallback details, see [TTS System Reference](../reference/tts-system.md#fallback-logic).
 
 **Usage Example**:
+
 ```bash
 echo '{"message": "Task completed successfully"}' | \
   uv run .claude/hooks/notification.py --tts-provider elevenlabs
 ```
 
-**Features**:
-- Multi-provider TTS fallback
-- Voice customization per provider
-- Audio file generation and playback
-- Notification queuing and batching
+**Features**: For comprehensive TTS features and configuration, see [TTS System Reference](../reference/tts-system.md#system-overview).
 
 ### 5. stop.py
 
 **Purpose**: Task completion handling with AI-generated summaries.
 
 **Parameters**:
+
 - `session_data`: Session context (JSON)
 - `--summary-style`: Summary format (`concise`, `detailed`, `technical`)
 - `--generate-audio`: Create audio summary
 
 **Features**:
+
 - AI-generated completion messages
 - Session context integration
 - Audio summary generation
@@ -157,11 +147,13 @@ echo '{"message": "Task completed successfully"}' | \
 **Purpose**: Subagent completion announcements and handoffs.
 
 **Parameters**:
+
 - `subagent_name`: Name of completed subagent
 - `subagent_result`: Result data from subagent
 - `--handoff-mode`: Next action (`return`, `continue`, `delegate`)
 
 **Features**:
+
 - Subagent result processing
 - Context handoff management
 - Multi-agent workflow coordination
@@ -171,11 +163,13 @@ echo '{"message": "Task completed successfully"}' | \
 **Purpose**: Transcript backup before conversation compaction.
 
 **Parameters**:
+
 - `transcript_data`: Full conversation transcript
 - `--backup-location`: Storage location (`local`, `cloud`)
 - `--compression`: Backup compression (`none`, `gzip`, `lz4`)
 
 **Features**:
+
 - Automatic transcript archiving
 - Configurable backup strategies
 - Compression and storage optimization
@@ -186,11 +180,13 @@ echo '{"message": "Task completed successfully"}' | \
 **Purpose**: Development context loading and session initialization.
 
 **Parameters**:
+
 - `project_path`: Current project directory
 - `--context-level`: Context depth (`minimal`, `standard`, `comprehensive`)
 - `--load-history`: Load previous session data
 
 **Features**:
+
 - Project context detection
 - Git integration and status loading
 - Previous session restoration
@@ -209,12 +205,14 @@ The CC-Boilerplate includes 8 specialized agents with distinct capabilities.
 **Tools**: `Write`, `WebFetch`, `mcp__firecrawl-mcp__firecrawl_scrape`, `MultiEdit`
 
 **Usage Pattern**:
+
 ```
 user: "Create an agent that reviews pull requests for security issues"
 assistant: [Uses meta-agent to generate new PR security review agent]
 ```
 
 **Capabilities**:
+
 - Agent configuration file generation
 - Tool selection and optimization
 - Best practice integration
@@ -227,12 +225,14 @@ assistant: [Uses meta-agent to generate new PR security review agent]
 **Tools**: Universal access (`*`)
 
 **Review Categories**:
+
 - **Security**: Vulnerability detection, dangerous patterns
 - **Quality**: Code style, best practices, maintainability
 - **Performance**: Optimization opportunities, bottlenecks
 - **Architecture**: Design patterns, structure analysis
 
 **Usage Example**:
+
 ```python
 # Automatically triggered after code changes
 def review_criteria():
@@ -250,12 +250,14 @@ def review_criteria():
 **Tools**: `Bash`, `mcp__ElevenLabs__text_to_speech`, `mcp__ElevenLabs__play_audio`
 
 **Usage Pattern**:
+
 ```
 user: "tts summary"
 assistant: [Generates concise audio summary of completed work]
 ```
 
 **Features**:
+
 - Context-aware summarization
 - Multi-language support
 - Voice customization
@@ -268,6 +270,7 @@ assistant: [Generates concise audio summary of completed work]
 **Tools**: `Bash`, `mcp__firecrawl-mcp__firecrawl_search`, `WebFetch`
 
 **Research Areas**:
+
 - LLM developments and releases
 - AI agent architectures
 - Engineering best practices
@@ -282,10 +285,11 @@ assistant: [Generates concise audio summary of completed work]
 **Tools**: Universal access (`*`)
 
 **Test Categories**:
+
 ```python
 test_types = {
     "unit": "Individual component testing",
-    "integration": "Component interaction testing", 
+    "integration": "Component interaction testing",
     "e2e": "End-to-end workflow testing",
     "security": "Security validation testing",
     "performance": "Load and stress testing"
@@ -299,6 +303,7 @@ test_types = {
 **Tools**: Universal access (`*`)
 
 **Research Capabilities**:
+
 - Framework evaluation and comparison
 - Security vulnerability analysis
 - Performance optimization strategies
@@ -311,6 +316,7 @@ test_types = {
 **Tools**: `Read`, `Grep`, `Glob`, `Bash`, `MultiEdit`
 
 **Analysis Output**:
+
 ```python
 coverage_report = {
     "current_coverage": "60%",
@@ -326,6 +332,7 @@ coverage_report = {
 **Tools**: `Read`, `Glob`, `Grep`, `LS`, `Write`, `MultiEdit`
 
 **Documentation Types**:
+
 - API documentation
 - Architecture overviews
 - User guides and tutorials
@@ -335,65 +342,21 @@ coverage_report = {
 
 ### TTS Provider System
 
-#### ElevenLabs TTS (`elevenlabs_tts.py`)
+For comprehensive TTS provider documentation including:
 
-**Parameters**:
-- `--text`: Text to synthesize (required)
-- `--voice-name`: Voice selection (default: `"Adam"`)
-- `--model-id`: ElevenLabs model (default: `"eleven_multilingual_v2"`)
-- `--output-dir`: Audio file output directory
+- Individual provider setup and configuration
+- Parameter details and usage examples
+- Voice selection and customization options
+- Performance characteristics and troubleshooting
 
-**Usage**:
-```bash
-uv run .claude/hooks/utils/tts/elevenlabs_tts.py \
-  --text "Hello world" \
-  --voice-name "Rachel" \
-  --output-dir /tmp
-```
-
-**Features**:
-- High-quality voice synthesis
-- Multiple voice options
-- Multilingual support
-- Custom voice training
-
-#### OpenAI TTS (`openai_tts.py`)
-
-**Parameters**:
-- `--text`: Text to synthesize (required)
-- `--voice`: Voice selection (`alloy`, `echo`, `fable`, `onyx`, `nova`, `shimmer`)
-- `--model`: TTS model (`tts-1`, `tts-1-hd`)
-- `--speed`: Speech speed (0.25 to 4.0)
-
-**Usage**:
-```bash
-uv run .claude/hooks/utils/tts/openai_tts.py \
-  --text "Task completed" \
-  --voice "nova" \
-  --speed 1.2
-```
-
-#### Pyttsx3 TTS (`pyttsx3_tts.py`)
-
-**Parameters**:
-- `--text`: Text to synthesize (required)
-- `--rate`: Speech rate (words per minute)
-- `--voice-id`: System voice identifier
-- `--volume`: Volume level (0.0 to 1.0)
-
-**Usage**:
-```bash
-uv run .claude/hooks/utils/tts/pyttsx3_tts.py \
-  --text "Local TTS working" \
-  --rate 150 \
-  --volume 0.8
-```
+See [TTS System Reference](../reference/tts-system.md).
 
 ### LLM Utility System
 
 #### Anthropic LLM (`anth.py`)
 
 **Capabilities**:
+
 - Claude model integration
 - Context management
 - Response streaming
@@ -402,6 +365,7 @@ uv run .claude/hooks/utils/tts/pyttsx3_tts.py \
 #### OpenAI LLM (`oai.py`)
 
 **Capabilities**:
+
 - GPT model integration
 - Chat completion
 - Function calling
@@ -410,6 +374,7 @@ uv run .claude/hooks/utils/tts/pyttsx3_tts.py \
 #### Ollama LLM (`ollama.py`)
 
 **Capabilities**:
+
 - Local model execution
 - Custom model support
 - Offline operation
@@ -471,7 +436,7 @@ uv run .claude/hooks/utils/tts/pyttsx3_tts.py \
 ELEVENLABS_API_KEY=your_key_here
 OPENAI_API_KEY=your_key_here
 
-# LLM Providers  
+# LLM Providers
 ANTHROPIC_API_KEY=your_key_here
 OLLAMA_HOST=http://localhost:11434
 
@@ -485,12 +450,7 @@ LOG_LEVEL=info
 
 ### Common Exit Codes
 
-- `0`: Success
-- `1`: Validation failed / Security block
-- `2`: System error / Configuration issue
-- `3`: Network/API error
-- `4`: Permission denied
-- `5`: Resource unavailable
+For detailed exit codes and error handling, see [Hooks API Reference](../reference/hooks-api.md#exit-codes-and-error-handling).
 
 ### Error Response Format
 
@@ -543,10 +503,6 @@ LOG_LEVEL=info
 
 ### Security Best Practices
 
-- Always enable `pre_tool_use` security validation
-- Use `strict` security level in production
-- Regularly update dangerous command patterns
-- Monitor hook execution logs for security events
-- Implement proper API key management
+For comprehensive security configuration and best practices, see [Security Guide](../guides/security.md).
 
 This API reference provides complete documentation for integrating and extending the CC-Boilerplate system while maintaining security and reliability.

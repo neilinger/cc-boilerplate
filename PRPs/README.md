@@ -3,6 +3,7 @@
 "Over-specifying what to build while under-specifying the context, and how to build it, is why so many AI-driven coding attempts stall at 80%. A Product Requirement Prompt (PRP) fixes that by fusing the disciplined scope of a classic Product Requirements Document (PRD) with the "context-is-king" mindset of modern prompt engineering."
 
 ## Planning & Roadmap Location
+
 - **Current Roadmap**: Always in main README.md (source of truth)
 - **Feature Planning**: Create new PRP files here
 - **NO separate planning docs** - they just create confusion

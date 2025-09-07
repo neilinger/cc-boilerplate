@@ -18,6 +18,37 @@ Before ANY plan or implementation:
 
 **Remember**: Every unchallenged complexity costs 100x more to fix later.
 
+## ADR vs PRP Guidelines
+
+### When to use ADR (Architecture Decision Record)
+
+- Significant technical choices affecting system structure
+- Technology selection (frameworks, databases, patterns)
+- Cross-cutting concerns (security, performance strategies)
+- Design constraints and principles
+- Focus: WHY and WHAT decisions
+
+### When to use PRP (Product Requirements Process)
+
+- Feature implementation planning
+- Migration and refactoring tasks
+- Step-by-step execution plans
+- Resource allocation and timelines
+- Focus: HOW and WHEN to implement
+
+### MANDATORY: Keep them separate
+
+- ADRs are immutable decision records
+- PRPs are living implementation documents
+- ADR references PRP for implementation
+- PRP references ADR for rationale
+- When in doubt: "Is this architectural (ADR) or tactical (PRP)?"
+
+### Available Commands
+
+- Use `/adr-creator` for architectural decisions
+- Use `/prp-step0-clarify_intent` for implementation planning
+
 ## Documentation Maintenance
 
 **MANDATORY** when changing structure:
@@ -28,21 +59,21 @@ Before ANY plan or implementation:
 
 ## Two Golden Rules - MANDATORY WORKING PRINCIPLE
 
-- **KISS – Keep It Simple, Stupid:**  
+- **KISS – Keep It Simple, Stupid:**
   Use the **easiest** way that works. Fewer parts. Short words. Short functions.
-- **YAGNI – You Aren’t Gonna Need It:**  
+- **YAGNI – You Aren’t Gonna Need It:**
   Don’t build extra stuff “just in case.” Build it **only** when someone actually needs it **now**.
 
 ## How to Work (tiny steps)
 
-1. **Say the goal in one short sentence.**  
+1. **Say the goal in one short sentence.**
    “I need a function that adds two numbers.”
-2. **Pick the simplest path.**  
+2. **Pick the simplest path.**
    Use built-in tools first. No new library unless there’s a clear, current need.
-3. **Make a tiny plan (3 steps max).**  
+3. **Make a tiny plan (3 steps max).**
    List the steps in plain words.
 4. **Build the smallest piece that solves today’s need.**
-5. **Test with one tiny example.**  
+5. **Test with one tiny example.**
    If it works, you’re done. If not, fix the smallest thing.
 6. **Show the result and the test.**
 7. **Stop.** Don’t add features unless asked.
@@ -58,11 +89,11 @@ Before ANY plan or implementation:
 
 ## YAGNI Guardrails (when to say “not now”)
 
-- ❌ “Maybe we’ll need logging, caching, plugins, or config later.”  
+- ❌ “Maybe we’ll need logging, caching, plugins, or config later.”
   ✅ “Add it only when the current task requires it.”
-- ❌ “Let’s support every edge case.”  
+- ❌ “Let’s support every edge case.”
   ✅ “Handle the cases we actually have.”
-- ❌ "Let's make it super fast first."  
+- ❌ "Let's make it super fast first."
   ✅ "Make it correct and simple. Optimize only if it's too slow **now**."
 - ✅ "Found a small bug while working? Fix it now (Boy Scout Rule)"
 
@@ -93,11 +124,11 @@ def **init**(self, strategy=None): ...
 
 # Unneeded classes/strategy for simple addition
 
-## YAGNI (Good):
+## YAGNI (Good)
 
 - “We only need CSV read? Use Python’s csv module.”
 
-## Not YAGNI (Too much):
+## Not YAGNI (Too much)
 
 - “Let’s build a full data pipeline with plugins, caching, and a dashboard”—when we only need to read one CSV once.
 

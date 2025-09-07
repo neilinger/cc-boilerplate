@@ -2,9 +2,11 @@ name: "Planning PRP Template - PRD Generation with Diagrams"
 description: |
 
 ## Purpose
+
 Generate comprehensive Product Requirements Documents (PRDs) with visual diagrams, turning rough ideas into detailed specifications ready for implementation PRPs.
 
 ## Philosophy
+
 1. **Research First**: Gather context before planning
 2. **Visual Thinking**: Use diagrams to clarify concepts
 3. **Validation Built-in**: Include challenges and edge cases
@@ -13,6 +15,7 @@ Generate comprehensive Product Requirements Documents (PRDs) with visual diagram
 ---
 
 ## Initial Concept
+
 $ARGUMENTS
 
 ## Planning Process
@@ -20,18 +23,19 @@ $ARGUMENTS
 ### Phase 1: Idea Expansion & Research
 
 #### Context Gathering
+
 ```yaml
 research_areas:
   market_analysis:
     - competitors: [Research similar solutions]
     - user_needs: [Identify pain points]
     - trends: [Current industry directions]
-  
+
   technical_research:
     - existing_solutions: [How others solve this]
     - libraries: [Available tools/frameworks]
     - patterns: [Common implementation approaches]
-  
+
   internal_context:
     - current_system: [How it works today]
     - constraints: [Technical/business limitations]
@@ -39,6 +43,7 @@ research_areas:
 ```
 
 #### Initial Exploration
+
 ```
 RESEARCH similar solutions:
   - WEB_SEARCH: "{concept} implementation examples"
@@ -54,6 +59,7 @@ ANALYZE existing codebase:
 ### Phase 2: PRD Structure Generation
 
 #### 1. Executive Summary
+
 ```markdown
 ## Problem Statement
 [Clear articulation of the problem being solved]
@@ -68,6 +74,7 @@ ANALYZE existing codebase:
 ```
 
 #### 2. User Stories & Scenarios
+
 ```markdown
 ## Primary User Flow
 \```mermaid
@@ -90,6 +97,7 @@ graph LR
 ```
 
 #### 3. System Architecture
+
 ```markdown
 ## High-Level Architecture
 \```mermaid
@@ -98,17 +106,17 @@ graph TB
         UI[User Interface]
         State[State Management]
     end
-    
+
     subgraph "Backend"
         API[API Layer]
         BL[Business Logic]
         DB[(Database)]
     end
-    
+
     subgraph "External"
         EXT[External Services]
     end
-    
+
     UI --> API
     API --> BL
     BL --> DB
@@ -131,6 +139,7 @@ graph TB
 ```
 
 #### 4. Technical Specifications
+
 ```markdown
 ## API Design
 \```mermaid
@@ -140,7 +149,7 @@ sequenceDiagram
     participant A as API
     participant D as Database
     participant E as External Service
-    
+
     U->>F: Initiates Action
     F->>A: POST /api/endpoint
     A->>D: Query Data
@@ -170,6 +179,7 @@ flowchart TD
 ```
 
 #### 5. Implementation Strategy
+
 ```markdown
 ## Development Phases
 \```mermaid
@@ -178,7 +188,7 @@ graph LR
     B --> C[Integration]
     C --> D[Testing]
     D --> E[Deployment]
-    
+
     A -.- F[Database Schema<br/>API Framework<br/>Authentication]
     B -.- G[Business Logic<br/>API Endpoints<br/>Basic UI]
     C -.- H[External Services<br/>Full UI Integration<br/>Error Handling]
@@ -197,31 +207,33 @@ graph LR
 ### Phase 3: Challenge & Validation
 
 #### Devil's Advocate Analysis
+
 ```yaml
 challenges:
   technical_risks:
     - risk: "Performance at scale"
       mitigation: "Implement caching layer"
-    
+
     - risk: "Third-party API reliability"
       mitigation: "Build fallback mechanisms"
-  
+
   business_risks:
     - risk: "User adoption"
       mitigation: "Phased rollout with feedback loops"
-    
+
     - risk: "Scope creep"
       mitigation: "Strict MVP definition"
-  
+
   edge_cases:
     - scenario: "No network connectivity"
       handling: "Offline mode with sync"
-    
+
     - scenario: "Concurrent updates"
       handling: "Optimistic locking"
 ```
 
 #### Success Criteria
+
 ```markdown
 ## Definition of Done
 - [ ] All user stories implemented
@@ -239,6 +251,7 @@ challenges:
 ### Phase 4: Validation & Output
 
 #### Pre-Implementation Checklist
+
 ```
 VALIDATE assumptions:
   - Technical feasibility confirmed
@@ -254,6 +267,7 @@ REVIEW with stakeholders:
 ```
 
 #### Output Format
+
 The final PRD should be structured as:
 
 1. **Executive Summary** (1 page)
@@ -276,6 +290,7 @@ python validate_prd_structure.py generated_prd.md
 ```
 
 ## Anti-Patterns to Avoid
+
 - ❌ Vague requirements without acceptance criteria
 - ❌ Missing edge cases and error scenarios
 - ❌ Diagrams that don't match the text
@@ -284,6 +299,7 @@ python validate_prd_structure.py generated_prd.md
 - ❌ No success metrics
 
 ## Success Indicators
+
 - ✅ Another developer could implement from this PRD alone
 - ✅ All stakeholders understand the plan
 - ✅ Risks are identified with mitigations
@@ -295,6 +311,7 @@ python validate_prd_structure.py generated_prd.md
 Input: "Build a notification system for our app"
 
 Output would include:
+
 - User flow diagrams for different notification types
 - System architecture showing pub/sub patterns
 - Sequence diagrams for real-time delivery
