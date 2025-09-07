@@ -70,11 +70,11 @@ graph TD
     K --> N[Session End]
     L --> M
     M --> C
-    
+
     O[Context Window Full] --> P[pre_compact]
     P --> Q[Compact Transcript]
     Q --> M
-    
+
     R[Session Start] --> S[session_start]
     S --> A
 ```
@@ -101,6 +101,7 @@ graph TD
 **Execution**: When a new Claude Code session begins.
 
 **Input Format**:
+
 ```json
 {
   "session_id": "string",
@@ -109,17 +110,20 @@ graph TD
 ```
 
 **Command Line Options**:
+
 - `--load-context`: Load development context (git status, TODO files, issues)
 - `--announce`: TTS announcement of session start
 
 **Output**: JSON with optional additional context
 
 **Exit Codes**:
+
 - `0`: Success
 - `1`: Warning (continues execution)
 - `2`: Error (continues execution)
 
 **Key Features**:
+
 - Git status detection (branch, uncommitted changes)
 - GitHub issue loading via `gh` CLI
 - Development context files loading (.claude/CONTEXT.md, TODO.md)
@@ -130,6 +134,7 @@ graph TD
 **Purpose**: Pre-process and validate user prompts before processing.
 
 **Input Format**:
+
 ```json
 {
   "session_id": "string",
@@ -138,17 +143,20 @@ graph TD
 ```
 
 **Command Line Options**:
+
 - `--validate`: Enable prompt validation (blocks dangerous prompts)
 - `--log-only`: Logging only, no validation
 - `--store-last-prompt`: Store prompt for status display
 - `--name-agent`: Generate agent name for session
 
 **Exit Codes**:
+
 - `0`: Success, continue processing
 - `1`: Warning (continues)
 - `2`: Block prompt with error message
 
 **Key Features**:
+
 - Prompt validation against blocked patterns
 - Session data management (JSON structure)
 - Agent name generation via LLM providers
@@ -159,6 +167,7 @@ graph TD
 **Purpose**: Security validation and logging before tool execution.
 
 **Input Format**:
+
 ```json
 {
   "tool_name": "string",
@@ -170,6 +179,7 @@ graph TD
 ```
 
 **Exit Codes**:
+
 - `0`: Allow tool execution
 - `2`: Block tool execution with error message
 
@@ -180,6 +190,7 @@ graph TD
 **Purpose**: Log and post-process tool execution results.
 
 **Input Format**:
+
 ```json
 {
   "tool_name": "string",
@@ -191,6 +202,7 @@ graph TD
 ```
 
 **Features**:
+
 - Comprehensive execution logging
 - Performance metrics collection
 - Error tracking and analysis
@@ -201,6 +213,7 @@ graph TD
 **Purpose**: Handle user notifications with intelligent TTS announcements.
 
 **Input Format**:
+
 ```json
 {
   "message": "string",
@@ -210,14 +223,17 @@ graph TD
 ```
 
 **Command Line Options**:
+
 - `--notify`: Enable TTS notifications
 
 **TTS Provider Selection**:
+
 1. **ElevenLabs** (if `ELEVENLABS_API_KEY` available)
-2. **OpenAI TTS** (if `OPENAI_API_KEY` available)  
+2. **OpenAI TTS** (if `OPENAI_API_KEY` available)
 3. **pyttsx3** (local fallback, always available)
 
 **Features**:
+
 - Intelligent TTS provider fallback
 - Engineer name personalization (30% probability)
 - Message filtering (skips generic "waiting for input")
@@ -228,6 +244,7 @@ graph TD
 **Purpose**: Handle task completion with announcements and transcript export.
 
 **Input Format**:
+
 ```json
 {
   "session_id": "string",
@@ -237,10 +254,12 @@ graph TD
 ```
 
 **Command Line Options**:
+
 - `--chat`: Export transcript to `logs/chat.json`
 - `--notify`: TTS completion announcement
 
 **Features**:
+
 - LLM-generated completion messages (OpenAI → Anthropic → Ollama → fallback)
 - Transcript export from JSONL to JSON
 - Multi-provider TTS announcements
@@ -255,6 +274,7 @@ graph TD
 **Command Line Options**: Same as `stop.py`
 
 **Features**:
+
 - Fixed "Subagent Complete" message
 - Same transcript export capability as main stop hook
 - TTS announcement support
@@ -264,6 +284,7 @@ graph TD
 **Purpose**: Backup transcripts before context window compaction.
 
 **Input Format**:
+
 ```json
 {
   "session_id": "string",
@@ -274,10 +295,12 @@ graph TD
 ```
 
 **Command Line Options**:
+
 - `--backup`: Create backup of transcript before compaction
 - `--verbose`: Print detailed compaction information
 
 **Features**:
+
 - Automatic transcript backup with timestamps
 - Manual vs auto-compaction detection
 - Custom instruction logging
@@ -300,6 +323,7 @@ All hooks receive JSON data via stdin:
 ### Standard Output Formats
 
 #### Success (Exit Code 0)
+
 ```json
 {
   "hookSpecificOutput": {
@@ -311,6 +335,7 @@ All hooks receive JSON data via stdin:
 ```
 
 #### Error/Block (Exit Code 2)
+
 ```bash
 # stderr output
 BLOCKED: Dangerous rm command detected and prevented
@@ -360,6 +385,7 @@ except Exception:
 ### Timeout Handling
 
 Hooks have implicit timeouts:
+
 - **Network operations**: 5-10 seconds
 - **LLM calls**: 5-10 seconds
 - **TTS generation**: 10 seconds
@@ -370,13 +396,14 @@ Hooks have implicit timeouts:
 ### Environment Variables
 
 #### Global Hook Configuration
+
 ```bash
 # Logging
 HOOK_DEBUG=true                    # Enable debug output
 HOOK_VERBOSE=true                  # Verbose logging
 HOOK_LOG_LEVEL=info               # debug|info|warn|error
 
-# TTS Configuration  
+# TTS Configuration
 TTS_PROVIDER=auto                 # auto|elevenlabs|openai|pyttsx3
 TTS_FALLBACK_ENABLED=true         # Enable provider fallback
 TTS_TIMEOUT=10                    # TTS generation timeout
@@ -388,6 +415,7 @@ ENGINEER_NAME="YourName"          # Used in TTS messages (30% chance)
 #### Provider-Specific Configuration
 
 **ElevenLabs**:
+
 ```bash
 ELEVENLABS_API_KEY=your_key
 ELEVENLABS_VOICE_NAME=Rachel
@@ -397,6 +425,7 @@ ELEVENLABS_SIMILARITY_BOOST=0.75
 ```
 
 **OpenAI**:
+
 ```bash
 OPENAI_API_KEY=your_key
 OPENAI_TTS_VOICE=nova
@@ -405,6 +434,7 @@ OPENAI_TTS_SPEED=1.0
 ```
 
 **Ollama**:
+
 ```bash
 OLLAMA_MODEL=gpt-oss:20b          # Default model
 ```
@@ -412,11 +442,13 @@ OLLAMA_MODEL=gpt-oss:20b          # Default model
 ### Hook-Specific Configuration
 
 **session_start.py**:
+
 - Reads context files: `.claude/CONTEXT.md`, `TODO.md`, `.claude/TODO.md`
 - Uses `gh` CLI for GitHub integration
 - Loads development context automatically
 
 **pre_tool_use.py**:
+
 - Security patterns are hardcoded for safety
 - Logs all tool attempts for audit
 - Cannot be disabled (critical security feature)
@@ -456,17 +488,17 @@ def main():
     try:
         # Read JSON input
         input_data = json.load(sys.stdin)
-        
+
         # Hook logic here
         session_id = input_data.get('session_id', 'unknown')
-        
+
         # Log the event
         log_dir = Path('logs')
         log_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # Always exit 0 for graceful handling
         sys.exit(0)
-        
+
     except Exception:
         # Never break Claude Code
         sys.exit(0)
@@ -495,17 +527,20 @@ tail -f logs/*.json | jq '.'
 ### Built-in Security Features
 
 #### Command Injection Prevention
+
 - Comprehensive `rm -rf` detection with regex patterns
 - Path traversal protection (`../`, root directory)
 - Environment file protection (`.env` access blocking)
 - Wildcard pattern protection in destructive contexts
 
 #### API Key Protection
+
 - Environment file access prevention
 - API keys never logged in plaintext
 - Secure credential handling in utility scripts
 
 #### File System Protection
+
 - Recursive deletion blocking
 - System directory protection
 - Backup creation before destructive operations
@@ -513,12 +548,14 @@ tail -f logs/*.json | jq '.'
 ### Security Best Practices
 
 #### Hook Development
+
 - **Never trust user input**: Always validate and sanitize
 - **Fail securely**: Exit with code 0 on errors to avoid breaking Claude
 - **Log security events**: All blocked operations should be logged
 - **Use allowlists**: Prefer allowlists over blocklists for security
 
 #### Environment Security
+
 - Store API keys in `.env` files (never commit)
 - Use `.env.sample` for templates
 - Restrict file permissions on sensitive files
@@ -545,11 +582,13 @@ grep "authentication\|api.*error\|unauthorized" logs/*.json
 #### Issue 1: Hook Not Executing
 
 **Symptoms**:
+
 - Expected hook behavior not occurring
 - No log files generated
 - Silent failures
 
 **Diagnosis**:
+
 ```bash
 # Test hook directly
 echo '{"test": true}' | uv run .claude/hooks/session_start.py --verbose
@@ -562,6 +601,7 @@ uv --version
 ```
 
 **Solutions**:
+
 - Ensure hooks are executable: `chmod +x .claude/hooks/*.py`
 - Verify UV is installed and accessible
 - Check Python dependencies in script headers
@@ -569,10 +609,12 @@ uv --version
 #### Issue 2: TTS Not Working
 
 **Symptoms**:
+
 - No audio output from notification/stop hooks
 - Silent completion announcements
 
 **Diagnosis**:
+
 ```bash
 # Test TTS providers individually
 uv run .claude/hooks/utils/tts/pyttsx3_tts.py "test"
@@ -585,6 +627,7 @@ echo "ElevenLabs: ${ELEVENLABS_API_KEY:0:10}..."
 ```
 
 **Solutions**:
+
 - Install system TTS: `pyttsx3` should always work as fallback
 - Configure at least one API key for premium TTS
 - Check network connectivity for API-based TTS
@@ -592,10 +635,12 @@ echo "ElevenLabs: ${ELEVENLABS_API_KEY:0:10}..."
 #### Issue 3: Security Hook Blocking Valid Commands
 
 **Symptoms**:
+
 - Legitimate commands being blocked
 - `pre_tool_use.py` returning exit code 2 incorrectly
 
 **Diagnosis**:
+
 ```bash
 # Test specific command patterns
 echo '{"tool_name": "Bash", "tool_input": {"command": "your_command_here"}}' | \
@@ -606,6 +651,7 @@ grep -n "patterns\|blocked" .claude/hooks/pre_tool_use.py
 ```
 
 **Solutions**:
+
 - Review and adjust security patterns in `pre_tool_use.py`
 - Add specific allowlists for legitimate use cases
 - Test command variations to find safe alternatives
@@ -613,10 +659,12 @@ grep -n "patterns\|blocked" .claude/hooks/pre_tool_use.py
 #### Issue 4: Session Context Not Loading
 
 **Symptoms**:
+
 - Missing development context at session start
 - No git status or GitHub issues loaded
 
 **Diagnosis**:
+
 ```bash
 # Test context loading components
 git rev-parse --abbrev-ref HEAD
@@ -626,6 +674,7 @@ ls -la .claude/CONTEXT.md TODO.md .claude/TODO.md
 ```
 
 **Solutions**:
+
 - Install `gh` CLI: `brew install gh` or equivalent
 - Ensure git repository is properly initialized
 - Create context files as needed

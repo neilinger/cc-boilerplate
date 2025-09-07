@@ -18,9 +18,9 @@ The cc-boilerplate project implements a **priority-based testing strategy** with
 
 ### 🔴 High Priority (Security Critical - Always Run)
 
-**Purpose**: Prevent security vulnerabilities and system failures  
-**Execution**: All branches, all contexts, CI/CD mandatory  
-**Timeout**: <30 seconds total  
+**Purpose**: Prevent security vulnerabilities and system failures
+**Execution**: All branches, all contexts, CI/CD mandatory
+**Timeout**: <30 seconds total
 **Success Criteria**: 100% pass rate required for any deployment
 
 **Test Suites**:
@@ -47,14 +47,14 @@ The cc-boilerplate project implements a **priority-based testing strategy** with
 
 ### 🟡 Medium Priority (Feature Reliability - Release Testing)
 
-**Purpose**: Validate feature functionality and user experience  
-**Execution**: Release branches, main branch, PR to main  
-**Timeout**: <90 seconds total  
+**Purpose**: Validate feature functionality and user experience
+**Execution**: Release branches, main branch, PR to main
+**Timeout**: <90 seconds total
 **Success Criteria**: 95% pass rate, failures documented but not blocking
 
 **Test Suites**:
 
-- **TTS Providers** (`test_tts_providers.py`)  
+- **TTS Providers** (`test_tts_providers.py`)
   For TTS provider details and fallback logic, see [TTS System Reference](../reference/tts-system.md#fallback-logic).
 
 - **Integration Testing**
@@ -67,9 +67,9 @@ The cc-boilerplate project implements a **priority-based testing strategy** with
 
 ### 🟢 Low Priority (Extended Validation - Release Only)
 
-**Purpose**: Comprehensive system validation and edge case coverage  
-**Execution**: Release branches only, manual testing  
-**Timeout**: <180 seconds total  
+**Purpose**: Comprehensive system validation and edge case coverage
+**Execution**: Release branches only, manual testing
+**Timeout**: <180 seconds total
 **Success Criteria**: Best effort, failures inform improvement backlog
 
 **Test Areas**:
@@ -90,8 +90,8 @@ The cc-boilerplate project implements a **priority-based testing strategy** with
 
 ### 🔵 Manual Priority (Human Validation)
 
-**Purpose**: User experience and integration validation  
-**Execution**: Before major releases, manual only  
+**Purpose**: User experience and integration validation
+**Execution**: Before major releases, manual only
 **Timeline**: As needed
 
 **Test Areas**:
@@ -176,7 +176,7 @@ coverage html  # Generate HTML report
    ```bash
    # Run security tests after each significant change
    python3 tests/test_safety_hooks.py
-   
+
    # Test specific functionality being developed
    python3 tests/test_[relevant_module].py
    ```
@@ -359,7 +359,7 @@ tests/
 **Performance Requirements**:
 
 - **High Priority**: Must complete in <30 seconds total
-- **Medium Priority**: Must complete in <90 seconds total  
+- **Medium Priority**: Must complete in <90 seconds total
 - **Low Priority**: Must complete in <180 seconds total
 - **CI Job Timeout**: 5-20 minutes depending on branch type
 
@@ -474,7 +474,7 @@ python3 tests/run_all_tests.py
    ```bash
    # Run specific failing test
    python3 tests/test_failing_module.py -v
-   
+
    # Enable debug output
    DEBUG_TESTS=true python3 tests/test_failing_module.py
    ```
@@ -484,7 +484,7 @@ python3 tests/run_all_tests.py
    ```bash
    # Validate test environment
    python3 tests/test_base.py
-   
+
    # Check dependencies
    uv pip list
    ```
@@ -501,7 +501,7 @@ python3 tests/run_all_tests.py
 
 1. **Follow Test Hierarchy**:
    - Security tests → High priority
-   - Feature tests → Medium priority  
+   - Feature tests → Medium priority
    - Performance tests → Low priority
 
 2. **Use Descriptive Names**:

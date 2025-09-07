@@ -30,7 +30,7 @@ description: |
 **User Journey**:
 
 1. Land on README.md
-2. See clear documentation sections  
+2. See clear documentation sections
 3. Follow links to specific guides
 4. Find information without duplication or confusion
 
@@ -79,11 +79,11 @@ Reorganize existing documentation files to match the structure defined in [adr-0
 
 ```text
 docs/
-├── adr/                    # Architecture Decision Records  
+├── adr/                    # Architecture Decision Records
 │   └── adr-*.md           # Numbered ADRs (kebab-case)
 ├── guides/                 # How-to guides
 │   ├── development.md      # Development workflow
-│   ├── testing.md          # Testing guide  
+│   ├── testing.md          # Testing guide
 │   ├── security.md         # Security practices
 │   └── branch-protection.md # Branch protection setup
 ├── reference/              # API and technical reference
@@ -112,7 +112,7 @@ mkdir -p docs/guides docs/reference
 ```bash
 # Move and rename files using git to preserve history
 git mv docs/BRANCH_PROTECTION.md docs/guides/branch-protection.md
-git mv docs/DEVELOPMENT.md docs/guides/development.md  
+git mv docs/DEVELOPMENT.md docs/guides/development.md
 git mv docs/SECURITY.md docs/guides/security.md
 git mv docs/TROUBLESHOOTING.md docs/troubleshooting.md
 git mv docs/REFERENCE.md docs/reference/index.md
@@ -155,7 +155,7 @@ Add comprehensive documentation section:
 - [Setup Guide](setup.md) - Get cc-boilerplate running
 - [Development Workflow](docs/guides/development.md) - Contributing guidelines
 
-### Core Guides  
+### Core Guides
 - [Security Features](docs/guides/security.md) - Security hooks and validation
 - [Testing Strategy](docs/guides/testing.md) - Comprehensive testing approach
 - [Branch Protection](docs/guides/branch-protection.md) - Repository protection setup
@@ -164,7 +164,7 @@ Add comprehensive documentation section:
 - [Hooks API](docs/reference/hooks-api.md) - Technical hook system reference
 - [Troubleshooting](docs/troubleshooting.md) - Common issues and fixes
 
-### Architecture  
+### Architecture
 - [All ADRs](docs/adr/) - Architecture decision records
 - [adr-001: Branching Strategy](docs/adr/adr-001-branching-strategy.md)
 - [adr-004: Documentation Standards](docs/adr/adr-004-documentation-standards.md)
@@ -198,7 +198,7 @@ Add documentation guidelines section:
 
 ### Structure
 - Guides go in `docs/guides/`
-- Reference material in `docs/reference/`  
+- Reference material in `docs/reference/`
 - ADRs in `docs/adr/`
 
 ### Before Adding New Docs
@@ -210,7 +210,7 @@ Add documentation guidelines section:
 ### Review Checklist
 - [ ] Follows naming convention
 - [ ] Added to README navigation
-- [ ] Cross-referenced appropriately  
+- [ ] Cross-referenced appropriately
 - [ ] No content duplication
 ```
 
@@ -224,10 +224,10 @@ For future PRs involving documentation changes.
 
 1. Clone fresh repository
 2. Check all links from README.md work
-3. Verify internal cross-references  
+3. Verify internal cross-references
 4. Test that moved files don't break external references
 
-### Content Validation  
+### Content Validation
 
 1. Ensure no content was lost during moves
 2. Verify consolidated content maintains all information
@@ -242,7 +242,7 @@ For future PRs involving documentation changes.
 ## Success Metrics
 
 - **Technical**: 0 broken internal links
-- **Structure**: 100% files follow kebab-case naming convention  
+- **Structure**: 100% files follow kebab-case naming convention
 - **Navigation**: Complete documentation index in README
 - **Governance**: Development guide includes documentation standards
 - **Quality**: No duplicate content between files
@@ -266,7 +266,7 @@ If issues arise:
 ## Timeline
 
 - **Phase 1** (File moves): 1-2 hours
-- **Phase 2** (Content consolidation): 2-3 hours  
+- **Phase 2** (Content consolidation): 2-3 hours
 - **Phase 3** (Navigation): 1-2 hours
 - **Phase 4** (Governance): 1 hour
 - **Validation**: 1 hour
