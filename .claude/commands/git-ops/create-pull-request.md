@@ -6,6 +6,16 @@ Create a well-structured pull request following the Release Flow branching strat
 
 $ARGUMENTS
 
+## Usage - Context Aware
+
+This command automatically detects your current branch and creates the appropriate PR:
+
+- **From feature/* branch** → Creates PR to release branch
+- **From release/* branch** → Creates PR to main (completes release)
+- **From hotfix/* branch** → Creates PR to main (emergency fix)
+
+Simply run the command from whichever branch you're currently on. No need to switch branches.
+
 ## Release Flow Process
 
 Follows the workflow: `feature/* → release/* → main`
@@ -284,10 +294,26 @@ EOF
 
    # Link to related issues/PRPs
    echo "PR created successfully!"
-   echo "Don't forget to:"
+   echo ""
+   echo "🤖 GitHub Claude Review Options:"
+   echo "Copy one of these commands to your PR for AI review:"
+   echo ""
+   echo "Comprehensive review:"
+   echo "@claude Please review this PR comprehensively for security, KISS/YAGNI compliance, and architectural alignment"
+   echo ""
+   echo "Focused reviews:"
+   echo "@claude Review for security vulnerabilities and safety"
+   echo "@claude Validate KISS/YAGNI principles and code complexity"
+   echo "@claude Check adherence to ADR-001 through ADR-005"
+   echo ""
+   echo "Quick review:"
+   echo "@claude Quick review please"
+   echo ""
+   echo "📋 Don't forget to:"
    echo "- Link related issues in PR description"
    echo "- Request appropriate reviewers"
    echo "- Monitor CI/CD pipeline status"
+   echo "- Consider GitHub Claude review for comprehensive validation"
    ```
 
 ## Release Flow Best Practices
