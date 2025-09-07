@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-# MANDATORY VALIDATION PROTOCOL
+## MANDATORY VALIDATION PROTOCOL
 
 **CRITICAL**: Being "nice" by not challenging ideas WASTES user time and money. Harsh validation is kindness.
 
@@ -122,7 +122,7 @@ class Adder:
 def **init**(self, strategy=None): ...
 ```
 
-# Unneeded classes/strategy for simple addition
+## Unneeded classes/strategy for simple addition
 
 ## YAGNI (Good)
 
@@ -147,3 +147,48 @@ If still stuck:
 - Write the test first, then the smallest code to pass it.
 
 **Remember:** Small + clear + working now > big + clever + maybe useful later.
+
+## GitHub Claude Review Integration
+
+**MANDATORY**: When assisting with git operations, always surface GitHub review options without forcing them.
+
+### When to Mention GitHub Claude Review
+
+1. **During Commits** (`/smart-commit`):
+   - Run local security tests first (fast feedback)
+   - Show GitHub review commands for comprehensive validation
+   - Let user decide timing (now vs after PR)
+
+2. **After PR Creation** (`/create-pull-request`):
+   - Always provide copy-paste @claude commands
+   - Offer comprehensive and focused review options
+   - Reference our ADRs and KISS/YAGNI principles
+
+3. **In General Dialogue**:
+   - When user says "pushed changes" → mention PR enables GitHub review
+   - When user asks "is this ready?" → suggest both local tests and GitHub validation
+   - For releases → recommend both local AND GitHub comprehensive review
+
+### GitHub Review Command Templates
+
+**Comprehensive:**
+`@claude Please review this PR comprehensively for security, KISS/YAGNI compliance, and architectural alignment`
+
+**Security Focus:**
+`@claude Review for security vulnerabilities and safety`
+
+**Architectural:**
+`@claude Check adherence to ADR-001 through ADR-005`
+
+**Quick:**
+`@claude Quick review please`
+
+### Integration Guidelines
+
+- **Always provide options, never force**
+- **Local first for speed, GitHub for comprehensiveness**
+- **Show exact commands to copy-paste**
+- **Mention benefits: security validation, KISS/YAGNI compliance, ADR adherence**
+- **Respect user choice - some prefer local, some prefer GitHub delegation**
+
+This ensures comprehensive validation options are always available without adding complexity to the workflow.

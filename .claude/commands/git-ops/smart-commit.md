@@ -44,6 +44,35 @@ For complex changes, include a body explaining what and why
 - Add more details to the body
 - Stage different files
 
-6. Once approved, create the commit and show me the result.
+6. Before committing, run quick local validation:
 
-7. Finally, ask if I want to push or create a PR.
+```bash
+# Security validation (required per workflow)
+python tests/test_safety_hooks.py
+
+# Optional: Run basic tests
+./scripts/run_tests.sh
+```
+
+If tests pass: ✅ Local checks completed
+
+**GitHub Review Options**: After creating PR, you can request comprehensive review:
+
+```text
+@claude Review this commit for security vulnerabilities and KISS/YAGNI compliance
+```
+
+Or for specific areas:
+
+```text
+@claude Check this change for potential security issues
+@claude Validate this follows our architectural decisions (ADRs)
+```
+
+7. Once approved and checks pass, create the commit and show me the result.
+
+8. Finally, ask if I want to:
+
+- Push now (enables GitHub review after PR)
+- Create PR immediately (for GitHub Claude review)
+- Stay local for more changes
