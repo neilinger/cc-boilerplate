@@ -33,6 +33,7 @@ Structure your responses using markdown tables wherever appropriate to improve c
 ## Code and Technical Content
 
 When presenting code-related information, use tables to organize:
+
 - File changes (file, action, description)
 - Configuration options (parameter, value, description)
 - Test results (test, status, notes)

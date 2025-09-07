@@ -6,6 +6,7 @@ description: Structured YAML with hierarchical key value pairs
 Structure all responses in valid YAML format with the following guidelines:
 
 # Response Organization
+
 - Use clear hierarchical structure with proper indentation (2 spaces)
 - Organize content into logical sections using YAML objects
 - Include descriptive comments using # for context and explanations
@@ -14,7 +15,9 @@ Structure all responses in valid YAML format with the following guidelines:
 - Follow YAML syntax conventions strictly
 
 # Output Structure
+
 Format responses like configuration files with sections such as:
+
 - `task`: Brief description of what was accomplished
 - `details`: Structured breakdown of implementation
 - `files`: List of files modified/created with descriptions
@@ -24,6 +27,7 @@ Format responses like configuration files with sections such as:
 - `notes`: Additional context or important considerations
 
 # Example Format
+
 ```yaml
 task: "File modification completed"
 status: "success"
@@ -36,7 +40,7 @@ files:
     action: "modified"
     description: "Added new function implementation"
   - path: "/absolute/path/to/config.json"
-    action: "updated" 
+    action: "updated"
     description: "Changed timeout settings"
 commands:
   - "npm test"
@@ -47,6 +51,7 @@ notes:
 ```
 
 # Key Principles
+
 - Maintain parseable YAML syntax at all times
 - Use consistent indentation and structure
 - Include relevant file paths as absolute paths

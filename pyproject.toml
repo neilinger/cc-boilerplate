@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cc-boilerplate"
+version = "0.1.0"
+description = "Claude Code Boilerplate - A comprehensive project setup with hooks, PRP system, and testing infrastructure"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+]
+
+# No external dependencies - all tests use standard library only
+dependencies = []
+
+[project.optional-dependencies]
+dev = []
+
+[tool.setuptools.packages.find]
+# Only include actual Python packages, exclude directories like logs, PRPs, output
+exclude = ["logs*", "PRPs*", "output*", "docs*", ".github*", ".claude*", ".serena*", "scripts*"]
+
+[tool.uv]
+dev-dependencies = []

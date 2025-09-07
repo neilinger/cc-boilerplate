@@ -116,3 +116,5 @@ extras/
 
 # Claude Code data
 .claude/data/
+# Serena MCP memories (should not be version controlled)
+.serena/

@@ -13,6 +13,7 @@ Update or add custom key-value pairs to a session's status line data, enabling d
 ## Instructions
 
 Update the session JSON file at `.claude/data/sessions/{session_id}.json` by:
+
 1. Locating the correct session file based on the provided session_id
 2. Loading the existing JSON data
 3. Creating an "extras" object if it doesn't exist
@@ -32,6 +33,7 @@ Update the session JSON file at `.claude/data/sessions/{session_id}.json` by:
 ## Report
 
 Report the following:
+
 - Session ID that was updated
 - Key that was modified
 - Previous value (if it existed)
@@ -39,6 +41,7 @@ Report the following:
 - Full path to the updated session file
 
 Example usage:
+
 ```
 /update_status_line 4c932bd7-ee06-46e3-b26b-f32f52cc0862 project myapp
 /update_status_line 4c932bd7-ee06-46e3-b26b-f32f52cc0862 status debugging

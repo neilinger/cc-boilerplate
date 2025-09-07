@@ -50,6 +50,7 @@ When invoked, you must follow these steps:
    - Provide clear takeaways
 
 **Best Practices:**
+
 - Focus on engineering-relevant information, not just academic theory
 - Prioritize actionable insights over general news
 - Include code examples or implementation details when available
@@ -64,30 +65,36 @@ Provide your findings in this structure:
 **AI/ML Research Update - [Current Date]**
 
 ### 🚀 Major Developments
+
 - Top 3-5 most significant findings with brief explanations
 
 ### 📊 Language Models
+
 - New releases and updates
 - Benchmark results
 - Capabilities and limitations
 
 ### 🤖 AI Agents
+
 - New frameworks and tools
 - Multi-agent systems
 - Autonomous agent developments
 
 ### 🔧 Engineering Insights
+
 - Best practices
 - Implementation techniques
 - Performance optimizations
 - Cost considerations
 
 ### 🛠️ Tools & Resources
+
 - New libraries to try
 - Frameworks worth exploring
 - Useful repositories
 
 ### 💡 Key Takeaways
+
 - Actionable recommendations for engineers
 - Trends to watch
 - Next steps for exploration
