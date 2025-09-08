@@ -45,7 +45,7 @@ def main():
         from elevenlabs import ElevenLabs, play
 
         # Initialize client
-        elevenlabs = ElevenLabs(api_key=api_key)
+        client = ElevenLabs(api_key=api_key)
 
         print("🎙️  ElevenLabs Turbo v2.5 TTS")
         print("=" * 40)
@@ -61,10 +61,11 @@ def main():
 
         try:
             # Generate and play audio directly
-            audio = elevenlabs.generate(
+            audio = client.text_to_speech.convert(
                 text=text,
-                voice=os.getenv('ELEVENLABS_VOICE_ID') or "Adam",  # Default to Adam if no voice specified
-                model="eleven_turbo_v2_5"
+                voice_id=os.getenv('ELEVENLABS_VOICE_ID') or "JBFqnCBsd6RMkjVDRZzb",  # Default to Adam's voice ID
+                model_id="eleven_turbo_v2_5",
+                output_format="mp3_44100_128"
             )
 
             play(audio)
