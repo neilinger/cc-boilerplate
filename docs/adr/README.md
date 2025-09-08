@@ -11,6 +11,7 @@ This directory contains Architecture Decision Records for the cc-boilerplate pro
 | [ADR-003](adr-003-testing-strategy.md) | Priority-Based Testing Strategy | Accepted | 2025-01-09 |
 | [ADR-004](adr-004-documentation-standards.md) | Documentation Standards and Organization | Accepted | 2025-01-09 |
 | [ADR-005](adr-005-adr-prp-separation.md) | ADR vs PRP Separation of Concerns | Accepted | 2025-01-09 |
+| [ADR-006](adr-006-issue-management-process.md) | Issue Management Process | Accepted | 2025-09-07 |
 
 ## What are ADRs?
 
