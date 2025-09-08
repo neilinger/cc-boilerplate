@@ -42,7 +42,8 @@ def main():
         sys.exit(1)
 
     try:
-        from elevenlabs import ElevenLabs, play
+        import elevenlabs
+        from elevenlabs import ElevenLabs
 
         # Initialize client
         client = ElevenLabs(api_key=api_key)
@@ -68,7 +69,7 @@ def main():
                 output_format="mp3_44100_128"
             )
 
-            play(audio)
+            elevenlabs.play(audio)
             print("✅ Playback complete!")
 
         except Exception as e:
