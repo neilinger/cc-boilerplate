@@ -43,11 +43,18 @@ echo "🔍 GitHub Maintenance Check Report"
 echo "================================="
 echo ""
 
-# Check for unlabeled issues
+# Check for all open issues (maintenance needed regardless of labels)
+OPEN_ISSUES=$(gh issue list --json number | jq '. | length')
+if [ "$OPEN_ISSUES" -gt 0 ]; then
+    echo "📋 Open issues: $OPEN_ISSUES"
+    gh issue list --json number,title,labels --jq '.[] | "  - #\(.number): \(.title)" + (if (.labels | length) > 0 then " [" + (.labels | map(.name) | join(", ")) + "]" else " [unlabeled]" end)'
+    echo ""
+fi
+
+# Check for unlabeled issues specifically
 UNLABELED=$(gh issue list --json number,title,labels --jq '.[] | select(.labels | length == 0) | .number' | wc -l | xargs)
 if [ "$UNLABELED" -gt 0 ]; then
-    echo "📝 Issues needing labels: $UNLABELED"
-    gh issue list --json number,title,labels --jq '.[] | select(.labels | length == 0) | "  - #\(.number): \(.title)"'
+    echo "🏷️ Issues needing labels: $UNLABELED"
     echo ""
 fi
 
@@ -85,7 +92,7 @@ if [ "$APPROVED" -gt 0 ]; then
 fi
 
 # Summary
-TOTAL_ITEMS=$((UNLABELED + STALE + AWAITING_REVIEW + DRAFTS + APPROVED))
+TOTAL_ITEMS=$((OPEN_ISSUES + STALE + AWAITING_REVIEW + DRAFTS + APPROVED))
 if [ "$TOTAL_ITEMS" -eq 0 ]; then
     echo "🎉 All clean! No maintenance items found."
 else
