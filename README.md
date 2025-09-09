@@ -140,6 +140,7 @@ cc-boilerplate/
 ├── PRPs/               # Product Requirements Process templates
 ├── scripts/            # Validation utilities (KISS/YAGNI)
 ├── tests/              # Security-critical functionality tests
+│   └── medium_priority/ # Feature reliability tests
 ├── CLAUDE.md           # KISS/YAGNI development principles
 └── setup.sh            # Project setup script
 ```
