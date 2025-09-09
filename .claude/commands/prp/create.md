@@ -76,7 +76,13 @@ After research completion, create comprehensive PRP writing plan using TodoWrite
 
 ## Output
 
-Save as: `PRPs/{feature-name}.md`
+Save as: `PRPs/prp-{next-sequence-number}-{feature-name}.md`
+
+**Naming Pattern**: prp-XXX-feature-name.md where:
+
+- XXX is a 3-digit sequence number (001, 002, 003...)
+- feature-name is a kebab-case description of the feature goal
+- Example: `prp-001-documentation-migration.md`, `prp-002-github-maintenance-check.md`
 
 ## PRP Quality Gates
 
