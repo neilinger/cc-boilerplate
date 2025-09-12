@@ -78,6 +78,11 @@ After research completion, create comprehensive PRP writing plan using TodoWrite
 
 Save as: `PRPs/{feature-name}.md`
 
+**IMPORTANT**: When creating the PRP from the template, automatically:
+1. Set `Status: PROPOSED` 
+2. Set `Status_Date:` to today's date (YYYY-MM-DD format)
+3. Leave `Status_Note:` empty unless there's specific context to add
+
 ## PRP Quality Gates
 
 ### Context Completeness Check

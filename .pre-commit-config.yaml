@@ -11,3 +11,13 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
         exclude: '\.md$'  # Let markdownlint handle markdown files
+  # Local hooks for project-specific checks
+  - repo: local
+    hooks:
+      - id: check-prp-status
+        name: Check for IN_PROGRESS PRPs
+        entry: python scripts/check_prp_status.py
+        language: python
+        files: ^PRPs/.*\.md$
+        pass_filenames: true
+        verbose: true
