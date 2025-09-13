@@ -26,6 +26,12 @@ else
     exit 1
 fi
 
+command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1 || {
+    echo "⚠️  Warning: Python is not installed."
+    echo "Some features (PRP status checking) will not work without Python."
+    echo "Install from: https://www.python.org/"
+}
+
 # Get project configuration
 echo "=� Project Configuration"
 echo "------------------------"

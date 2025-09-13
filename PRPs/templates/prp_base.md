@@ -3,6 +3,12 @@ description: |
 
 ---
 
+## Status
+
+Status: PROPOSED
+Status_Date: YYYY-MM-DD
+Status_Note: # Optional explanation
+
 ## Goal
 
 **Feature Goal**: [Specific, measurable end state of what needs to be built]

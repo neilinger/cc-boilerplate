@@ -4,11 +4,18 @@
 
 $ARGUMENTS
 
-## Mission
+## Mission: One-Pass Implementation Success
 
-Execute a PRP (Product Requirement Prompt) in a proper feature branch following Release Flow branching strategy.
+Execute a PRP (Product Requirement Prompt) in a proper feature branch following Release Flow branching strategy, with automatic status tracking.
 
 **Workflow**: `feature/prp-{number}-{slug}` → `release/*` → `main`
+
+PRPs enable working code on the first attempt through:
+
+- **Context Completeness**: Everything needed, nothing guessed
+- **Progressive Validation**: 4-level gates catch errors early
+- **Pattern Consistency**: Follow existing codebase approaches
+- **Status Tracking**: Automatic status updates from PROPOSED to IN_PROGRESS
 
 ## Implementation Process
 
@@ -46,7 +53,7 @@ if [[ "$CURRENT_BRANCH" != "main" ]]; then
 fi
 ```
 
-### Step 2: Parse PRP File and Extract Details
+### Step 2: Parse PRP File and Update Status
 
 ```bash
 # Validate PRP file exists
@@ -63,6 +70,11 @@ if [[ ! -f "$PRP_FILE" ]]; then
 fi
 
 echo "📋 Executing PRP: $PRP_FILE"
+
+# UPDATE STATUS: Change Status: PROPOSED to Status: IN_PROGRESS
+# Update Status_Date: to today's date
+# Add Status_Note: Implementation started
+echo "📝 Updating PRP status to IN_PROGRESS..."
 
 # Extract PRP number and title from filename
 PRP_FILENAME=$(basename "$PRP_FILE")
@@ -101,10 +113,9 @@ else
 fi
 ```
 
-### Step 4: Display PRP Context
+### Step 4: Load PRP Context & Plan
 
 ```bash
-# Show PRP content for reference
 echo ""
 echo "📖 PRP CONTENT OVERVIEW"
 echo "========================================"
@@ -112,30 +123,48 @@ echo ""
 
 # Extract key sections from PRP
 echo "🎯 FEATURE GOAL:"
-grep -A 3 "^## Feature Goal" "$PRP_FILE" | tail -n +2 || echo "Not specified"
+grep -A 3 "^## Feature Goal" "$PRP_FILE" | tail -n +2 || grep -A 3 "^\*\*Feature Goal\*\*" "$PRP_FILE" | tail -n +2
 
 echo ""
 echo "📦 DELIVERABLE:"
-grep -A 3 "^## Deliverable" "$PRP_FILE" | tail -n +2 || echo "Not specified"
+grep -A 3 "^## Deliverable" "$PRP_FILE" | tail -n +2 || grep -A 3 "^\*\*Deliverable\*\*" "$PRP_FILE" | tail -n +2
 
 echo ""
 echo "✅ SUCCESS DEFINITION:"
-grep -A 3 "^## Success Definition" "$PRP_FILE" | tail -n +2 || echo "Not specified"
-
-echo ""
-echo "🔧 IMPLEMENTATION TASKS:"
-echo "----------------------------------------"
-# Extract task list from PRP
-sed -n '/^## Implementation Tasks/,/^## /p' "$PRP_FILE" | head -n -1 | tail -n +2
-
-echo ""
-echo "✅ FINAL VALIDATION CHECKLIST:"
-echo "----------------------------------------"
-# Extract validation checklist
-sed -n '/^## Final Validation Checklist/,/^## /p' "$PRP_FILE" | head -n -1 | tail -n +2
+grep -A 3 "^## Success Definition" "$PRP_FILE" | tail -n +2 || grep -A 3 "^\*\*Success Definition\*\*" "$PRP_FILE" | tail -n +2
 ```
 
-### Step 5: Start Implementation
+### Step 5: Execute Implementation
+
+**Your Goal**: Transform the PRP into working code that passes all validation gates.
+
+1. **ULTRATHINK & Plan**
+   - Create comprehensive implementation plan following the PRP's task order
+   - Break down into clear todos using TodoWrite tool
+   - Use subagents for parallel work when beneficial
+   - Follow the patterns referenced in the PRP
+
+2. **Execute Implementation**
+   - Follow the PRP's Implementation Tasks sequence
+   - Use the patterns and examples referenced in the PRP
+   - Create files in locations specified by the desired codebase tree
+   - Apply naming conventions from the task specifications
+
+3. **Progressive Validation**
+   - **Level 1**: Run syntax & style validation commands from PRP
+   - **Level 2**: Execute unit test validation from PRP
+   - **Level 3**: Run integration testing commands from PRP
+   - **Level 4**: Execute specified validation from PRP
+
+   **Each level must pass before proceeding to the next.**
+
+4. **Completion Verification**
+   - Work through the Final Validation Checklist in the PRP
+   - Verify all Success Criteria from the "What" section are met
+   - Confirm all Anti-Patterns were avoided
+   - Implementation is ready and working
+
+### Step 6: Implementation Ready
 
 ```bash
 echo ""
@@ -145,13 +174,14 @@ echo ""
 echo "✅ Environment prepared:"
 echo "   - Working directory is clean"
 echo "   - Feature branch created: $FEATURE_BRANCH"
+echo "   - PRP status updated to IN_PROGRESS"
 echo "   - PRP context loaded: $PRP_FILE"
 echo ""
 echo "💡 Next steps:"
 echo "   1. Follow the Implementation Tasks above"
 echo "   2. Use /git-ops:smart-commit for commits"
 echo "   3. Use /git-ops:create-pull-request when ready"
-echo "   4. Feature branch will target appropriate release branch"
+echo "   4. Use /prp:review when implementation complete"
 echo ""
 echo "📋 Remember:"
 echo "   - Follow KISS/YAGNI principles"
@@ -161,34 +191,25 @@ echo "   - Complete Final Validation Checklist"
 echo ""
 ```
 
-### Step 6: Implementation Ready
-
-At this point, the environment is prepared and the user can begin implementing the PRP following the tasks and validation checklist. The feature branch ensures proper isolation and review workflow.
+**Failure Protocol**: When validation fails, use the patterns and gotchas from the PRP to fix issues, then re-run validation until passing.
 
 ## KISS Principles
 
-- **Single Purpose**: Automate feature branch creation for PRP execution
+- **Single Purpose**: Automate feature branch creation and status tracking for PRP execution
 - **No Magic**: Clear step-by-step process with user confirmation
 - **Safe Defaults**: Validates environment before making changes
 - **User Control**: Prompts for confirmation on key decisions
-- **Standard Flow**: Integrates with existing git-ops commands
-
-## Success Criteria
-
-- [x] Validates clean git environment
-- [x] Creates feature branch following naming convention
-- [x] Displays PRP context for implementation reference
-- [x] Integrates with existing Release Flow branching strategy
-- [x] Provides clear next steps for user
+- **Status Tracking**: Automatic PRP lifecycle management
 
 ## Integration with Existing Workflow
 
 This command bridges the gap between PRP creation and implementation:
 
-1. **PRP Creation**: `/prp:create` → Creates PRP document
-2. **PRP Execution**: `/prp:execute` → **NEW** Creates feature branch and starts implementation
+1. **PRP Creation**: `/prp:create` → Creates PRP document (Status: PROPOSED)
+2. **PRP Execution**: `/prp:execute` → Creates feature branch, updates status to IN_PROGRESS
 3. **Development**: Standard development with `/git-ops:smart-commit`
 4. **PR Creation**: `/git-ops:create-pull-request` → Creates feature→release PR
+5. **PRP Review**: `/prp:review` → Updates status to COMPLETED after validation
 
 ## Example Usage
 
@@ -200,6 +221,7 @@ This command bridges the gap between PRP creation and implementation:
 This will:
 
 - Validate environment (clean git, on main branch)
+- Update PRP status from PROPOSED to IN_PROGRESS
 - Create `feature/prp-003-user-authentication` branch
 - Display PRP context and tasks
 - Prepare for implementation following Release Flow

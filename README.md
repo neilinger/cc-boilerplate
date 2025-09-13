@@ -126,12 +126,26 @@ Different development phases need different information formats:
 - **`scripts/`**: KISS/YAGNI-compliant validation tools (PRP validation, etc.)
 - **`tests/`**: Security-focused testing of critical hook functionality
 
+## PRP Status Management
+
+PRPs (Product Requirements Process) now include lifecycle tracking to prevent documentation drift:
+
+| Status | Description | Set By |
+|--------|-------------|--------|
+| **PROPOSED** | Idea documented, not started | `/prp:create` |
+| **IN_PROGRESS** | Being implemented | `/prp:execute` |
+| **COMPLETED** | Finished and reviewed | `/prp:review` |
+| **OBSOLETE** | No longer relevant | Manual update |
+
+The pre-commit hook will warn (but not block) if you're committing PRPs with IN_PROGRESS status, helping prevent incomplete work from appearing finished.
+
 ## Project Structure
 
 ```
 cc-boilerplate/
 ├── .claude/
 │   ├── agents/         # Meta-agent + specialized agents
+│   ├── commands/       # Claude commands including PRP lifecycle
 │   ├── hooks/          # Security, TTS, session management
 │   ├── output-styles/  # Workflow-specific formatting
 │   ├── status_lines/   # Dynamic terminal displays
