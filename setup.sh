@@ -16,11 +16,15 @@ command -v uv >/dev/null 2>&1 || {
     exit 1
 }
 
-command -v claude-code >/dev/null 2>&1 || {
+# Check if running inside Claude Code environment or if claude-code command is available
+if [ -n "$CLAUDE_CODE_SESSION" ] || [ -n "$CLAUDE_ENV" ] || command -v claude-code >/dev/null 2>&1; then
+    echo "✓ Claude Code environment detected"
+else
     echo "L Error: Claude Code is required but not installed."
     echo "Install from: https://docs.anthropic.com/en/docs/claude-code"
+    echo "Or run this script from inside an active Claude Code session"
     exit 1
-}
+fi
 
 command -v python3 >/dev/null 2>&1 || command -v python >/dev/null 2>&1 || {
     echo "⚠️  Warning: Python is not installed."
@@ -62,20 +66,20 @@ if [ -f .env.sample ]; then
         sed -i '' "s/cc-boilerplate/$PROJECT_NAME/g" .env
 
         # Update API keys if provided
-        [ ! -z "$OPENAI_KEY" ] && sed -i '' "s/your-openai-api-key-here/$OPENAI_KEY/g" .env
-        [ ! -z "$ANTHROPIC_KEY" ] && sed -i '' "s/your-anthropic-api-key-here/$ANTHROPIC_KEY/g" .env
-        [ ! -z "$ELEVENLABS_KEY" ] && sed -i '' "s/your-elevenlabs-api-key-here/$ELEVENLABS_KEY/g" .env
-        [ ! -z "$ELEVENLABS_VOICE_ID" ] && sed -i '' "s/your-preferred-voice-id/$ELEVENLABS_VOICE_ID/g" .env
+        [ ! -z "$OPENAI_KEY" ] && sed -i '' "s/OPENAI_API_KEY=\"\"/OPENAI_API_KEY=\"$OPENAI_KEY\"/g" .env
+        [ ! -z "$ANTHROPIC_KEY" ] && sed -i '' "s/ANTHROPIC_API_KEY=\"\"/ANTHROPIC_API_KEY=\"$ANTHROPIC_KEY\"/g" .env
+        [ ! -z "$ELEVENLABS_KEY" ] && sed -i '' "s/ELEVENLABS_API_KEY=\"\"/ELEVENLABS_API_KEY=\"$ELEVENLABS_KEY\"/g" .env
+        [ ! -z "$ELEVENLABS_VOICE_ID" ] && sed -i '' "s/ELEVENLABS_VOICE_ID=\"\"/ELEVENLABS_VOICE_ID=\"$ELEVENLABS_VOICE_ID\"/g" .env
     else
         # Linux
         sed -i "s/\"Your Name\"/\"$USER_NAME\"/g" .env
         sed -i "s/cc-boilerplate/$PROJECT_NAME/g" .env
 
         # Update API keys if provided
-        [ ! -z "$OPENAI_KEY" ] && sed -i "s/your-openai-api-key-here/$OPENAI_KEY/g" .env
-        [ ! -z "$ANTHROPIC_KEY" ] && sed -i "s/your-anthropic-api-key-here/$ANTHROPIC_KEY/g" .env
-        [ ! -z "$ELEVENLABS_KEY" ] && sed -i "s/your-elevenlabs-api-key-here/$ELEVENLABS_KEY/g" .env
-        [ ! -z "$ELEVENLABS_VOICE_ID" ] && sed -i "s/your-preferred-voice-id/$ELEVENLABS_VOICE_ID/g" .env
+        [ ! -z "$OPENAI_KEY" ] && sed -i "s/OPENAI_API_KEY=\"\"/OPENAI_API_KEY=\"$OPENAI_KEY\"/g" .env
+        [ ! -z "$ANTHROPIC_KEY" ] && sed -i "s/ANTHROPIC_API_KEY=\"\"/ANTHROPIC_API_KEY=\"$ANTHROPIC_KEY\"/g" .env
+        [ ! -z "$ELEVENLABS_KEY" ] && sed -i "s/ELEVENLABS_API_KEY=\"\"/ELEVENLABS_API_KEY=\"$ELEVENLABS_KEY\"/g" .env
+        [ ! -z "$ELEVENLABS_VOICE_ID" ] && sed -i "s/ELEVENLABS_VOICE_ID=\"\"/ELEVENLABS_VOICE_ID=\"$ELEVENLABS_VOICE_ID\"/g" .env
     fi
 
     echo " Created .env configuration"

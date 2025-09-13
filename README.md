@@ -15,7 +15,60 @@ Claude Code boilerplate with essential hooks, agents, and security features.
 - **[Astral UV](https://docs.astral.sh/uv/)** - Python package manager
 - **[Claude Code](https://docs.anthropic.com/en/docs/claude-code)** - AI coding assistant
 
-## Quick Start
+## Setup in Claude Code
+
+If you're already working in Claude Code (the primary use case), use this quick setup:
+
+### Quick Start Prompt
+
+Copy this exact prompt into Claude Code:
+
+```
+start with latest tag of neilinger/cc-boilerplate repository as skeleton for this project. then guide me through whats next.
+```
+
+### Manual Setup Steps
+
+Alternatively, follow these steps manually:
+
+```bash
+# 1. Initialize and import boilerplate
+git init
+git remote add boilerplate https://github.com/neilinger/cc-boilerplate.git
+git fetch boilerplate
+git checkout v1.1.0 -- .
+
+# 2. Configure for your project
+git remote remove boilerplate
+git remote add origin https://github.com/username/your-project.git
+
+# 3. Setup configuration (NOTE: setup.sh works inside Claude Code)
+cp .mcp.json.sample .mcp.json
+mkdir -p logs output
+touch logs/.gitkeep output/.gitkeep
+
+# 4. Create .env manually (do NOT copy .env.sample directly)
+# IMPORTANT: Create .env with your actual API keys or empty values
+# Never use the placeholder strings from .env.sample
+
+# 5. Customize project
+# Update PROJECT_NAME in README.md and pyproject.toml
+# Update project name throughout the codebase
+
+# 6. Initial commit
+git add .
+git commit -m "Initial commit from cc-boilerplate"
+git push -u origin main
+```
+
+### ⚠️ Important Notes
+
+- **Never copy `.env.sample` to `.env` directly** - this breaks Claude with placeholder API keys
+- **Create `.env` manually** with your actual keys or empty values: `ANTHROPIC_API_KEY=""`
+- **The `./setup.sh` script works inside Claude Code** (detects the environment automatically)
+- **Customize project name** in README.md and pyproject.toml before committing
+
+## Traditional Setup (Outside Claude Code)
 
 ```bash
 # 1. Clone this boilerplate
@@ -101,6 +154,7 @@ cc-boilerplate/
 ├── PRPs/               # Product Requirements Process templates
 ├── scripts/            # Validation utilities (KISS/YAGNI)
 ├── tests/              # Security-critical functionality tests
+│   └── medium_priority/ # Feature reliability tests
 ├── CLAUDE.md           # KISS/YAGNI development principles
 └── setup.sh            # Project setup script
 ```
@@ -198,6 +252,7 @@ python tests/test_hook_integration.py
 - **[ADR-003: Testing Strategy](docs/adr/adr-003-testing-strategy.md)**
 - **[ADR-004: Documentation Standards](docs/adr/adr-004-documentation-standards.md)**
 - **[ADR-005: ADR/PRP Separation](docs/adr/adr-005-adr-prp-separation.md)**
+- **[ADR-006: Issue Management Process](docs/adr/adr-006-issue-management-process.md)**
 
 ## Usage
 
