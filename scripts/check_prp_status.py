@@ -11,15 +11,15 @@ from pathlib import Path
 
 def check_prp_status(files):
     """Check if any PRP files have IN_PROGRESS status.
-    
+
     Args:
         files: List of file paths to check
-        
+
     Returns:
         0 always (warnings don't block commits)
     """
     in_progress = []
-    
+
     for file_path in files:
         path = Path(file_path)
         if path.exists() and path.suffix == '.md':
@@ -30,7 +30,7 @@ def check_prp_status(files):
                     in_progress.append(file_path)
             except Exception as e:
                 print(f"Warning: Could not read {file_path}: {e}", file=sys.stderr)
-    
+
     if in_progress:
         print("\n⚠️  Warning: Committing PRPs with IN_PROGRESS status:")
         for file in in_progress:
@@ -41,7 +41,7 @@ def check_prp_status(files):
         print("  - COMPLETED if work is done and reviewed")
         print("  - PROPOSED if work hasn't started yet")
         print("  - OBSOLETE if no longer relevant\n")
-    
+
     # Always return 0 to warn but not block
     return 0
 

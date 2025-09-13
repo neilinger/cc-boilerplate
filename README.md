@@ -79,9 +79,9 @@ PRPs (Product Requirements Process) now include lifecycle tracking to prevent do
 
 | Status | Description | Set By |
 |--------|-------------|--------|
-| **PROPOSED** | Idea documented, not started | `/prp-create` |
-| **IN_PROGRESS** | Being implemented | `/prp-execute` |
-| **COMPLETED** | Finished and reviewed | `/prp-review` |
+| **PROPOSED** | Idea documented, not started | `/prp:create` |
+| **IN_PROGRESS** | Being implemented | `/prp:execute` |
+| **COMPLETED** | Finished and reviewed | `/prp:review` |
 | **OBSOLETE** | No longer relevant | Manual update |
 
 The pre-commit hook will warn (but not block) if you're committing PRPs with IN_PROGRESS status, helping prevent incomplete work from appearing finished.
