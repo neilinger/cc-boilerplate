@@ -1,0 +1,8 @@
+{
+  "session_id": "2cb68cb4-e9ed-41fd-8956-caba18bf97ff",
+  "prompts": [
+    "/code-quality:review-staged-unstaged \"use your findings of your BALANCED CC-BOILERPLATE OPTIMIZATION plan\"",
+    "ok, let us go though the delete non-core components. please reason in detail why we should DELETE this. my main thoughts of concern are: .serena is a vital component of maintaining and developing this boilerplate (serena-mcp). as you obviously do not now about that, this seems to be a vital task to document this inside the project for 'documentation for cc-boilerplate development' purposes. secondly the meta-agent is a core component of the boilerplate, as this is the subagent-creation-automation-engine that is a vital component of this boilerplate. the genui style(s) are also very important, as they support the developer, who is the target group of this boilerplate, in his different workflow-phases to provide optimal Claude Code (short: cc) interaction and communication styles. scripts and tests i don't know yet, but they have been developed with current @CLAUDE.md directives, which includes KISS/YAGNI. therefor we have a situation that is a) we destroy carefullt thought out functionality already extensively reduced by KISS/YAGNI principles without the proper context to be able to evaluate the current state, it's reasoning and therefor the implicit quality and high value or b) our @CLAUDE.md is shit."
+  ],
+  "agent_name": "Synth"
+}

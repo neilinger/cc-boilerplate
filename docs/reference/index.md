@@ -34,6 +34,14 @@ Quick test: `echo '{"tool_name": "Bash", "tool_input": {"command": "rm -rf /"}}'
 **github-checker** - GitHub repository analysis and validation
 **adr-creator** - Architectural Decision Record generation
 
+## Commands (5 Total)
+
+**cook** - Run multiple agent tasks in parallel for rapid development
+**prime** - Load project context for new agent sessions
+**prime_tts** - Initialize Text-to-Speech system
+**question** - Structured questioning for requirements gathering
+**update_status_line** - Update dynamic terminal status displays
+
 ## Serena MCP Integration
 
 Semantic coding tools for intelligent codebase analysis and manipulation.
@@ -77,6 +85,22 @@ Quick commands:
 - Security only: `python tests/test_safety_hooks.py`
 - Hook integration: `python tests/test_hook_integration.py`
 
+## Boilerplate Synchronization System
+
+Three-layer configuration system for graceful boilerplate updates:
+
+**Base Layer**: Core boilerplate files (git subtree)
+**Project Layer**: Domain-specific customizations
+**Merged Layer**: Auto-generated final configuration
+
+### Synchronization Commands
+
+**init-boilerplate.sh** - Initialize synchronization system in projects
+**update-boilerplate.sh** - Pull boilerplate updates without losing customizations
+**build-config.sh** - Merge base templates with project customizations
+
+For complete synchronization workflow, see [Synchronization Guide](../SYNCHRONIZATION.md).
+
 ## PRP Status Management
 
 PRPs (Product Requirements Process) include lifecycle tracking to prevent documentation drift:
@@ -96,6 +120,7 @@ For detailed configuration including .env setup, hook settings, and environment 
 - [TTS System Reference](tts-system.md) for TTS configuration
 - [Security Guide](../guides/security.md) for security configuration
 - [Serena MCP Reference](serena-mcp.md) for semantic coding configuration
+- [Synchronization Guide](../SYNCHRONIZATION.md) for boilerplate sync configuration
 
 ## Architecture
 

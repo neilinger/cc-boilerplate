@@ -1,0 +1,19 @@
+{
+  "session_id": "aa338b8e-a383-4ec9-b371-affc5ed6997f",
+  "prompts": [
+    "i have a challenge in this project and i need your guidance in solving it. please ask me, one question at a time, clarifying questions so you can understand what i need from you with 95% certainty. this project is a 'skelleton/boilerplate' project for other projects using claude code. one usecase is to throw this boilerplate in an already running project, which is kind of a 'merge' situation. other thing is, what cc-boilerplate gets developed further inside the other projects and it is very complicated to streamline the improvements back to this project. as i am sure that i'm not the first human having this problem with a 'utility' project, I'd like to have your advice on how to approach this / structure this project to streamline this by a lot. please research best practices and how others solve it before  you give me advice on how to implement it specifically to this project and usecase.",
+    "CLAUDE.md, .pre-commit-config.yaml, .claude/ in general. another thing is, that work items from this project is not needed in being a skeleton (e.g. PRPs/prp-002-github-maintenance-check.md is a good prp for cc-boilerplate project, but irrelevant for the project it is imported into).",
+    "the other projects are git-projects aswell. but it is 100% up to the devs of the other projects to feed back information. can be through issue description or doing a pr or reaching out in any other way or form.",
+    "I'd like to go with 're-apply, gracefully'",
+    "all of the above for CLAUDE.md",
+    "cc-boilerplate is following a proper release workflow and uses semantiv versioning all the way. you should be aware of it due to our adrs",
+    "/prp:create from current plan",
+    "/git-ops:gh-check ",
+    "ok",
+    "i did not see any gh-check-result.",
+    "look at pr 20 and propose a plan how to implement it 'proper' if there are any discrepancies/concerns.",
+    "I'd like to implement the recomended fixes following our branching/release workflows, commit it to the pr, then review the whole thing again",
+    "the note about the status field in @CLAUDE.md needs more explanation for me, why we need that, if we have it in the adr from the pr?"
+  ],
+  "agent_name": "Prism"
+}

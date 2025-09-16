@@ -1,0 +1,8 @@
+{
+  "session_id": "9563421c-48da-4755-8e3f-638a22436e70",
+  "prompts": [
+    "update the project documentation",
+    "please explain why you did not chose to use smart-doc-generator subagent. describe what i can do to improve your accuracy in your selection process of subagents."
+  ],
+  "agent_name": "Prism"
+}

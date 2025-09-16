@@ -1,0 +1,16 @@
+{
+  "session_id": "50e289e2-dfad-4f09-8af0-6b0faae00286",
+  "prompts": [
+    "how can i ask my claude github automation to prepare a pr? or do i need to do that from here?",
+    "yes, i want to create a good PR for the next release we have prepared via prp. i want to follow our branching strategy. guide me through the process. before we do that, please review @.claude/commands/git-ops/create-pull-request.md if it is a good command to fullfill this role (keep in mind: our release process is the only valid approach).",
+    "ok. pull request is now in github. in github we have 2 action integrations. one Claude Code and one Claude Code Review. How can I utilize them properly?",
+    "please think and come up with a strategy to have this as an option when we are creating commits from here. like with @.claude/commands/git-ops/smart-commit.md , @.claude/commands/git-ops/create-pull-request.md or in dialogue. i do not want need to think about it while interacting here in the console, but i want you to assist/provide me with the proper suggestion at the right time. i do not want to offload the work to another claude-instance by default, but i want to always have the option provided.",
+    "i want this to be a little bit more sofisticated: this should be part of our 'default' todo/preflight checklist when we want to commit or push or release something. like: only commit when already done a securiy review or something like that. so let us use our already documented 'this needs to be done on anything commit/release/feature whatever' workflow and extend it with the 'ask the user if we should delegate this to github-claude or do this locally (pre-/post git commit|push)'.",
+    "continue",
+    "use KISS/YAGNI and verify that your solution really needs new python scripts instead of extending what we have or utilizing a command/agent.",
+    "/git-ops:create-pull-request \"Let us commit current state end to end\"",
+    "ok. review is done. now what?",
+    "let us do the whole end2end dance"
+  ],
+  "agent_name": "Phoenix"
+}
