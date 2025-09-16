@@ -2,7 +2,7 @@
 
 Essential API and system information.
 
-## Hooks
+## Hooks (8 Total)
 
 8 hooks execute in sequence. Exit codes: 0=continue, 1=block, 2=error.
 
@@ -21,16 +21,39 @@ Blocks dangerous commands. For complete security patterns and testing details, s
 
 Quick test: `echo '{"tool_name": "Bash", "tool_input": {"command": "rm -rf /"}}' | uv run .claude/hooks/pre_tool_use.py`
 
-## Agents
+## Agents (10 Total)
 
-**meta-agent** - Generate new agents
-**engineer-code-reviewer** - Code/security review
-**work-completion-summary** - Audio summaries
-**llm-ai-agents-and-eng-research** - AI research
-**test-automator** - Generate test suites
-**technical-researcher** - Technical analysis
-**test-coverage-analyzer** - Coverage analysis
-**smart-doc-generator** - Documentation
+**meta-agent** - Generate new specialized agents
+**smart-doc-generator** - Comprehensive documentation generation
+**engineer-code-reviewer** - Security and quality code reviews
+**test-automator** - Automated test suite creation
+**test-coverage-analyzer** - Test coverage analysis and gap identification
+**work-completion-summary** - Audio summaries for long operations
+**llm-ai-agents-and-eng-research** - AI/ML research and analysis
+**technical.researcher** - Deep technical research and documentation
+**github-checker** - GitHub repository analysis and validation
+**adr-creator** - Architectural Decision Record generation
+
+## Commands (5 Total)
+
+**cook** - Run multiple agent tasks in parallel for rapid development
+**prime** - Load project context for new agent sessions
+**prime_tts** - Initialize Text-to-Speech system
+**question** - Structured questioning for requirements gathering
+**update_status_line** - Update dynamic terminal status displays
+
+## Serena MCP Integration
+
+Semantic coding tools for intelligent codebase analysis and manipulation.
+
+**Key Features:**
+
+- Symbol-based navigation and code understanding
+- Project memory system for architectural knowledge
+- Token-efficient code reading and manipulation
+- Pattern-based search with structure awareness
+
+For complete serena-mcp documentation including setup, usage patterns, and best practices, see [Serena MCP Reference](serena-mcp.md).
 
 ## TTS System
 
@@ -46,7 +69,13 @@ For complete TTS system documentation including provider comparison, configurati
 
 Set: `SECURITY_LEVEL=strict`
 
-## Testing
+## Testing & Validation
+
+**3-Tier Testing Architecture:**
+
+- **High Priority (Security Critical)**: Safety hooks, dangerous command detection
+- **Medium Priority (Feature Reliability)**: TTS providers, integration testing
+- **Infrastructure**: Comprehensive test runners and validation
 
 For comprehensive testing strategy, commands, and categories, see [Testing Guide](../guides/testing.md).
 
@@ -54,20 +83,48 @@ Quick commands:
 
 - All tests: `python tests/run_all_tests.py`
 - Security only: `python tests/test_safety_hooks.py`
+- Hook integration: `python tests/test_hook_integration.py`
+
+## Boilerplate Synchronization System
+
+Three-layer configuration system for graceful boilerplate updates:
+
+**Base Layer**: Core boilerplate files (git subtree)
+**Project Layer**: Domain-specific customizations
+**Merged Layer**: Auto-generated final configuration
+
+### Synchronization Commands
+
+**init-boilerplate.sh** - Initialize synchronization system in projects
+**update-boilerplate.sh** - Pull boilerplate updates without losing customizations
+**build-config.sh** - Merge base templates with project customizations
+
+For complete synchronization workflow, see [Synchronization Guide](../SYNCHRONIZATION.md).
+
+## PRP Status Management
+
+PRPs (Product Requirements Process) include lifecycle tracking to prevent documentation drift:
+
+| Status | Description | Set By |
+|--------|-------------|--------|
+| **PROPOSED** | Idea documented, not started | `/prp:create` |
+| **IN_PROGRESS** | Being implemented | `/prp:execute` |
+| **COMPLETED** | Finished and reviewed | `/prp:review` |
+| **OBSOLETE** | No longer relevant | Manual update |
 
 ## Configuration
-
-### Configuration
 
 For detailed configuration including .env setup, hook settings, and environment variables, see:
 
 - [Development Guide](../guides/development.md) for development configuration
-- [TTS System Reference](../reference/tts-system.md) for TTS configuration
+- [TTS System Reference](tts-system.md) for TTS configuration
 - [Security Guide](../guides/security.md) for security configuration
+- [Serena MCP Reference](serena-mcp.md) for semantic coding configuration
+- [Synchronization Guide](../SYNCHRONIZATION.md) for boilerplate sync configuration
 
 ## Architecture
 
-```
+```text
 User Input → user_prompt_submit → pre_tool_use (security) → Tool Execution
                                        ↓ (if blocked)
                                    Block + Log

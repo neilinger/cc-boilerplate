@@ -2,9 +2,30 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## MANDATORY: Agent Selection Protocol
+
+Before ANY manual work:
+
+1. Check if request matches ANY specialized agent
+2. If yes → use that agent IMMEDIATELY
+3. If no → proceed with manual approach
+4. When user has agent file open → ALWAYS consider using that agent
+
+### Common Agent Selection Failures to Avoid
+
+- Documentation request → NOT using smart-doc-generator
+- Code review request → NOT using code-reviewer
+- Test creation → NOT using test-automator
+
 ## MANDATORY VALIDATION PROTOCOL
 
 **CRITICAL**: Being "nice" by not challenging ideas WASTES user time and money. Harsh validation is kindness.
+
+Always use:
+
+- serena for semantic code retrieval and editing tools
+- Ref for up to date documentation on third party code
+- sequential thinking for any decision making
 
 Before ANY plan or implementation:
 
@@ -48,14 +69,6 @@ Before ANY plan or implementation:
 
 - Use `/adr-creator` for architectural decisions
 - Use `/prp-step0-clarify_intent` for implementation planning
-
-## Documentation Maintenance
-
-**MANDATORY** when changing structure:
-
-- Delete/move directories → Update README.md Project Structure tree
-- Delete/move files → Check README.md for broken links
-- Otherwise → Don't touch documentation
 
 ## Two Golden Rules - MANDATORY WORKING PRINCIPLE
 
@@ -132,19 +145,11 @@ def **init**(self, strategy=None): ...
 
 - “Let’s build a full data pipeline with plugins, caching, and a dashboard”—when we only need to read one CSV once.
 
-## When You're Stuck (Systematic Debug)
+- use `debugger` agent
 
-1. **Reproduce**: Create minimal failing test case
-2. **Gather**: Collect error messages and context
-3. **Hypothesize**: Form ONE theory about the cause
-4. **Test**: Change ONE thing, verify result
-5. **Binary Search**: Eliminate half the problem space each step
+**If still stuck:**
 
-If still stuck:
-
-- Make it smaller. Ship a slice that works.
-- Remove one part and try again.
-- Write the test first, then the smallest code to pass it.
+- hold! inform the user!
 
 **Remember:** Small + clear + working now > big + clever + maybe useful later.
 
@@ -155,11 +160,13 @@ If still stuck:
 ### When to Mention GitHub Claude Review
 
 1. **During Commits** (`/smart-commit`):
+
    - Run local security tests first (fast feedback)
    - Show GitHub review commands for comprehensive validation
    - Let user decide timing (now vs after PR)
 
 2. **After PR Creation** (`/create-pull-request`):
+
    - Always provide copy-paste @claude commands
    - Offer comprehensive and focused review options
    - Reference our ADRs and KISS/YAGNI principles

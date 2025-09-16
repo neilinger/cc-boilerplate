@@ -1,0 +1,9 @@
+{
+  "session_id": "0772af3d-39ae-48c8-962d-0b512b2584cc",
+  "prompts": [
+    "/git-ops:smart-commit ",
+    "seperate commit, add unstracked files",
+    "remove the notification flag from chat stop hook and revert that change aswell."
+  ],
+  "agent_name": "Atlas"
+}

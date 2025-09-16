@@ -4,6 +4,7 @@
 
 - [System Overview](#system-overview)
 - [Component Architecture](#component-architecture)
+- [Boilerplate Synchronization Architecture](#boilerplate-synchronization-architecture)
 - [Data Flow and Interactions](#data-flow-and-interactions)
 - [Security Architecture](#security-architecture)
 - [Extension Points](#extension-points)
@@ -134,6 +135,60 @@ Agents implement the **Strategy Pattern** with specialized tool access.
 - **smart-doc-generator**: Comprehensive documentation generation
 - **work-completion-summary**: Audio task summaries
 - **llm-ai-agents-and-eng-research**: AI/ML research specialist
+
+## Boilerplate Synchronization Architecture
+
+The synchronization system (PRP-003) implements a **Three-Layer Configuration Pattern** with git subtree for graceful updates.
+
+### Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Synchronization System                      │
+│                                                                 │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────────────┐   │
+│  │ Base Layer  │ + │Project Layer│ = │   Merged Layer      │   │
+│  │             │   │             │   │                     │   │
+│  │ boilerplate/│   │ .claude/    │   │ Generated Files:    │   │
+│  │ .claude/    │   │ project/    │   │ • CLAUDE.md         │   │
+│  │ templates/  │   │ *.project.* │   │ • settings.json     │   │
+│  │ scripts/    │   │             │   │ • .pre-commit-*.yml │   │
+│  └─────────────┘   └─────────────┘   └─────────────────────┘   │
+│        │                   │                     │             │
+│        ▼                   ▼                     ▼             │
+│  Git Subtree        Domain-Specific      Build Process        │
+│  from upstream      Customizations      (build-config.sh)     │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Key Components
+
+#### Git Subtree Integration
+
+- **Repository**: `cc-boilerplate` → `.claude/boilerplate/` in projects
+- **Strategy**: Squash merges to maintain clean history
+- **Updates**: Pull upstream changes without losing customizations
+- **Version Tracking**: `.boilerplate-version` tracks sync state
+
+#### Template System
+
+- **Merge Markers**: HTML comments for section-based merging
+- **Placeholder Replacement**: `__PROJECT_CUSTOM__` injection points
+- **Deep JSON Merging**: Preserves nested configuration structure
+- **YAML Append Strategy**: Configuration layering for pre-commit hooks
+
+#### Synchronization Scripts
+
+1. **init-boilerplate.sh**: Initialize git subtree and build system
+2. **update-boilerplate.sh**: Pull upstream changes with backup/rollback
+3. **build-config.sh**: Merge base templates with project customizations
+
+#### Safety Mechanisms
+
+- **Automatic Backup**: Before any update operation
+- **Atomic Operations**: Temporary files with safe replacement
+- **Rollback Capability**: Restore previous state on failure
+- **Validation**: JSON/YAML syntax checking post-merge
 
 ### TTS Provider Architecture
 

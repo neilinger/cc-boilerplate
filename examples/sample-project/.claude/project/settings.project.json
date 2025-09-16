@@ -1,0 +1,53 @@
+{
+  "__PROJECT_CUSTOM_PERMISSIONS__": [
+    "Bash(docker:*)",
+    "Bash(npm run:*)",
+    "Bash(yarn:*)",
+    "Bash(pnpm:*)",
+    "Bash(prisma:*)",
+    "Bash(stripe:*)",
+    "Bash(jest:*)",
+    "Bash(cypress:*)",
+    "WebFetch(domain:api.stripe.com)",
+    "WebFetch(domain:docs.stripe.com)"
+  ],
+  "__PROJECT_CUSTOM_SETTINGS__": {
+    "projectName": "sample-ecommerce-project",
+    "outputStyle": "TTS Summary",
+    "enableAllProjectMcpServers": true,
+    "enabledMcpjsonServers": ["ElevenLabs", "Stripe"],
+    "statusLine": {
+      "type": "command",
+      "command": "uv run $CLAUDE_PROJECT_DIR/.claude/status_lines/ecommerce_status.py",
+      "padding": 0
+    }
+  },
+  "__PROJECT_CUSTOM_HOOKS__": {
+    "PreDeploy": [
+      {
+        "matcher": "production",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm run test:integration"
+          },
+          {
+            "type": "command",
+            "command": "npm run security:scan"
+          }
+        ]
+      }
+    ],
+    "PostDeploy": [
+      {
+        "matcher": "production",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm run health:check"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "session_id": "9088f450-0ab7-4803-a71e-56517f499a4d",
+  "prompts": [
+    "how do i get this thing started?",
+    "i want you to create this project as a private repository in my github.",
+    "/prime_tts ",
+    "how can i setup and test the tts capabilities via elevenlabs you have available via your hooks"
+  ],
+  "agent_name": "Sage"
+}

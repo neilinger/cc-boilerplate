@@ -78,9 +78,22 @@ Establish clear separation of concerns between ADRs and PRPs:
 
 ### Cross-referencing Standards
 
-- **ADR → PRP**: "Implementation handled via PRP-XXX"
-- **PRP → ADR**: "Based on architectural decision ADR-XXX"
+- **ADR → PRP**: "Implementation handled via prp-XXX"
+- **PRP → ADR**: "Based on architectural decision adr-XXX"
 - **Clear Handoff**: ADR establishes decision, PRP executes it
+
+### Naming Conventions
+
+**ADRs**: `adr-XXX-decision-title.md`
+
+- XXX is a 3-digit sequence number (001, 002, 003...)
+- decision-title describes the architectural decision
+
+**PRPs**: `prp-XXX-feature-name.md`
+
+- XXX is a 3-digit sequence number (001, 002, 003...)
+- feature-name is a kebab-case description of the feature goal
+- Examples: `prp-001-documentation-migration.md`, `prp-002-github-maintenance-check.md`
 
 ## Consequences
 
@@ -136,11 +149,11 @@ Establish clear separation of concerns between ADRs and PRPs:
 ```markdown
 # In ADR
 ## Implementation
-This decision will be implemented via PRP-XXX (link when created).
+This decision will be implemented via prp-XXX (link when created).
 
 # In PRP
 ## Context
-This PRP implements the architectural decision documented in ADR-XXX.
+This PRP implements the architectural decision documented in adr-XXX.
 ```
 
 ## Alternatives Considered
@@ -169,4 +182,4 @@ This PRP implements the architectural decision documented in ADR-XXX.
 - [GitHub ADR Examples](https://github.com/joelparkerhenderson/architecture-decision-record)
 - [ADR Process - AWS Prescriptive Guidance](https://docs.aws.amazon.com/prescriptive-guidance/latest/architectural-decision-records/adr-process.html)
 - Related ADRs: adr-001 (Branching), adr-004 (Documentation Standards)
-- Implementation PRP: PRP-001 (Documentation Migration)
+- Implementation PRP: prp-001 (Documentation Migration)

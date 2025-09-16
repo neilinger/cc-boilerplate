@@ -1,0 +1,92 @@
+{
+  "version": "1.0.0",
+  "description": "CC-Boilerplate manifest defining syncable files and merge strategies",
+  "created": "2025-01-16",
+  "files": [
+    ".claude/agents/**/*",
+    ".claude/commands/**/*",
+    ".claude/hooks/**/*",
+    ".claude/output-styles/**/*",
+    ".claude/status_lines/**/*",
+    ".claude/data/**/*",
+    "templates/CLAUDE.template.md",
+    "templates/.pre-commit-config.template.yaml",
+    ".claude/settings.template.json",
+    "scripts/init-boilerplate.sh",
+    "scripts/update-boilerplate.sh",
+    "scripts/build-config.sh"
+  ],
+  "generated_files": [
+    "CLAUDE.md",
+    ".claude/settings.json",
+    ".pre-commit-config.yaml"
+  ],
+  "merge_strategy": {
+    ".claude/settings.template.json": {
+      "type": "deep_merge",
+      "description": "JSON deep merge with project customizations",
+      "placeholders": [
+        "__PROJECT_CUSTOM_PERMISSIONS__",
+        "__PROJECT_CUSTOM_SETTINGS__",
+        "__PROJECT_CUSTOM_HOOKS__"
+      ],
+      "output": ".claude/settings.json"
+    },
+    "templates/CLAUDE.template.md": {
+      "type": "section_merge",
+      "description": "Markdown section merge using HTML comment markers",
+      "markers": {
+        "boilerplate_start": "<!-- BEGIN BOILERPLATE -->",
+        "boilerplate_end": "<!-- END BOILERPLATE -->",
+        "project_start": "<!-- BEGIN PROJECT -->",
+        "project_end": "<!-- END PROJECT -->"
+      },
+      "output": "CLAUDE.md"
+    },
+    "templates/.pre-commit-config.template.yaml": {
+      "type": "replace_or_append",
+      "description": "YAML replacement or concatenation",
+      "output": ".pre-commit-config.yaml"
+    }
+  },
+  "ignore_patterns": [
+    ".DS_Store",
+    "*.tmp",
+    "*.backup.*",
+    ".boilerplate-version.backup"
+  ],
+  "project_customization_dirs": [
+    ".claude/project/"
+  ],
+  "backup_strategy": {
+    "enabled": true,
+    "location": ".claude/backups/",
+    "retention_days": 30,
+    "auto_cleanup": true
+  },
+  "validation": {
+    "required_tools": ["git", "jq"],
+    "optional_tools": ["yq", "shellcheck"],
+    "required_files": [
+      ".claude/boilerplate/.boilerplate-manifest.json",
+      ".claude/boilerplate/.claude/settings.template.json",
+      ".claude/boilerplate/templates/CLAUDE.template.md"
+    ]
+  },
+  "sync_metadata": {
+    "supports_subtree": true,
+    "supports_submodule": false,
+    "default_branch": "main",
+    "squash_commits": true
+  },
+  "compatibility": {
+    "min_git_version": "2.20.0",
+    "supported_os": ["macOS", "Linux"],
+    "bash_version": "4.0+"
+  },
+  "documentation": {
+    "sync_guide": "docs/SYNCHRONIZATION.md",
+    "examples": "examples/sample-project/",
+    "troubleshooting": "docs/SYNCHRONIZATION.md#troubleshooting"
+  }
+}
