@@ -1,0 +1,7 @@
+{
+  "session_id": "ea0cc355-9f07-4c8d-8f27-7481396b1e92",
+  "prompts": [
+    "we've got github issues. follow our issue-management-process and process the first one. after we've done that one end2end i want to review how this went and do 1-2 improvement-cycles. afterwards we fix the remaining issues."
+  ],
+  "agent_name": "Cipher"
+}

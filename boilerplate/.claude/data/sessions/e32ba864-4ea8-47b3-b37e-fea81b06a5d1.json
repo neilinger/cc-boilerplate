@@ -1,0 +1,7 @@
+{
+  "session_id": "e32ba864-4ea8-47b3-b37e-fea81b06a5d1",
+  "prompts": [
+    "i want to create an agent that gets triggered by a command that checks for new github issues/prs and such and starts the journey of processing them as regular maintenance. "
+  ],
+  "agent_name": "Atlas"
+}

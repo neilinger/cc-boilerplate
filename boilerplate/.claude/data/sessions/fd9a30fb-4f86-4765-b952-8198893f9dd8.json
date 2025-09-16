@@ -1,0 +1,10 @@
+{
+  "session_id": "fd9a30fb-4f86-4765-b952-8198893f9dd8",
+  "prompts": [
+    "hello world",
+    "/statusline ",
+    "/update_status_line "
+  ],
+  "agent_name": "Nexus",
+  "extras": {}
+}

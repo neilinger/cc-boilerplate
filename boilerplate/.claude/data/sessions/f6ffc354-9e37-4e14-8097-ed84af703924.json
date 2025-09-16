@@ -1,0 +1,9 @@
+{
+  "session_id": "f6ffc354-9e37-4e14-8097-ed84af703924",
+  "prompts": [
+    "look at the failed ci run and fix it.",
+    "ok. i understand. issue is: we want to have automated test coverage and this is done via github actions. therefor the test must be able to run via github actions aswell as via local testing. for me it seems like a good job for @agent-llm-ai-agents-and-eng-research agent to look for best practices and how to approach this proper and for @agent-code-reviewer agent to get a good feeling for the test architecture. last but not least you can involve @agent-test-coverage-analyzer and @agent-test-automator to assist in fixing this. as it seems that you are 'just' orchestrating things, it seems to be a good idea to come up with a solid plan, individual delegation tasks lists and extensive use of sequential-thinking capabilities to orchestrate this properly. use agents in parallel if they have non-blocking/non-sequencial tasks.",
+    "continue"
+  ],
+  "agent_name": "Sage"
+}

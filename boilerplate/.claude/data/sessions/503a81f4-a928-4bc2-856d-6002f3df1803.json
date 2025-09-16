@@ -1,0 +1,11 @@
+{
+  "session_id": "503a81f4-a928-4bc2-856d-6002f3df1803",
+  "prompts": [
+    " my developer delivered the current state. verify and review harshly if we successfully implemented @PRPs/PRP-001-documentation-migration.md - use all agents, mcps and commands you have at your disposal. this is the final check before releasing this version! this will define our brand and will be the cornerstone of customer percievance in terms of style, character, grit and quality.",
+    "/git-ops:smart-commit ",
+    "suggest commit stages for all changes present.",
+    "before we continue with option 1: please do a quick research on best-practice regarding serena-mcp (and the resulting .serena/memories) if it is a good idea to add it's memories to git, or if this should be a local-only thing. this decides of the content of stage 7.",
+    "lets execute your recommendation."
+  ],
+  "agent_name": "Prism"
+}

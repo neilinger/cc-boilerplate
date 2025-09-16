@@ -118,3 +118,11 @@ extras/
 .claude/data/
 # Serena MCP memories (should not be version controlled)
 .serena/
+
+# Boilerplate Synchronization System
+.claude/build/
+.claude/backups/
+*.backup.*
+.boilerplate-version.backup
+CLAUDE.md.backup
+settings.json.backup

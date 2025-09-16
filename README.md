@@ -5,6 +5,7 @@
 [![Test Coverage](https://img.shields.io/badge/coverage-60%25-yellow)](https://github.com/USERNAME/cc-boilerplate/actions)
 [![Hooks](https://img.shields.io/badge/hooks-8-blue)](#-all-8-claude-code-hooks)
 [![Agents](https://img.shields.io/badge/agents-10-purple)](#-essential-agents)
+[![Commands](https://img.shields.io/badge/commands-5-cyan)](#-claude-commands-5-total)
 [![Output Styles](https://img.shields.io/badge/styles-9-orange)](#-9-output-styles)
 [![Release](https://img.shields.io/github/v/release/USERNAME/cc-boilerplate?include_prereleases)](https://github.com/USERNAME/cc-boilerplate/releases)
 
@@ -25,6 +26,25 @@ Copy this exact prompt into Claude Code:
 
 ```
 start with latest tag of neilinger/cc-boilerplate repository as skeleton for this project. then guide me through whats next.
+```
+
+### Modern Setup (Recommended - PRP-003 Synchronization)
+
+Use the new boilerplate synchronization system for seamless updates:
+
+```bash
+# 1. Initialize cc-boilerplate in new/existing project
+curl -sSL https://raw.githubusercontent.com/neilinger/cc-boilerplate/main/scripts/init-boilerplate.sh | bash
+
+# 2. Build configurations
+scripts/build-config.sh
+
+# 3. Customize for your domain
+vim .claude/project/CLAUDE.project.md     # Domain-specific instructions
+vim .claude/project/settings.project.json # Custom settings
+
+# 4. Update from upstream (anytime)
+scripts/update-boilerplate.sh
 ```
 
 ### Manual Setup Steps
@@ -126,8 +146,34 @@ Different development phases need different information formats:
 ### 🔧 Development Infrastructure
 
 - **`.serena/`**: serena-mcp semantic coding tools with project memories and intelligent code analysis
-- **`scripts/`**: KISS/YAGNI-compliant validation tools (PRP validation, etc.)
+- **`scripts/`**: KISS/YAGNI-compliant validation tools (PRP validation, boilerplate synchronization)
 - **`tests/`**: Security-focused testing of critical hook functionality
+- **`boilerplate/`**: Layered configuration system with git subtree for graceful updates
+
+## Boilerplate Synchronization System (PRP-003)
+
+The cc-boilerplate now supports graceful updates while preserving project customizations:
+
+### Three-Layer Configuration
+
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│  Base Layer     │    │  Project Layer   │    │  Merged Layer   │
+│                 │    │                  │    │                 │
+│ Boilerplate     │ +  │ Customizations   │ =  │ Final Config    │
+│ Templates       │    │ (.claude/project)│    │ (Generated)     │
+│ (.claude/       │    │                  │    │                 │
+│  boilerplate)   │    │                  │    │                 │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+```
+
+**Key Benefits**:
+- **Graceful Updates**: Pull boilerplate improvements without losing customizations
+- **Project Customization**: Add domain-specific instructions and settings
+- **Version Tracking**: Know exactly which boilerplate version you're using
+- **Conflict Resolution**: Automatic backup and rollback capabilities
+
+**See**: [Synchronization Guide](docs/SYNCHRONIZATION.md) for complete workflow documentation
 
 ## PRP Status Management
 
@@ -154,10 +200,19 @@ cc-boilerplate/
 │   ├── status_lines/   # Dynamic terminal displays
 │   └── settings.json   # Permissions and configuration
 ├── .serena/            # serena-mcp semantic coding & project memory
+├── boilerplate/        # Core boilerplate templates and git subtree
+│   ├── .claude/        # Base configuration templates
+│   ├── templates/      # Mergeable template files
+│   └── scripts/        # Synchronization utilities
 ├── PRPs/               # Product Requirements Process templates
 ├── scripts/            # Validation utilities (KISS/YAGNI)
+│   ├── init-boilerplate.sh    # Initialize synchronization
+│   ├── update-boilerplate.sh  # Pull boilerplate updates
+│   └── build-config.sh        # Merge configurations
 ├── tests/              # Security-critical functionality tests
 │   └── medium_priority/ # Feature reliability tests
+├── examples/           # Sample project implementations
+│   └── sample-project/ # Complete synchronization example
 ├── CLAUDE.md           # KISS/YAGNI development principles
 └── setup.sh            # Project setup script
 ```
@@ -221,6 +276,16 @@ Specialized agents for different development workflows:
 - **[github-checker](/.claude/agents/github-checker.md)** - GitHub repository analysis and validation
 - **[adr-creator](/.claude/agents/adr-creator.md)** - Architectural Decision Record generation
 
+## 🎯 Claude Commands (5 Total)
+
+Specialized commands for common development tasks:
+
+- **[cook](/.claude/commands/cook.md)** - Run multiple agent tasks in parallel for rapid development
+- **[prime](/.claude/commands/prime.md)** - Load project context for new agent sessions
+- **[prime_tts](/.claude/commands/prime_tts.md)** - Initialize Text-to-Speech system
+- **[question](/.claude/commands/question.md)** - Structured questioning for requirements gathering
+- **[update_status_line](/.claude/commands/update_status_line.md)** - Update dynamic terminal status displays
+
 ## Testing
 
 **🔴 High Priority (Security Critical)**: Safety hooks, dangerous command detection
@@ -260,10 +325,12 @@ python tests/test_hook_integration.py
 - **[System Reference](docs/reference/index.md)** - Essential system information
 - **[Serena MCP Integration](docs/reference/serena-mcp.md)** - Semantic coding tools
 - **[TTS System](docs/reference/tts-system.md)** - Audio notification system
+- **[Synchronization Guide](docs/SYNCHRONIZATION.md)** - Boilerplate update workflow
 
 ### Troubleshooting
 
 - **[Common Issues](docs/troubleshooting.md)** - Solutions to frequent problems
+- **[Synchronization Issues](docs/SYNCHRONIZATION.md#troubleshooting)** - Boilerplate update problems
 
 ### Architecture Decisions
 

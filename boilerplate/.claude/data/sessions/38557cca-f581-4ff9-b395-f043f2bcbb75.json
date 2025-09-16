@@ -1,0 +1,8 @@
+{
+  "session_id": "38557cca-f581-4ff9-b395-f043f2bcbb75",
+  "prompts": [
+    "i want to create an agent that gets triggered by a command that checks for new github issues/prs and such and starts the journey of processing them as regular maintenance.",
+    "serena onboarding"
+  ],
+  "agent_name": "Flux"
+}

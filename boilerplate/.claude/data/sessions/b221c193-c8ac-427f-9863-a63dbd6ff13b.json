@@ -1,0 +1,21 @@
+{
+  "session_id": "b221c193-c8ac-427f-9863-a63dbd6ff13b",
+  "prompts": [
+    "/git-ops:gh-check ",
+    "gh issue list",
+    "/git-ops:gh-check ",
+    "the release feature is broken: gh issue list counts 2 issues, gh-check command only one. check and fix.\\\n\\\n> gh issue list\n\n\u23fa Bash(gh issue list)\n  \u23bf  18 OPEN    CI/CD Safety Logic Tests Failing        bug     2025-09-09T21:05:46Z                 \n     16 OPEN    PRP execution should automatically create feature branch                2025-09-09T19:14:30Z\n\n\u23fa Two open issues:\n  - #18 (today): CI/CD Safety Logic Tests Failing - labeled as bug\n  - #16 (today): PRP execution should automatically create feature branch - unlabeled\n\n> /git-ops:gh-check is running\u2026 \n\n\u23fa \ud83d\udd0d GitHub Maintenance Check Report\n\n  \ud83d\udcdd Issues needing labels: 1\n  - #16: PRP execution should automatically create feature branch\n\n  \ud83d\udc40 PRs awaiting review: 0\n\n  \ud83d\udcdd Draft PRs: 0\n\n  \u2705 Approved PRs ready to merge: 0\n\n  \ud83d\udcca Total maintenance items: 1\n\n  \ud83d\udca1 Tip: Use 'gh issue list' and 'gh pr list' for detailed views",
+    "/git-ops:gh-check ",
+    "fix issues",
+    "which pipeline-issues remain? fix them, too",
+    "out of curiosity: I've seen a few issues with claude code hooks that it cannot find the hook file. currently the hooks are configured with relative paths in project root (like .claude/hooks/pre_tool_use.py). but the real path is /Users/neil/src/solo/cc-boilderplate/.claude/hooks/pre_tool_use.py) can this been an issue when claude 'losses' its orientation in which directory it is? research claude code documentation and github issues if this is valid / how to circumvent file not found issues with hooks.",
+    "implement this inside this project. give me a short prompt i can throw in to claude code in other projects so it fixes this aswell.",
+    "ok. whats next?",
+    "3,1,2 remove fix-hool-paths.md, release.",
+    "on to next issue",
+    "/git-ops:create-pull-request ",
+    "reviews are in, release it.",
+    "/git-ops:gh-check "
+  ],
+  "agent_name": "Cipher"
+}

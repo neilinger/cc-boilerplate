@@ -159,6 +159,7 @@ For detailed test categories and execution strategy, see [Testing Guide](testing
 1. **Read ADRs**: Review [docs/adr/](../adr/) for architectural decisions
 2. **Check CLAUDE.md**: Follow KISS/YAGNI principles
 3. **Review test coverage**: Understand what needs testing
+4. **Synchronization setup**: If using boilerplate sync, understand [Synchronization Guide](../SYNCHRONIZATION.md)
 
 ### During Development
 
@@ -166,6 +167,7 @@ For detailed test categories and execution strategy, see [Testing Guide](testing
 2. **Test locally**: Run `python tests/test_safety_hooks.py` before pushing
 3. **Security first**: Never bypass safety validations
 4. **Document decisions**: Create ADRs for significant choices
+5. **Sync awareness**: If using boilerplate sync, customize in `.claude/project/` not base files
 
 ### Before Release
 
@@ -227,12 +229,23 @@ cc-boilerplate/
 ├── .github/
 │   └── workflows/
 │       └── ci-cd.yml           # Branch-specific CI/CD pipeline
+├── boilerplate/                # NEW: Core boilerplate templates
+│   ├── .claude/                # Base configuration templates
+│   ├── templates/              # Mergeable template files
+│   └── scripts/                # Synchronization utilities
 ├── docs/
 │   ├── adr/                    # Architecture Decision Records
 │   │   ├── adr-001-branching-strategy.md
 │   │   ├── adr-002-cicd-pipeline.md
 │   │   └── adr-003-testing-strategy.md
+│   ├── SYNCHRONIZATION.md      # NEW: Boilerplate sync guide
 │   └── development.md          # This file
+├── examples/
+│   └── sample-project/         # NEW: Synchronization example
+├── scripts/
+│   ├── init-boilerplate.sh     # NEW: Initialize synchronization
+│   ├── update-boilerplate.sh   # NEW: Pull boilerplate updates
+│   └── build-config.sh         # NEW: Merge configurations
 ├── tests/
 │   ├── test_safety_hooks.py    # 🔴 Security critical
 │   ├── test_hook_integration.py # 🔴 Security critical
@@ -274,6 +287,19 @@ git checkout -b feature/new-hook
 git checkout release/v1.3.0
 git merge feature/tts-enhancement
 git merge feature/new-hook
+```
+
+### Working with Boilerplate Synchronization
+
+```bash
+# Update boilerplate while working on feature
+git checkout feature/my-feature
+scripts/update-boilerplate.sh  # Pulls latest boilerplate improvements
+scripts/build-config.sh        # Rebuilds merged configurations
+
+# Test that customizations are preserved
+git diff CLAUDE.md             # Should show your domain-specific content
+git add . && git commit -m "feat: update boilerplate and rebuild configs"
 ```
 
 ### Failed Release Branch

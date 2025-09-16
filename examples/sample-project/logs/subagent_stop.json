@@ -1,0 +1,10 @@
+[
+  {
+    "session_id": "7653b5e0-bb0d-48c4-a537-03e42bbe197b",
+    "transcript_path": "/Users/neil/.claude/projects/-Users-neil-src-solo-cc-boilerplate/7653b5e0-bb0d-48c4-a537-03e42bbe197b.jsonl",
+    "cwd": "/Users/neil/src/solo/cc-boilerplate/examples/sample-project",
+    "permission_mode": "acceptEdits",
+    "hook_event_name": "SubagentStop",
+    "stop_hook_active": false
+  }
+]

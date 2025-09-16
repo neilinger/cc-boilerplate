@@ -1,0 +1,11 @@
+{
+  "session_id": "f03e3ab6-6dd6-4a90-bdf1-20f3a2b29456",
+  "prompts": [
+    "continue",
+    "hm. if our branch is on the latest release and everything is as you say it is - why do i get this error:\\\n---\n  Audio Summary for Neil\n\n  Neil, I've successfully resolved Issue #11 with the hook system failures - ElevenLabs credit exhaustion no longer blocks operations.\n\n\u23fa Bash(uv run .claude/hooks/utils/tts/elevenlabs_tts.py \"Neil, I've successfully resolved Issue #11 with the hook system failures - ElevenLabs credit exhaustion no lon\u2026)\n  \u23bf  Error: \ud83c\udf99\ufe0f  ElevenLabs Turbo v2.5 TTS\n     ========================================\n     \ud83c\udfaf Text: Neil, I've successfully resolved Issue #11 with the hook system failures - ElevenLabs credit exhaustion no longer blocks operations.\n     \ud83d\udd0a Generating and playing...\n     \u274c TTS Error: 'ElevenLabs' object has no attribute 'generate'",
+    "retest, i think you got misleaded, you did not test in 'normal' context again after your fix.",
+    "ok. then let us continue",
+    "ok. then let us continue"
+  ],
+  "agent_name": "Echo"
+}
