@@ -16,8 +16,8 @@ command -v uv >/dev/null 2>&1 || {
     exit 1
 }
 
-# Check if running inside Claude Code environment or if claude-code command is available
-if [ -n "$CLAUDE_CODE_SESSION" ] || [ -n "$CLAUDE_ENV" ] || command -v claude-code >/dev/null 2>&1; then
+# Check if running inside Claude Code environment or if claude command is available
+if [ -n "$CLAUDE_CODE_SESSION" ] || [ -n "$CLAUDE_ENV" ] || command -v claude >/dev/null 2>&1; then
     echo "✓ Claude Code environment detected"
 else
     echo "L Error: Claude Code is required but not installed."
@@ -125,21 +125,21 @@ echo "         Setup Complete!"
 echo "======================================"
 echo ""
 echo "=� Project Configuration:"
-echo "  " Name: $PROJECT_NAME"
-echo "  " User: $USER_NAME"
-[ ! -z "$OPENAI_KEY" ] && echo "  " OpenAI API: Configured"
-[ ! -z "$ANTHROPIC_KEY" ] && echo "  " Anthropic API: Configured"
-[ ! -z "$ELEVENLABS_KEY" ] && echo "  " ElevenLabs API: Configured"
+echo "   Name: $PROJECT_NAME"
+echo "   User: $USER_NAME"
+[ ! -z "$OPENAI_KEY" ] && echo "   OpenAI API: Configured"
+[ ! -z "$ANTHROPIC_KEY" ] && echo "   Anthropic API: Configured"
+[ ! -z "$ELEVENLABS_KEY" ] && echo "   ElevenLabs API: Configured"
 echo ""
 echo "=� Files Created:"
-echo "  " .env (from .env.sample)"
-[ ! -z "$ELEVENLABS_KEY" ] && echo "  " .mcp.json (from .mcp.json.sample)"
-echo "  " logs/.gitkeep"
-echo "  " output/.gitkeep"
+echo "   .env (from .env.sample)"
+[ ! -z "$ELEVENLABS_KEY" ] && echo "   .mcp.json (from .mcp.json.sample)"
+echo "   logs/.gitkeep"
+echo "   output/.gitkeep"
 echo ""
 echo "=� Next Steps:"
 echo "  1. Review your .env configuration"
-echo "  2. Start Claude Code: claude-code ."
+echo "  2. Start Claude Code: claude ."
 echo "  3. Try the pre-configured hooks and agents"
 echo "  4. Use /agents to explore available sub-agents"
 echo "  5. Use meta-agent to create project-specific agents"
