@@ -4,8 +4,8 @@
 [![Security Tests](https://img.shields.io/badge/security-passing-brightgreen)](https://github.com/USERNAME/cc-boilerplate/actions)
 [![Test Coverage](https://img.shields.io/badge/coverage-60%25-yellow)](https://github.com/USERNAME/cc-boilerplate/actions)
 [![Hooks](https://img.shields.io/badge/hooks-8-blue)](#-all-8-claude-code-hooks)
-[![Agents](https://img.shields.io/badge/agents-4-purple)](#-essential-agents)
-[![Output Styles](https://img.shields.io/badge/styles-8-orange)](#-8-output-styles)
+[![Agents](https://img.shields.io/badge/agents-10-purple)](#-essential-agents)
+[![Output Styles](https://img.shields.io/badge/styles-9-orange)](#-9-output-styles)
 [![Release](https://img.shields.io/github/v/release/USERNAME/cc-boilerplate?include_prereleases)](https://github.com/USERNAME/cc-boilerplate/releases)
 
 Claude Code boilerplate with essential hooks, agents, and security features.
@@ -96,7 +96,7 @@ See `.env.sample` for all available configuration options.
 **🛡️ Security**: Comprehensive `rm -rf` protection with 30+ dangerous command patterns
 **🤖 Agent Automation**: Meta-agent creates new specialized agents from descriptions
 **🎨 Workflow Styles**: Output formats optimized for different development phases
-**🔧 Development Tools**: serena-mcp integration for boilerplate maintenance
+**🔧 Development Tools**: serena-mcp semantic coding for intelligent codebase analysis
 **🔊 Smart TTS**: Multi-provider fallback (ElevenLabs → OpenAI → pyttsx3)
 **📝 Session Management**: Context-aware hooks and logging
 
@@ -111,18 +111,21 @@ The `meta-agent` is the heart of this boilerplate - it automatically creates new
 - Set appropriate tools, colors, and delegation rules
 - Write ready-to-use `.md` files to `.claude/agents/`
 
-### 🎨 Workflow-Optimized Output Styles
+### 🎨 Workflow-Optimized Output Styles (9 Total)
 
 Different development phases need different information formats:
 
 - **GenUI**: Automatically generates and opens HTML documents for visual workflows
 - **TTS Summary**: Audio feedback for long-running operations
-- **JSON Structured**: Machine-parseable outputs for automation
-- **Markdown/Bullet Points**: Clean readable formats for documentation
+- **JSON/YAML/HTML Structured**: Machine-parseable outputs for automation
+- **Markdown Focused**: Clean readable formats for documentation
+- **Bullet Points**: Concise list-based information
+- **Table-Based**: Structured tabular data presentation
+- **Ultra-Concise**: Minimal, essential information only
 
 ### 🔧 Development Infrastructure
 
-- **`.serena/`**: serena-mcp tooling for maintaining and evolving this boilerplate itself
+- **`.serena/`**: serena-mcp semantic coding tools with project memories and intelligent code analysis
 - **`scripts/`**: KISS/YAGNI-compliant validation tools (PRP validation, etc.)
 - **`tests/`**: Security-focused testing of critical hook functionality
 
@@ -150,7 +153,7 @@ cc-boilerplate/
 │   ├── output-styles/  # Workflow-specific formatting
 │   ├── status_lines/   # Dynamic terminal displays
 │   └── settings.json   # Permissions and configuration
-├── .serena/            # serena-mcp development tooling
+├── .serena/            # serena-mcp semantic coding & project memory
 ├── PRPs/               # Product Requirements Process templates
 ├── scripts/            # Validation utilities (KISS/YAGNI)
 ├── tests/              # Security-critical functionality tests
@@ -190,16 +193,33 @@ ELEVENLABS_API_KEY=key
 OPENAI_API_KEY=key
 ```
 
-## Agents
+## 🔒 All 8 Claude Code Hooks
 
-- **meta-agent** - Generate new agents
-- **test-automator** - Create test suites
-- **code-reviewer** - Security and quality reviews
-- **technical-researcher** - Research analysis
-- **smart-doc-generator** - Documentation
-- **work-completion-summary** - Audio summaries
-- **test-coverage-analyzer** - Coverage gaps
-- **llm-research** - AI/ML developments
+Security-first hooks that execute in sequence:
+
+- **[user_prompt_submit](/.claude/hooks/user_prompt_submit.py)** - Input validation and preprocessing
+- **[pre_tool_use](/.claude/hooks/pre_tool_use.py)** - Security validation (CRITICAL - blocks dangerous commands)
+- **[post_tool_use](/.claude/hooks/post_tool_use.py)** - Logging and post-execution processing
+- **[notification](/.claude/hooks/notification.py)** - TTS alerts and notifications
+- **[stop](/.claude/hooks/stop.py)** - Session completion handling
+- **[subagent_stop](/.claude/hooks/subagent_stop.py)** - Agent completion processing
+- **[pre_compact](/.claude/hooks/pre_compact.py)** - Backup before conversation compaction
+- **[session_start](/.claude/hooks/session_start.py)** - Context loading and initialization
+
+## 🤖 Essential Agents
+
+Specialized agents for different development workflows:
+
+- **[meta-agent](/.claude/agents/meta-agent.md)** - Generate new specialized agents from descriptions
+- **[smart-doc-generator](/.claude/agents/smart-doc-generator.md)** - Comprehensive documentation generation
+- **[engineer-code-reviewer](/.claude/agents/engineer-code-reviewer.md)** - Security and quality code reviews
+- **[test-automator](/.claude/agents/test-automator.md)** - Automated test suite creation
+- **[test-coverage-analyzer](/.claude/agents/test-coverage-analyzer.md)** - Test coverage analysis and gap identification
+- **[work-completion-summary](/.claude/agents/work-completion-summary.md)** - Audio summaries for long operations
+- **[llm-ai-agents-and-eng-research](/.claude/agents/llm-ai-agents-and-eng-research.md)** - AI/ML research and analysis
+- **[technical.researcher](/.claude/agents/technical.researcher.md)** - Deep technical research and documentation
+- **[github-checker](/.claude/agents/github-checker.md)** - GitHub repository analysis and validation
+- **[adr-creator](/.claude/agents/adr-creator.md)** - Architectural Decision Record generation
 
 ## Testing
 
@@ -238,6 +258,7 @@ python tests/test_hook_integration.py
 
 - **[API Reference](docs/reference/api.md)** - Complete API documentation
 - **[System Reference](docs/reference/index.md)** - Essential system information
+- **[Serena MCP Integration](docs/reference/serena-mcp.md)** - Semantic coding tools
 - **[TTS System](docs/reference/tts-system.md)** - Audio notification system
 
 ### Troubleshooting
@@ -253,6 +274,20 @@ python tests/test_hook_integration.py
 - **[ADR-004: Documentation Standards](docs/adr/adr-004-documentation-standards.md)**
 - **[ADR-005: ADR/PRP Separation](docs/adr/adr-005-adr-prp-separation.md)**
 - **[ADR-006: Issue Management Process](docs/adr/adr-006-issue-management-process.md)**
+
+## 🎨 9 Output Styles
+
+Workflow-optimized formatting for different development phases:
+
+- **[genui.md](/.claude/output-styles/genui.md)** - Automatically generates and opens HTML documents for visual workflows
+- **[tts-summary.md](/.claude/output-styles/tts-summary.md)** - Audio feedback for long-running operations
+- **[json-structured.md](/.claude/output-styles/json-structured.md)** - Machine-parseable JSON outputs for automation
+- **[yaml-structured.md](/.claude/output-styles/yaml-structured.md)** - YAML format for configuration and data
+- **[html-structured.md](/.claude/output-styles/html-structured.md)** - Structured HTML for rich displays
+- **[markdown-focused.md](/.claude/output-styles/markdown-focused.md)** - Clean readable markdown for documentation
+- **[bullet-points.md](/.claude/output-styles/bullet-points.md)** - Concise list-based information
+- **[table-based.md](/.claude/output-styles/table-based.md)** - Structured tabular data presentation
+- **[ultra-concise.md](/.claude/output-styles/ultra-concise.md)** - Minimal, essential information only
 
 ## Usage
 
