@@ -46,7 +46,6 @@ vim .claude/project/settings.project.json # Custom settings
 # 4. Update from upstream (anytime)
 scripts/update-boilerplate.sh
 ```
-
 ### Manual Setup Steps
 
 Alternatively, follow these steps manually:
