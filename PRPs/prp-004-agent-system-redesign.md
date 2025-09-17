@@ -14,6 +14,7 @@ Status_Note: Comprehensive redesign based on collaborative analysis - implements
 **Feature Goal**: Transform the Claude Code sub-agent system from flat agent delegation to hierarchical orchestration with autonomous agent selection, security-first tool allocation, and proactive quality assurance through soft hooks.
 
 **Deliverable**:
+
 - Hierarchical orchestration system with primary orchestrator agents
 - Security-based tool allocation matrix with role-based permissions
 - Missing critical agents (debugger, security-scanner, dependency-manager, pr-optimizer, context-engineer)
@@ -22,6 +23,7 @@ Status_Note: Comprehensive redesign based on collaborative analysis - implements
 - Agent orchestration chains for common workflows
 
 **Success Definition**:
+
 - Agents autonomously coordinate in chains (code-reviewer → security-scanner → test-automator)
 - Tool permissions enforced by role (read-only agents cannot edit)
 - Proactive quality hooks prevent issues before they occur
@@ -35,6 +37,7 @@ Status_Note: Comprehensive redesign based on collaborative analysis - implements
 **Use Case**: Developer writes code, system automatically triggers code-reviewer → security-scanner → test-automator chain, prevents insecure code from reaching production, and optimizes agent model usage based on task complexity
 
 **User Journey**:
+
 1. User makes code change
 2. Soft hook triggers proactive quality chain
 3. Hierarchical agents coordinate automatically
@@ -43,6 +46,7 @@ Status_Note: Comprehensive redesign based on collaborative analysis - implements
 6. System prevents drift and maintains quality
 
 **Pain Points Addressed**:
+
 - Current flat agent selection misses coordinated workflows
 - No security boundaries on tool access
 - Reactive rather than proactive quality assurance
@@ -63,6 +67,7 @@ Status_Note: Comprehensive redesign based on collaborative analysis - implements
 ## What
 
 ### User-Visible Behavior
+
 - Agents automatically coordinate in predefined chains for common workflows
 - Security-sensitive operations require explicit confirmation
 - Proactive quality suggestions appear before problems occur
@@ -70,6 +75,7 @@ Status_Note: Comprehensive redesign based on collaborative analysis - implements
 - Comprehensive validation occurs before code reaches production
 
 ### Technical Requirements
+
 - Hierarchical orchestration layer above current agent system
 - Role-based tool permission enforcement
 - Soft hook system that integrates with existing Claude Code hooks
