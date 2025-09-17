@@ -55,8 +55,11 @@ check_requirements() {
     # Check git
     command -v git >/dev/null 2>&1 || abort "Git is required but not installed"
 
-    # Check git subtree
-    git subtree --help >/dev/null 2>&1 || abort "Git subtree is required but not available"
+    # Check git subtree (exit code 129 is expected when called without args)
+    git subtree >/dev/null 2>&1
+    if [[ $? -ne 129 ]]; then
+        abort "Git subtree is required but not available"
+    fi
 
     # Check jq
     command -v jq >/dev/null 2>&1 || abort "jq is required but not installed. Install with: brew install jq"
