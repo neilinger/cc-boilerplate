@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Ensure Homebrew git is used (includes git-subtree on macOS)
+export PATH="/opt/homebrew/bin:$PATH"
+
 # CC-Boilerplate Initialization Script
 # Initializes cc-boilerplate in new or existing projects using git subtree
 
