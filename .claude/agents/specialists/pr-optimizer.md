@@ -6,7 +6,7 @@ description: |
   Runs AFTER: Code implementation complete, ready for PR creation
   Hands off to: the-librarian (for context), github-checker (for maintenance)
 tools: Bash(gh pr:*), Bash(gh issue:*), Bash(gh label:*), Read, Task
-model: haiku
+model: sonnet
 color: green
 ---
 

@@ -6,7 +6,7 @@ description: |
   Runs AFTER: Dependency analysis, security alerts, periodic maintenance
   Hands off to: security-scanner (for vulnerability validation), test-automator (for compatibility testing)
 tools: Read, Bash(npm:*), Bash(git:*), Bash(gh api:*), Task
-model: haiku
+model: sonnet
 color: blue
 ---
 

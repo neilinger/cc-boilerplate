@@ -1,0 +1,150 @@
+# GitHub Actions workflow for agent compliance validation
+# Add this to .github/workflows/ to enable CI/CD agent validation
+
+name: Agent Architecture Compliance
+
+on:
+  push:
+    paths:
+      - '.claude/agents/**/*.md'
+      - '.claude/agents/config/*.yaml'
+  pull_request:
+    paths:
+      - '.claude/agents/**/*.md'
+      - '.claude/agents/config/*.yaml'
+
+jobs:
+  agent-compliance:
+    runs-on: ubuntu-latest
+    name: Validate Agent Architecture Compliance
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Run Agent Compliance Check
+        id: compliance
+        run: |
+          echo "🔍 Checking Claude Code agent compliance..."
+          if python3 .claude/hooks/utils/agent-compliance-checker.py --verbose; then
+            echo "✅ All agents are compliant with hierarchical architecture"
+            echo "compliance=passed" >> $GITHUB_OUTPUT
+          else
+            echo "⚠️ Agent compliance issues found"
+            echo "compliance=failed" >> $GITHUB_OUTPUT
+
+            # Create detailed report for PR comment
+            python3 .claude/hooks/utils/agent-compliance-checker.py --verbose > compliance-report.txt
+          fi
+
+      - name: Upload compliance report
+        if: steps.compliance.outputs.compliance == 'failed'
+        uses: actions/upload-artifact@v3
+        with:
+          name: agent-compliance-report
+          path: compliance-report.txt
+
+      - name: Comment on PR with compliance issues
+        if: github.event_name == 'pull_request' && steps.compliance.outputs.compliance == 'failed'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+
+            let report = '';
+            try {
+              report = fs.readFileSync('compliance-report.txt', 'utf8');
+            } catch (error) {
+              report = 'Could not read compliance report';
+            }
+
+            const body = `## 🤖 Agent Architecture Compliance Report
+
+            This PR contains changes to Claude Code agents that have compliance issues with the hierarchical multi-agent architecture defined in ADR-007 and ADR-008.
+
+            <details>
+            <summary>📊 Compliance Report</summary>
+
+            \`\`\`
+            ${report}
+            \`\`\`
+
+            </details>
+
+            ### 🔧 How to Fix
+
+            1. **Review the compliance issues** listed above
+            2. **Update agents** according to:
+               - ADR-007: Hierarchical Multi-Agent Architecture
+               - ADR-008: Cognitive Load Model Allocation
+            3. **Run locally**: \`python3 .claude/hooks/utils/agent-compliance-checker.py --verbose\`
+            4. **Commit fixes** and push to update this PR
+
+            ### 📚 Resources
+
+            - [ADR-007](docs/adr/adr-007-agent-system-architecture.md)
+            - [ADR-008](docs/adr/adr-008-cognitive-load-model-allocation.md)
+            - [Tool Permissions Matrix](.claude/agents/config/tool-permissions.yaml)
+            - [Orchestration Config](.claude/agents/config/agent-orchestration.yaml)
+
+            *This is a soft check - the PR can still be merged, but addressing these issues will improve agent system integrity.*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+      - name: Set status check
+        if: always()
+        run: |
+          if [ "${{ steps.compliance.outputs.compliance }}" = "passed" ]; then
+            echo "✅ Agent compliance check passed"
+            exit 0
+          else
+            echo "⚠️ Agent compliance check found issues (soft check - not blocking)"
+            # Exit 0 for soft check approach - warns but doesn't block
+            exit 0
+          fi
+
+  # Optional: Strict compliance check for critical branches
+  strict-compliance:
+    runs-on: ubuntu-latest
+    name: Strict Agent Compliance (main branch)
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Strict Compliance Check
+        run: |
+          echo "🔒 Running strict compliance check for main branch..."
+          if python3 .claude/hooks/utils/agent-compliance-checker.py; then
+            echo "✅ Strict compliance check passed"
+          else
+            echo "❌ Strict compliance check failed - main branch must be compliant"
+            echo "🔧 Please fix all compliance issues before merging to main"
+            exit 1
+          fi

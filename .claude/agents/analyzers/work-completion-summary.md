@@ -6,7 +6,7 @@ description: |
   Runs AFTER: Work completion, task finalization
   Hands off to: None (terminal agent)
 tools: Read, mcp__ElevenLabs__text_to_speech, mcp__ElevenLabs__play_audio, Task
-model: haiku
+model: sonnet
 color: green
 ---
 

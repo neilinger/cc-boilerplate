@@ -6,7 +6,7 @@ description: |
   Runs AFTER: test-automator (for coverage validation)
   Hands off to: workflow-orchestrator (for improvements)
 tools: Read, Grep, Glob, Bash(test:*), Bash(coverage:*), Bash(gh run view:*), Task
-model: haiku
+model: sonnet
 color: orange
 ---
 
