@@ -1,9 +1,13 @@
 ---
 name: smart-doc-generator
-description: ALWAYS USE FOR ANY DOCUMENTATION TASK - Updates README files, project docs, API documentation, architectural overviews. Handles both creation and updates.
-tools: Read, Glob, Grep, LS, Write, MultiEdit
+description: |
+  ALWAYS use when: Documentation creation/updates, README files, API docs, architectural overviews
+  NEVER use when: Code implementation, testing, non-documentation tasks
+  Runs AFTER: Code implementation complete
+  Hands off to: workflow-orchestrator (for integration)
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Task
 model: sonnet
-color: blue
+color: green
 ---
 
 # Purpose
