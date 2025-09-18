@@ -4,8 +4,8 @@
 [![Security Tests](https://img.shields.io/badge/security-passing-brightgreen)](https://github.com/USERNAME/cc-boilerplate/actions)
 [![Test Coverage](https://img.shields.io/badge/coverage-60%25-yellow)](https://github.com/USERNAME/cc-boilerplate/actions)
 [![Hooks](https://img.shields.io/badge/hooks-8-blue)](#-all-8-claude-code-hooks)
-[![Agents](https://img.shields.io/badge/agents-17-purple)](#-hierarchical-agent-system)
-[![Commands](https://img.shields.io/badge/commands-5-cyan)](#-claude-commands-5-total)
+[![Agents](https://img.shields.io/badge/agents-32-purple)](#-hierarchical-agent-system)
+[![Commands](https://img.shields.io/badge/commands-7-cyan)](#-claude-commands-7-total)
 [![Output Styles](https://img.shields.io/badge/styles-9-orange)](#-9-output-styles)
 [![Release](https://img.shields.io/github/v/release/USERNAME/cc-boilerplate?include_prereleases)](https://github.com/USERNAME/cc-boilerplate/releases)
 
@@ -324,8 +324,8 @@ Implements ADR-007 (Hierarchical Multi-Agent Architecture) with autonomous orche
 - **[workflow-orchestrator](/.claude/agents/orchestrators/workflow-orchestrator.md)** - Complex multi-step coordination and feature implementation
 - **[security-orchestrator](/.claude/agents/orchestrators/security-orchestrator.md)** - Security validation chain coordination
 
-### Specialized Agents (Sonnet Models)
-- **[meta-agent](/.claude/agents/meta-agent.md)** - Generate new specialized agents from descriptions
+### Specialized Agents (Sonnet/Opus Models)
+- **[meta-agent](/.claude/agents/meta-agent.md)** - Generate new specialized agents with external repository discovery
 - **[smart-doc-generator](/.claude/agents/specialists/smart-doc-generator.md)** - Comprehensive documentation generation
 - **[test-automator](/.claude/agents/specialists/test-automator.md)** - Automated test suite creation
 - **[debugger](/.claude/agents/specialists/debugger.md)** - Root cause analysis and fix implementation
@@ -336,6 +336,18 @@ Implements ADR-007 (Hierarchical Multi-Agent Architecture) with autonomous orche
 - **[dependency-manager](/.claude/agents/specialists/dependency-manager.md)** - Package management and security updates
 - **[context-engineer](/.claude/agents/specialists/context-engineer.md)** - Context window and prompt optimization
 - **[ai-engineering-researcher](/.claude/agents/specialists/ai-engineering-researcher.md)** - AI/ML research specialist
+
+#### New Specialist Agents (Phase 1 Implementation)
+- **[api-architect](/.claude/agents/specialists/api-architect.md)** - RESTful/GraphQL API design and implementation
+- **[aws-expert](/.claude/agents/specialists/aws-expert.md)** - AWS cloud services and infrastructure
+- **[docker-expert](/.claude/agents/specialists/docker-expert.md)** - Containerization and orchestration
+- **[postgres-expert](/.claude/agents/specialists/postgres-expert.md)** - Database design and optimization
+- **[react-expert](/.claude/agents/specialists/react-expert.md)** - React development and best practices
+- **[nextjs-expert](/.claude/agents/specialists/nextjs-expert.md)** - Next.js applications and optimization
+- **[typescript-pro](/.claude/agents/specialists/typescript-pro.md)** - TypeScript development and type safety
+- **[python-pro](/.claude/agents/specialists/python-pro.md)** - Python development and ecosystem tools
+- **[graphql-architect](/.claude/agents/specialists/graphql-architect.md)** - GraphQL schema design and implementation
+- **[performance-optimizer](/.claude/agents/specialists/performance-optimizer.md)** - Application performance and optimization
 
 ### Analysis Agents (Sonnet/Haiku Models)
 - **[code-reviewer](/.claude/agents/analyzers/code-reviewer.md)** - Security and quality code reviews (read-only)
@@ -357,7 +369,7 @@ Implements ADR-007 (Hierarchical Multi-Agent Architecture) with autonomous orche
 
 **Agent architecture compliance**: Run `./claude/hooks/check-agents.sh --verbose` for validation
 
-## 🎯 Claude Commands (5 Total)
+## 🎯 Claude Commands (7 Total)
 
 Specialized commands for common development tasks:
 
@@ -366,6 +378,10 @@ Specialized commands for common development tasks:
 - **[prime_tts](/.claude/commands/prime_tts.md)** - Initialize Text-to-Speech system
 - **[question](/.claude/commands/question.md)** - Structured questioning for requirements gathering
 - **[update_status_line](/.claude/commands/update_status_line.md)** - Update dynamic terminal status displays
+
+### Git Operations Commands
+- **[git-ops:smart-commit](/.claude/commands/git-ops/smart-commit.md)** - Context-aware commit creation with Release Flow support
+- **[git-ops:start-release-journey](/.claude/commands/git-ops/start-release-journey.md)** - Guide engineers through proper Release Flow process ("This is the way")
 
 ## Testing
 
