@@ -57,7 +57,27 @@ read -p "ElevenLabs Voice ID: " ELEVENLABS_VOICE_ID
 if [ -f .env.sample ]; then
     echo ""
     echo "⚙️ Creating .env configuration..."
-    cp .env.sample .env
+
+    # Check if .env already exists
+    if [ -f .env ]; then
+        echo "⚠️  Existing .env file detected. Creating backup and merging..."
+        cp .env .env.backup.$(date +%Y%m%d_%H%M%S)
+        echo " Created backup: .env.backup.$(date +%Y%m%d_%H%M%S)"
+
+        # Create merged .env by appending new template values that don't exist
+        while IFS= read -r line; do
+            if [[ "$line" =~ ^[A-Z_]+= ]]; then
+                var_name=$(echo "$line" | cut -d'=' -f1)
+                if ! grep -q "^${var_name}=" .env; then
+                    echo "$line" >> .env
+                fi
+            fi
+        done < .env.sample
+        echo " Merged new configuration options into existing .env"
+    else
+        cp .env.sample .env
+        echo " Created .env from template"
+    fi
 
     # Update with user inputs
     if [[ "$OSTYPE" == "darwin"* ]]; then

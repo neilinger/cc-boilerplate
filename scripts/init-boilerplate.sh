@@ -231,8 +231,18 @@ add_subtree() {
     # Copy only the boilerplate subdirectory content
     if [[ -d "$temp_dir/boilerplate" ]]; then
         info "Extracting boilerplate content..."
-        if ! cp -r "$temp_dir/boilerplate/"* .claude/boilerplate/; then
-            abort "Failed to copy boilerplate content"
+        # Use rsync or cp with dotglob to include hidden files
+        if command -v rsync >/dev/null 2>&1; then
+            if ! rsync -a "$temp_dir/boilerplate/" .claude/boilerplate/; then
+                abort "Failed to copy boilerplate content"
+            fi
+        else
+            # Enable dotglob to include hidden files like .claude
+            shopt -s dotglob
+            if ! cp -r "$temp_dir/boilerplate/"* .claude/boilerplate/; then
+                abort "Failed to copy boilerplate content"
+            fi
+            shopt -u dotglob
         fi
 
         # Copy essential project root files from the source repository
