@@ -53,7 +53,7 @@ uv run .claude/hooks/utils/tts/elevenlabs_tts.py "YOUR_MESSAGE_TO_${USER_NAME}"
 ${USER_NAME}, I've created three new output styles to customize how you receive information.
 
 ```bash
-uv run .claude/hooks/utils/tts/elevenlabs_tts.py "${USER_NAME}, I've created three new output styles to customize how you receive information."
+uv run ${CLAUDE_PROJECT_DIR}/.claude/hooks/utils/tts/elevenlabs_tts.py "${USER_NAME}, I've created three new output styles to customize how you receive information."
 ```
 
 ## Important Rules

@@ -1,0 +1,555 @@
+# Tool Permissions Matrix
+# Security-first tool allocation with role-based access control
+# Implements principle of least privilege from ADR-007
+
+version: "1.0"
+created: "2025-01-17"
+description: "Role-based tool permissions enforcing security boundaries"
+
+# Security Levels
+security_levels:
+  read_only:
+    description: "Analysis agents that cannot modify any files"
+    risk_level: "low"
+    tools_allowed:
+      - "Read"
+      - "Grep"
+      - "Glob"
+      - "Bash(git log:*)"
+      - "Bash(git show:*)"
+      - "Bash(git diff:*)"
+      - "WebSearch"
+      - "WebFetch"
+      - "Task"
+    tools_forbidden:
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "NotebookEdit"
+      - "Bash(*)"  # Except specific git commands
+    confirmation_required: false
+
+  write_limited:
+    description: "Agents that can create/modify files with restrictions"
+    risk_level: "medium"
+    tools_allowed:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Task"
+    tools_forbidden:
+      - "Bash(*)"  # No command execution
+      - "NotebookEdit"  # No notebook modification
+    confirmation_required: true
+
+  execution_restricted:
+    description: "Agents that can run specific commands"
+    risk_level: "medium"
+    tools_allowed:
+      - "Read"
+      - "Bash(git:*)"
+      - "Bash(test:*)"
+      - "Bash(npm:*)"
+      - "Bash(security:*)"
+      - "Bash(gh:*)"
+      - "Task"
+    tools_forbidden:
+      - "Write"
+      - "Edit"
+      - "Bash(rm:*)"
+      - "Bash(sudo:*)"
+    confirmation_required: true
+
+  full_access:
+    description: "Orchestrators and meta-agents with full capabilities"
+    risk_level: "high"
+    tools_allowed: ["*"]
+    tools_forbidden: []
+    confirmation_required: true
+
+# Agent-Specific Permission Mappings
+agent_permissions:
+  # Analysis Agents (Read-Only)
+  code-reviewer:
+    security_level: "read_only"
+    specific_tools:
+      - "Read"
+      - "Grep"
+      - "Glob"
+      - "Bash(git diff:*)"
+      - "Bash(gh pr diff:*)"
+      - "Task"
+    rationale: "Code review requires only analysis, no file modification"
+
+  security-scanner:
+    security_level: "read_only"
+    specific_tools:
+      - "Read"
+      - "Grep"
+      - "Glob"
+      - "Bash(security:*)"
+      - "Bash(gh api:*)"  # For security alerts
+      - "WebSearch"  # For CVE lookups
+      - "Task"
+    rationale: "Security scanning is analysis-only, must not modify code"
+
+  test-coverage-analyzer:
+    security_level: "read_only"
+    specific_tools:
+      - "Read"
+      - "Grep"
+      - "Glob"
+      - "Bash(coverage:*)"
+      - "Bash(test:*)"
+      - "Bash(gh run view:*)"
+      - "Task"
+    rationale: "Coverage analysis requires test execution but no file changes"
+
+  codebase-researcher:
+    security_level: "read_only"
+    specific_tools:
+      - "Read"
+      - "Grep"
+      - "Glob"
+      - "mcp__serena__*"
+      - "Bash(git log:*)"
+      - "Bash(git show:*)"
+      - "Bash(gh pr view:*)"
+      - "Bash(gh issue view:*)"
+      - "Task"
+    rationale: "Internal research requires read access and code analysis tools"
+
+  # Research Agents (Read-Only + External Access)
+  technical-researcher:
+    security_level: "read_only"
+    specific_tools:
+      - "Read"
+      - "Grep"
+      - "Glob"
+      - "WebSearch"
+      - "WebFetch"
+      - "mcp__Ref__*"
+      - "Task"
+    rationale: "External research requires web access but no file modification"
+
+  the-librarian:
+    security_level: "read_only"
+    specific_tools:
+      - "mcp__neil-knowledge-graph__*"
+      - "Read"
+      - "Task"
+    rationale: "RAG agent needs knowledge access but no file modification"
+
+  ai-engineering-researcher:
+    security_level: "read_only"
+    specific_tools:
+      - "Read"
+      - "WebSearch"
+      - "WebFetch"
+      - "mcp__Ref__*"
+      - "Task"
+    rationale: "AI research requires external sources but no file changes"
+
+  # Creation Agents (Write-Limited)
+  smart-doc-generator:
+    security_level: "write_limited"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "MultiEdit"
+      - "Edit"
+      - "Grep"
+      - "Glob"
+      - "Task"
+    rationale: "Documentation generation requires file creation/modification"
+
+  test-automator:
+    security_level: "write_limited"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Bash(test:*)"
+      - "Bash(npm:*)"
+      - "Task"
+    rationale: "Test creation requires file modification and test execution"
+
+  adr-creator:
+    security_level: "write_limited"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "Task"
+    rationale: "ADR creation requires file creation in docs/adr/ directory"
+
+  prp-creator:
+    security_level: "write_limited"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "Task"
+      - "Bash(gh issue list:*)"
+    rationale: "PRP creation requires file creation and issue reference"
+
+  debugger:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"  # For creating fix files
+      - "Edit"   # For applying fixes
+      - "Bash"   # General debugging commands
+      - "Grep"
+      - "Task"
+    rationale: "Debugging requires code analysis, execution, and fix application"
+
+  # GitHub Agents (Execution-Restricted)
+  pr-optimizer:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Bash(gh pr:*)"
+      - "Bash(gh issue:*)"
+      - "Bash(gh label:*)"
+      - "Read"
+      - "Task"
+    rationale: "PR optimization requires GitHub CLI but no file modification"
+
+  github-checker:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Bash(gh:*)"
+      - "Read"
+      - "Task"
+    rationale: "GitHub maintenance requires full gh CLI access"
+
+  dependency-manager:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Bash(npm:*)"
+      - "Bash(git:*)"
+      - "Bash(gh api:*)"  # For security alerts
+      - "Task"
+    rationale: "Dependency management requires package commands and git"
+
+  # Simple Agents (Read-Only)
+  work-completion-summary:
+    security_level: "read_only"
+    specific_tools:
+      - "Read"
+      - "mcp__ElevenLabs__text_to_speech"
+      - "mcp__ElevenLabs__play_audio"
+      - "Task"
+    rationale: "Summary generation requires only reading and TTS"
+
+  # Orchestrators (Full Access)
+  workflow-orchestrator:
+    security_level: "full_access"
+    specific_tools: ["*"]
+    rationale: "Primary orchestrator requires full capabilities for coordination"
+
+  # Meta Agents (Full Access)
+  meta-agent:
+    security_level: "full_access"
+    specific_tools: ["*"]
+    rationale: "Agent creation requires full understanding and file creation"
+
+  context-engineer:
+    security_level: "write_limited"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Task"
+    rationale: "Context optimization requires prompt modification capabilities"
+
+  # Imported Specialist Agents (New)
+  python-pro:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(python:*)"
+      - "Bash(pip:*)"
+      - "Bash(uv:*)"
+      - "Task"
+    rationale: "Python development requires code modification and Python tooling"
+
+  typescript-pro:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(npm:*)"
+      - "Bash(tsc:*)"
+      - "Bash(node:*)"
+      - "Task"
+    rationale: "TypeScript development requires code modification and Node.js tooling"
+
+  react-expert:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(npm:*)"
+      - "Bash(next:*)"
+      - "Bash(react:*)"
+      - "Task"
+    rationale: "React development requires code modification and React/Next.js tooling"
+
+  postgres-expert:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(psql:*)"
+      - "Bash(pg_dump:*)"
+      - "Bash(createdb:*)"
+      - "Task"
+    rationale: "PostgreSQL work requires database commands and schema modification"
+
+  aws-expert:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(aws:*)"
+      - "Bash(terraform:*)"
+      - "Bash(cdk:*)"
+      - "Task"
+    rationale: "AWS architecture requires infrastructure-as-code and AWS CLI access"
+
+  docker-expert:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(docker:*)"
+      - "Bash(kubectl:*)"
+      - "Bash(podman:*)"
+      - "Task"
+    rationale: "Container work requires Docker/Kubernetes commands and configuration"
+
+  performance-optimizer:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(performance:*)"
+      - "Bash(profiling:*)"
+      - "Task"
+    rationale: "Performance optimization requires profiling tools and code modification"
+
+  api-architect:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(curl:*)"
+      - "Bash(postman:*)"
+      - "Task"
+    rationale: "API architecture requires code modification and API testing tools"
+
+  nextjs-expert:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(npm:*)"
+      - "Bash(next:*)"
+      - "Bash(vercel:*)"
+      - "Task"
+    rationale: "Next.js development requires code modification and Next.js tooling"
+
+  graphql-architect:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(graphql:*)"
+      - "Bash(apollo:*)"
+      - "Task"
+    rationale: "GraphQL architecture requires schema modification and GraphQL tooling"
+
+  # Phase 2 Specialist Agents - AI-Centric Engineering Focus
+  terraform-specialist:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(terraform:*)"
+      - "Bash(tofu:*)"
+      - "Bash(aws:*)"
+      - "Bash(git:*)"
+      - "Task"
+    rationale: "Infrastructure as Code requires Terraform/OpenTofu commands and AWS CLI access"
+
+  kubernetes-architect:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(kubectl:*)"
+      - "Bash(helm:*)"
+      - "Bash(aws:*)"
+      - "Task"
+    rationale: "Kubernetes orchestration requires kubectl, Helm, and AWS EKS integration"
+
+  deployment-engineer:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(git:*)"
+      - "Bash(docker:*)"
+      - "Bash(kubectl:*)"
+      - "Bash(aws:*)"
+      - "Task"
+    rationale: "CI/CD pipelines require Git, Docker, Kubernetes, and AWS deployment tools"
+
+  ml-engineer:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(python:*)"
+      - "Bash(aws:*)"
+      - "Bash(docker:*)"
+      - "Task"
+    rationale: "ML production systems require Python, AWS Bedrock, and containerization"
+
+  data-scientist:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(python:*)"
+      - "Bash(jupyter:*)"
+      - "Task"
+    rationale: "Data science work requires Python data stack and Jupyter environments"
+
+# Tool Categories and Risk Assessment
+tool_categories:
+  safe_read:
+    risk: "none"
+    tools: ["Read", "Grep", "Glob"]
+
+  external_access:
+    risk: "low"
+    tools: ["WebSearch", "WebFetch", "mcp__Ref__*"]
+    monitoring: true
+
+  file_modification:
+    risk: "medium"
+    tools: ["Write", "Edit", "MultiEdit", "NotebookEdit"]
+    confirmation_required: true
+    audit_log: true
+
+  command_execution:
+    risk: "high"
+    tools: ["Bash"]
+    whitelist_required: true
+    audit_log: true
+
+  coordination:
+    risk: "low"
+    tools: ["Task", "TodoWrite"]
+
+# Enforcement Rules
+enforcement:
+  validation:
+    pre_execution: true
+    method: "whitelist_check"
+
+  violations:
+    action: "block_and_log"
+    notification: "security_orchestrator"
+    escalation: "workflow_orchestrator"
+
+  audit:
+    log_all_tool_usage: true
+    retention_days: 90
+    high_risk_monitoring: true
+
+  confirmation_prompts:
+    file_modification: "This agent will modify files. Continue? (y/N)"
+    command_execution: "This agent will execute commands. Continue? (y/N)"
+    full_access: "This agent has full system access. Continue? (y/N)"
+
+# Exception Handling
+exceptions:
+  emergency_access:
+    trigger: "system_recovery"
+    temporary_elevation: true
+    approval_required: true
+    time_limit: "1_hour"
+
+  development_mode:
+    relaxed_permissions: false  # Always enforce in production
+    testing_sandbox: true

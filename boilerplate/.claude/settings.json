@@ -12,37 +12,9 @@
       "Write",
       "Edit",
       "Bash(chmod:*)",
-      "Bash(touch:*)",
-      "Bash(git push:*)",
-      "mcp__ElevenLabs__text_to_speech",
-      "mcp__ElevenLabs__check_subscription",
-      "Read(/Users/neil/.claude/**)",
-      "WebSearch",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "mcp__sequential-thinking__sequentialthinking",
-      "mcp__serena__list_dir",
-      "mcp__serena__find_file",
-      "mcp__serena__search_for_pattern",
-      "mcp__serena__activate_project",
-      "mcp__serena__check_onboarding_performed",
-      "mcp__serena__onboarding",
-      "mcp__serena__write_memory",
-      "mcp__ElevenLabs__play_audio",
-      "Bash(gh repo rename:*)",
-      "Bash(git remote set-url:*)",
-      "Bash(git tag:*)",
-      "Bash(git checkout:*)",
-      "WebFetch(domain:*)",
-      "WebFetch(domain:www.google.com)",
-      "WebFetch(domain:github.com)",
-      "WebFetch(domain:arxiv.org)",
-      "WebFetch(domain:news.ycombinator.com)",
-      "mcp__Ref__ref_search_documentation",
-      "mcp__Ref__ref_read_url"
+      "Bash(touch:*)"
     ],
-    "deny": [],
-    "__PROJECT_CUSTOM_PERMISSIONS__": []
+    "deny": []
   },
   "statusLine": {
     "type": "command",
@@ -52,7 +24,6 @@
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": ["ElevenLabs"],
   "outputStyle": "TTS Summary",
-  "__PROJECT_CUSTOM_SETTINGS__": {},
   "hooks": {
     "PreToolUse": [
       {
@@ -140,7 +111,6 @@
           }
         ]
       }
-    ],
-    "__PROJECT_CUSTOM_HOOKS__": {}
+    ]
   }
 }

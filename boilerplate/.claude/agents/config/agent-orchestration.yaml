@@ -1,0 +1,122 @@
+# Agent Orchestration Configuration - Simplified
+# Minimal orchestration focusing on security chain and core coordination
+# Updated: 2025-01-18 - KISS/YAGNI Simplification
+
+version: "1.1"
+created: "2025-01-18"
+description: "Simplified orchestration system maintaining security-first approach with minimal complexity"
+
+# Primary Orchestrator - Single point of coordination
+orchestrators:
+  workflow-orchestrator:
+    model: opus
+    role: "multi_step_coordination"
+    triggers:
+      - "multi-step workflow"
+      - "complex feature implementation"
+      - "cross-domain coordination"
+    tools: ["Task", "TodoWrite", "Read"]
+
+  security-orchestrator:
+    model: sonnet
+    role: "security_coordination"
+    triggers:
+      - "security validation"
+      - "security incident response"
+    tools: ["Task", "Read"]
+
+# Essential Security Chain - Only keep what adds measurable value
+chains:
+  security_chain:
+    name: "Security Validation Chain"
+    trigger: "code_modified"
+    sequence:
+      - agent: "code-reviewer"
+        required: true
+      - agent: "security-scanner"
+        required: true
+        triggered_by: "code-reviewer"
+
+# Simplified Agent Categories - Basic organization only
+categories:
+  specialists:
+    description: "Domain-specific expert agents"
+    agents:
+      - "python-pro"
+      - "typescript-pro"
+      - "react-expert"
+      - "postgres-expert"
+      - "aws-expert"
+      - "docker-expert"
+      - "performance-optimizer"
+      - "api-architect"
+      - "nextjs-expert"
+      - "graphql-architect"
+      - "terraform-specialist"
+      - "kubernetes-architect"
+      - "deployment-engineer"
+      - "ml-engineer"
+      - "data-scientist"
+
+  core_agents:
+    description: "Essential workflow agents"
+    agents:
+      - "workflow-orchestrator"
+      - "security-orchestrator"
+      - "code-reviewer"
+      - "security-scanner"
+      - "test-automator"
+      - "test-coverage-analyzer"
+      - "smart-doc-generator"
+      - "debugger"
+      - "technical-researcher"
+      - "dependency-manager"
+      - "pr-optimizer"
+      - "github-checker"
+
+# Simple Model Allocation - Essential only
+model_allocation:
+  opus:
+    description: "High complexity coordination and architecture"
+    agents:
+      - "workflow-orchestrator"
+      - "technical-researcher"
+      - "terraform-specialist"
+      - "kubernetes-architect"
+      - "ml-engineer"
+      - "data-scientist"
+      - "aws-expert"
+      - "performance-optimizer"
+      - "api-architect"
+      - "graphql-architect"
+
+  sonnet:
+    description: "Standard development and analysis tasks"
+    agents:
+      - "python-pro"
+      - "typescript-pro"
+      - "react-expert"
+      - "postgres-expert"
+      - "docker-expert"
+      - "nextjs-expert"
+      - "deployment-engineer"
+      - "code-reviewer"
+      - "security-orchestrator"
+      - "security-scanner"
+      - "test-automator"
+      - "test-coverage-analyzer"
+      - "smart-doc-generator"
+      - "debugger"
+      - "dependency-manager"
+      - "pr-optimizer"
+      - "github-checker"
+
+  haiku:
+    description: "Simple tasks with minimal cognitive load"
+    agents:
+      - "work-completion-summary"
+
+# Basic Integration
+integration:
+  security_chain: true
+  claude_md_rules: true
