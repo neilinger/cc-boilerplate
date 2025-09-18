@@ -145,15 +145,32 @@ get_repo_url() {
 # Check if boilerplate already exists
 check_existing_boilerplate() {
     if [[ -d ".claude/boilerplate" ]]; then
-        warn "Boilerplate directory already exists at .claude/boilerplate"
-        read -p "Remove and reinitialize? (y/N): " -n 1 -r
-        echo ""
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            rm -rf .claude/boilerplate
-            git remote remove cc-boilerplate 2>/dev/null || true
-            success "Existing boilerplate removed"
+        if [ "$INTERACTIVE" = false ]; then
+            # Non-interactive mode - clean exit with guidance
+            local current_dir="$(pwd)"
+            local claude_cmd="$(detect_claude_command)"
+
+            echo ""
+            info "CC-Boilerplate detected - already installed ✓"
+            echo ""
+            echo "${BOLD}${BLUE}Ready to use:${RESET}"
+            echo "  ${BOLD}${GREEN}${claude_cmd} ${current_dir}${RESET}"
+            echo ""
+            echo "Then type ${BOLD}${GREEN}/code-quality${RESET} to test"
+            echo ""
+            exit 0
         else
-            abort "Initialization cancelled"
+            # Interactive mode - ask user
+            warn "Boilerplate directory already exists at .claude/boilerplate"
+            read -p "Remove and reinitialize? (y/N): " -n 1 -r
+            echo ""
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                rm -rf .claude/boilerplate
+                git remote remove cc-boilerplate 2>/dev/null || true
+                success "Existing boilerplate removed"
+            else
+                abort "Initialization cancelled"
+            fi
         fi
     fi
 }
@@ -280,33 +297,43 @@ update_gitignore() {
     success ".gitignore updated"
 }
 
+# Detect Claude Code command
+detect_claude_command() {
+    if command -v claude >/dev/null 2>&1; then
+        echo "claude"
+    elif command -v claude-code >/dev/null 2>&1; then
+        echo "claude-code"
+    else
+        echo "claude"  # default assumption
+    fi
+}
+
 # Show completion message
 show_completion() {
+    local current_dir="$(pwd)"
+    local claude_cmd="$(detect_claude_command)"
+
     echo ""
-    echo "${GREEN}${BOLD}🎉 CC-Boilerplate Initialization Complete!${RESET}"
+    echo "${GREEN}${BOLD}✅ CC-Boilerplate Installed Successfully!${RESET}"
     echo ""
-    success "Your project is now enhanced with Claude Code superpowers!"
+    echo "${BOLD}📁 Location: ${current_dir}${RESET}"
     echo ""
-    info "What was set up:"
-    echo "  📁 .claude/boilerplate/     - Core boilerplate files"
-    echo "  📁 .claude/project/         - Your project customizations"
-    echo "  📄 .boilerplate-version     - Version tracking"
-    echo "  ⚙️  Updated .gitignore       - Ignore generated files"
+
+    # Simple 3-step process
+    echo "${BOLD}${BLUE}Next steps:${RESET}"
     echo ""
-    echo "${BOLD}${BLUE}🚀 Ready to start coding!${RESET}"
+    echo "  ${BOLD}1.${RESET} Open Claude Code in this directory:"
+    echo "     ${BOLD}${GREEN}${claude_cmd} ${current_dir}${RESET}"
     echo ""
-    info "Try these commands in Claude Code:"
-    echo "  • Type ${BOLD}/code-quality${RESET} - Run comprehensive code analysis"
-    echo "  • Type ${BOLD}/git-ops${RESET} - Advanced git operations"
-    echo "  • Ask for ${BOLD}workflow-orchestrator${RESET} - Coordinate complex tasks"
-    echo "  • Ask for ${BOLD}smart-doc-generator${RESET} - Create documentation"
+    echo "  ${BOLD}2.${RESET} Test it works - type this command:"
+    echo "     ${BOLD}${GREEN}/code-quality${RESET}"
     echo ""
-    info "Optional customization:"
-    echo "  1. Edit .claude/project/CLAUDE.project.md for project-specific instructions"
-    echo "  2. Edit .claude/project/settings.project.json for custom settings"
-    echo "  3. Run 'scripts/build-config.sh' to generate merged configurations"
+    echo "  ${BOLD}3.${RESET} You'll see a menu = success! 🎉"
     echo ""
-    echo "${GREEN}💡 Everything is safe and ready to use. Start by asking Claude Code to help with your project!${RESET}"
+    echo "${BLUE}That's it! Your project now has AI superpowers.${RESET}"
+
+    # Create verification file
+    echo "$(date): CC-Boilerplate ready" > .claude/.cc-installed
 }
 
 # Main execution
