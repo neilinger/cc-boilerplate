@@ -36,6 +36,7 @@ When invoked, you must follow these steps:
 
 - **Select appropriate orchestrators**: Choose code-lifecycle-manager for development workflows, security-orchestrator for security chains
 - **Delegate to specialists**: Task specialized agents for domain-specific work
+- **Handle agent gaps**: If no suitable agent exists, invoke meta-agent for gap analysis and external agent discovery
 - **Manage information flow**: Ensure context and results flow properly between agents
 - **Coordinate timing**: Manage sequential dependencies and parallel execution
 
@@ -145,6 +146,16 @@ When invoked, you must follow these steps:
 - **Orchestrator Failure**: Fall back to manual coordination or simpler workflow
 - **Chain Interruption**: Resume from last successful checkpoint
 - **Tool Permission Violation**: Coordinate with security-orchestrator for resolution
+
+### Gap Detection Pattern
+
+When no suitable agent exists for a task:
+
+1. **Identify the gap**: Recognize when current agents can't handle requirement
+2. **Invoke meta-agent**: Task meta-agent to research and specify needed agent
+   - Meta-agent performs pre-flight check on GitHub repository (https://github.com/wshobson/agents/tree/main)
+   - Returns either: existing agent recommendation OR new agent specification
+3. **Continue workflow**: Proceed with recommended approach or escalate to user for decision
 
 ### Quality Failures
 

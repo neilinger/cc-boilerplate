@@ -5,7 +5,7 @@ description: |
   NEVER use when: General development, existing agent modification, non-agent tasks
   Runs AFTER: Requirements clarification
   Hands off to: workflow-orchestrator (for integration)
-tools: Write, WebFetch, mcp__firecrawl-mcp__firecrawl_scrape, mcp__firecrawl-mcp__firecrawl_search, MultiEdit
+tools: Write, WebSearch, WebFetch, mcp__firecrawl-mcp__firecrawl_scrape, mcp__firecrawl-mcp__firecrawl_search, MultiEdit
 model: opus
 color: cyan
 ---
@@ -25,7 +25,17 @@ When invoked, you must follow these steps:
 - **Assess cognitive load**: Assign haiku/sonnet/opus based on task complexity
 - **Prevent capability overlap**: Ensure no duplication of existing agent functions
 
-### 2. Documentation Research
+### 2. Pre-flight Agent Discovery
+
+- **Check existing internal agents**: Review .claude/agents/ directory for similar capabilities
+- **Scan external agent repository**:
+  - Search https://github.com/wshobson/agents/tree/main for matching agents (82+ agents available)
+  - Check categories: Architecture, Security, DevOps, Programming Languages, Data/AI
+  - Verify if any existing agent matches requirements before creating new one
+- **Validate gap exists**: Only proceed with new agent creation if no suitable agent found
+- **Adaptation over creation**: Prefer adapting existing external agent specifications to our system
+
+### 3. Documentation Research
 
 - **Scrape latest Claude Code documentation**:
   - `https://docs.anthropic.com/en/docs/claude-code/sub-agents` - Sub-agent feature
@@ -33,7 +43,7 @@ When invoked, you must follow these steps:
 - **Reference architectural decisions**: Review ADR-007 and ADR-008 for compliance
 - **Check tool permissions matrix**: Apply appropriate tool restrictions
 
-### 3. Agent Design and Creation
+### 4. Agent Design and Creation
 
 - **Analyze requirements**: Understand the agent's purpose, domain, and scope
 - **Design trigger patterns**: Create clear ALWAYS/NEVER use conditions
@@ -41,7 +51,7 @@ When invoked, you must follow these steps:
 - **Assign appropriate model**: Based on cognitive load (haiku ≤3 tools, sonnet ≤7 tools, opus for orchestration)
 - **Create integration points**: Define handoff patterns to other agents
 
-### 4. Agent File Generation
+### 5. Agent File Generation
 
 - **Use hierarchical structure**: Place in appropriate subdirectory
 - **Follow naming conventions**: Use kebab-case naming
