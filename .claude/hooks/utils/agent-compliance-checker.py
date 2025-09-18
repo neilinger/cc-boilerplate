@@ -244,7 +244,7 @@ class AgentComplianceChecker:
                 self.errors.append(f"{agent_name}: Must hand off to security-orchestrator (mandatory security chain)")
 
         # Check for valid handoff targets
-        handoff_match = re.search(r'Hands off to: ([^\\n]+)', description)
+        handoff_match = re.search(r'Hands off to: ([^\n]+)', description)
         if handoff_match:
             handoff_agents = [name.strip() for name in handoff_match.group(1).split(',')]
             for target in handoff_agents:
@@ -260,7 +260,7 @@ class AgentComplianceChecker:
         total_issues = len(self.errors) + len(self.warnings) + len(self.suggestions)
         if total_issues == 0:
             report.append("✅ All agents are compliant with hierarchical architecture!")
-            return "\\n".join(report)
+            return "\n".join(report)
 
         report.append(f"📊 Agent Compliance Report")
         report.append(f"{'=' * 50}")
@@ -302,7 +302,7 @@ class AgentComplianceChecker:
         report.append("  • Follow ALWAYS/NEVER/RUNS AFTER/HANDS OFF TO description format")
         report.append("  • Ensure security chain integration for critical agents")
 
-        return "\\n".join(report)
+        return "\n".join(report)
 
 def main():
     parser = argparse.ArgumentParser(description="Check agent compliance with hierarchical architecture")
@@ -336,7 +336,7 @@ def main():
     print(checker.generate_report(args.verbose))
 
     if args.fix:
-        print("\\n🔧 Auto-fix functionality coming in future version...")
+        print("\n🔧 Auto-fix functionality coming in future version...")
 
     # Exit code for CI/CD integration
     sys.exit(0 if is_compliant else 1)

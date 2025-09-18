@@ -11,8 +11,9 @@ import os
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
+from typing import Optional
 
-def main():
+def main() -> None:
     """
     ElevenLabs Turbo v2.5 TTS Script
 
