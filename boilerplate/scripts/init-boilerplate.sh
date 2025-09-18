@@ -210,6 +210,87 @@ setup_directories() {
     success "Directory structure created"
 }
 
+# Safely merge documentation (PRPs, ADRs) without overwriting existing project files
+merge_documentation() {
+    local source_dir="$1"
+
+    info "Merging documentation (preserving existing project files)..."
+
+    # Handle PRPs directory - only add missing boilerplate PRPs
+    if [[ -d "$source_dir/PRPs" ]]; then
+        if [[ -d "PRPs" ]]; then
+            # Project already has PRPs - selectively add only missing boilerplate PRPs
+            info "Found existing PRPs directory - merging selectively..."
+            mkdir -p .claude/boilerplate/PRPs
+
+            # Copy boilerplate PRPs to staging area, then selectively merge
+            cp -r "$source_dir/PRPs/"* .claude/boilerplate/PRPs/ 2>/dev/null || true
+
+            # Copy boilerplate PRPs that don't exist in project
+            for prp_file in "$source_dir/PRPs"/*.md; do
+                if [[ -f "$prp_file" ]]; then
+                    local filename=$(basename "$prp_file")
+                    if [[ ! -f "PRPs/$filename" ]]; then
+                        info "Adding boilerplate PRP: $filename"
+                        cp "$prp_file" "PRPs/"
+                    fi
+                fi
+            done
+
+            # Copy boilerplate PRP subdirectories that don't exist
+            for prp_dir in "$source_dir/PRPs"/*/; do
+                if [[ -d "$prp_dir" ]]; then
+                    local dirname=$(basename "$prp_dir")
+                    if [[ ! -d "PRPs/$dirname" ]]; then
+                        info "Adding boilerplate PRP directory: $dirname"
+                        cp -r "$prp_dir" "PRPs/"
+                    fi
+                fi
+            done
+        else
+            # No existing PRPs - copy all boilerplate PRPs
+            info "No existing PRPs found - copying all boilerplate PRPs..."
+            cp -r "$source_dir/PRPs" ./
+            # Also copy to boilerplate staging
+            cp -r "$source_dir/PRPs" .claude/boilerplate/
+        fi
+    fi
+
+    # Handle docs/adr directory - only add missing boilerplate ADRs
+    if [[ -d "$source_dir/docs" ]]; then
+        if [[ -d "docs" ]]; then
+            # Project already has docs - selectively add missing ADRs
+            info "Found existing docs directory - merging selectively..."
+            mkdir -p docs/adr
+            mkdir -p .claude/boilerplate/docs
+
+            # Copy boilerplate docs to staging
+            cp -r "$source_dir/docs/"* .claude/boilerplate/docs/ 2>/dev/null || true
+
+            # Copy missing boilerplate ADRs
+            if [[ -d "$source_dir/docs/adr" ]]; then
+                for adr_file in "$source_dir/docs/adr"/*.md; do
+                    if [[ -f "$adr_file" ]]; then
+                        local filename=$(basename "$adr_file")
+                        if [[ ! -f "docs/adr/$filename" ]]; then
+                            info "Adding boilerplate ADR: $filename"
+                            cp "$adr_file" "docs/adr/"
+                        fi
+                    fi
+                done
+            fi
+        else
+            # No existing docs - copy all boilerplate docs
+            info "No existing docs found - copying all boilerplate docs..."
+            cp -r "$source_dir/docs" ./
+            # Also copy to boilerplate staging
+            cp -r "$source_dir/docs" .claude/boilerplate/
+        fi
+    fi
+
+    success "Documentation merged safely (existing project files preserved)"
+}
+
 # Install boilerplate content
 add_subtree() {
     info "Installing cc-boilerplate content..."
@@ -228,22 +309,38 @@ add_subtree() {
     local commit_hash
     commit_hash=$(cd "$temp_dir" && git rev-parse HEAD)
 
-    # Copy only the boilerplate subdirectory content
+    # Copy only the boilerplate subdirectory content (PRESERVING EXISTING PROJECT FILES)
     if [[ -d "$temp_dir/boilerplate" ]]; then
         info "Extracting boilerplate content..."
-        # Use rsync or cp with dotglob to include hidden files
-        if command -v rsync >/dev/null 2>&1; then
-            if ! rsync -a "$temp_dir/boilerplate/" .claude/boilerplate/; then
-                abort "Failed to copy boilerplate content"
+
+        # CRITICAL: Only copy .claude directory to avoid overwriting project PRPs/ADRs
+        if [[ -d "$temp_dir/boilerplate/.claude" ]]; then
+            if command -v rsync >/dev/null 2>&1; then
+                if ! rsync -a "$temp_dir/boilerplate/.claude/" .claude/boilerplate/.claude/; then
+                    abort "Failed to copy .claude boilerplate content"
+                fi
+            else
+                # Enable dotglob to include hidden files
+                shopt -s dotglob
+                if ! cp -r "$temp_dir/boilerplate/.claude/"* .claude/boilerplate/.claude/; then
+                    abort "Failed to copy .claude boilerplate content"
+                fi
+                shopt -u dotglob
             fi
-        else
-            # Enable dotglob to include hidden files like .claude
-            shopt -s dotglob
-            if ! cp -r "$temp_dir/boilerplate/"* .claude/boilerplate/; then
-                abort "Failed to copy boilerplate content"
-            fi
-            shopt -u dotglob
         fi
+
+        # Copy scripts directory (needed for build-config.sh, etc.)
+        if [[ -d "$temp_dir/boilerplate/scripts" ]]; then
+            if command -v rsync >/dev/null 2>&1; then
+                rsync -a "$temp_dir/boilerplate/scripts/" .claude/boilerplate/scripts/
+            else
+                mkdir -p .claude/boilerplate/scripts
+                cp -r "$temp_dir/boilerplate/scripts/"* .claude/boilerplate/scripts/
+            fi
+        fi
+
+        # SELECTIVELY merge PRPs and ADRs (only add missing ones, don't overwrite)
+        merge_documentation "$temp_dir/boilerplate"
 
         # Copy essential project root files from the source repository
         info "Setting up project root files..."
