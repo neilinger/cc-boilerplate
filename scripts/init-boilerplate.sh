@@ -59,9 +59,12 @@ check_requirements() {
     command -v git >/dev/null 2>&1 || abort "Git is required but not installed"
 
     # Check git subtree (exit code 129 is expected when called without args)
+    set +e
     git subtree >/dev/null 2>&1
-    if [[ $? -ne 129 ]]; then
-        abort "Git subtree is required but not available"
+    local exit_code=$?
+    set -e
+    if [[ $exit_code -ne 129 ]]; then
+        abort "Git subtree is required but not available (got exit code $exit_code, expected 129)"
     fi
 
     # Check jq
