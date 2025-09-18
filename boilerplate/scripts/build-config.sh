@@ -89,8 +89,8 @@ check_requirements() {
     [[ -d ".claude/boilerplate" ]] || abort "Boilerplate not found. Run init-boilerplate.sh first"
 
     # Check for template files with helpful error messages
-    if [[ ! -f ".claude/boilerplate/.claude/settings.template.json" ]]; then
-        echo "❌ Settings template not found at: .claude/boilerplate/.claude/settings.template.json"
+    if [[ ! -f ".claude/boilerplate/.claude/settings.json" ]]; then
+        echo "❌ Settings template not found at: .claude/boilerplate/.claude/settings.json"
         echo "📁 Contents of .claude/boilerplate/:"
         ls -la .claude/boilerplate/ 2>/dev/null || echo "   Directory not found or empty"
         echo "📁 Contents of .claude/boilerplate/.claude/:"
@@ -136,7 +136,7 @@ safe_replace() {
 
 # Merge JSON files with jq
 merge_json_settings() {
-    local base_template=".claude/boilerplate/.claude/settings.template.json"
+    local base_template=".claude/boilerplate/.claude/settings.json"
     local project_settings=".claude/project/settings.project.json"
     local output=".claude/settings.json"
 
