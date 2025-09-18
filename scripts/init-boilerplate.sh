@@ -209,67 +209,58 @@ setup_directories() {
     success "Directory structure created"
 }
 
-# Add git subtree
+# Install boilerplate content
 add_subtree() {
-    info "Adding cc-boilerplate as git subtree..."
+    info "Installing cc-boilerplate content..."
 
-    # Check if we need to stash changes for git subtree
-    local need_stash=false
-    if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
-        need_stash=true
-        info "Temporarily stashing uncommitted changes for git subtree operation..."
-        if ! git stash push -m "cc-boilerplate-init: temporary stash for subtree operation"; then
-            warn "Failed to stash changes. Continuing anyway..."
-            need_stash=false
-        else
-            success "Changes stashed temporarily"
-        fi
+    # Create temp directory for clone
+    local temp_dir
+    temp_dir=$(mktemp -d)
+
+    # Clone the repository to temp directory
+    info "Downloading boilerplate from $REPO_URL (version: $BRANCH)..."
+    if ! git clone --depth 1 --branch "$BRANCH" "$REPO_URL" "$temp_dir"; then
+        abort "Failed to download boilerplate from $REPO_URL"
     fi
 
-    # Add remote if it doesn't exist
-    if ! git remote get-url cc-boilerplate >/dev/null 2>&1; then
-        git remote add -f cc-boilerplate "$REPO_URL"
+    # Get commit hash from the cloned repository
+    local commit_hash
+    commit_hash=$(cd "$temp_dir" && git rev-parse HEAD)
+
+    # Copy only the boilerplate subdirectory content
+    if [[ -d "$temp_dir/boilerplate" ]]; then
+        info "Extracting boilerplate content..."
+        if ! cp -r "$temp_dir/boilerplate/"* .claude/boilerplate/; then
+            abort "Failed to copy boilerplate content"
+        fi
+        success "Boilerplate content installed successfully"
     else
-        git fetch cc-boilerplate
+        abort "Boilerplate directory not found in repository"
     fi
 
-    # Add subtree
-    if git subtree add --prefix=.claude/boilerplate cc-boilerplate "$BRANCH" --squash; then
-        success "Boilerplate added successfully"
-    else
-        # If subtree failed and we stashed, restore the stash
-        if [[ "$need_stash" == "true" ]]; then
-            warn "Subtree operation failed. Restoring stashed changes..."
-            git stash pop || warn "Failed to restore stashed changes. Check 'git stash list'"
-        fi
-        abort "Failed to add boilerplate subtree"
-    fi
+    # Clean up temp directory
+    rm -rf "$temp_dir"
 
-    # Restore stashed changes if operation succeeded
-    if [[ "$need_stash" == "true" ]]; then
-        info "Restoring your uncommitted changes..."
-        if git stash pop; then
-            success "Your changes have been restored"
-        else
-            warn "Failed to restore stashed changes. Check 'git stash list' - your changes are safe in the stash"
-        fi
-    fi
+    # Store commit hash for version file
+    export BOILERPLATE_COMMIT_HASH="$commit_hash"
 }
 
 # Create version file
 create_version_file() {
-    local commit_hash
-    commit_hash=$(git ls-remote cc-boilerplate "$BRANCH" | cut -f1)
+    local commit_hash="${BOILERPLATE_COMMIT_HASH:-unknown}"
     local date
     date=$(date -u +"%Y-%m-%d")
+    local timestamp
+    timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
     cat > .boilerplate-version <<EOF
 {
-  "version": "1.0.0",
+  "version": "$BRANCH",
   "commit": "${commit_hash:0:7}",
   "date": "$date",
   "branch": "$BRANCH",
-  "repository": "$REPO_URL"
+  "repository": "$REPO_URL",
+  "initialized_at": "$timestamp"
 }
 EOF
 
