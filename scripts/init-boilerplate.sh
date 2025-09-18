@@ -186,6 +186,19 @@ setup_directories() {
 add_subtree() {
     info "Adding cc-boilerplate as git subtree..."
 
+    # Check if we need to stash changes for git subtree
+    local need_stash=false
+    if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
+        need_stash=true
+        info "Temporarily stashing uncommitted changes for git subtree operation..."
+        if ! git stash push -m "cc-boilerplate-init: temporary stash for subtree operation"; then
+            warn "Failed to stash changes. Continuing anyway..."
+            need_stash=false
+        else
+            success "Changes stashed temporarily"
+        fi
+    fi
+
     # Add remote if it doesn't exist
     if ! git remote get-url cc-boilerplate >/dev/null 2>&1; then
         git remote add -f cc-boilerplate "$REPO_URL"
@@ -197,7 +210,22 @@ add_subtree() {
     if git subtree add --prefix=.claude/boilerplate cc-boilerplate "$BRANCH" --squash; then
         success "Boilerplate added successfully"
     else
+        # If subtree failed and we stashed, restore the stash
+        if [[ "$need_stash" == "true" ]]; then
+            warn "Subtree operation failed. Restoring stashed changes..."
+            git stash pop || warn "Failed to restore stashed changes. Check 'git stash list'"
+        fi
         abort "Failed to add boilerplate subtree"
+    fi
+
+    # Restore stashed changes if operation succeeded
+    if [[ "$need_stash" == "true" ]]; then
+        info "Restoring your uncommitted changes..."
+        if git stash pop; then
+            success "Your changes have been restored"
+        else
+            warn "Failed to restore stashed changes. Check 'git stash list' - your changes are safe in the stash"
+        fi
     fi
 }
 
