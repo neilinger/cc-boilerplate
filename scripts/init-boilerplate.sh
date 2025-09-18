@@ -288,6 +288,13 @@ merge_documentation() {
         fi
     fi
 
+    # Handle templates directory - needed for config building
+    if [[ -d "$source_dir/templates" ]]; then
+        info "Copying configuration templates..."
+        mkdir -p .claude/boilerplate/templates
+        cp -r "$source_dir/templates/"* .claude/boilerplate/templates/ 2>/dev/null || true
+    fi
+
     success "Documentation merged safely (existing project files preserved)"
 }
 
