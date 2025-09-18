@@ -42,6 +42,7 @@ show_help() {
     echo "  ✓ Description format (ALWAYS/NEVER/RUNS AFTER/HANDS OFF TO)"
     echo "  ✓ Security chain integration"
     echo "  ✓ Orchestration patterns"
+    echo "  ✓ Agent chain configuration integrity"
     echo
     echo -e "${YELLOW}ARCHITECTURE REFERENCES:${NC}"
     echo "  📖 ADR-007: Hierarchical Multi-Agent Architecture"
@@ -96,7 +97,7 @@ echo -e "${BLUE}📊 Found ${AGENT_COUNT} agent files to validate${NC}"
 echo
 
 # Run the compliance checker
-echo -e "${BLUE}🔍 Running compliance analysis...${NC}"
+echo -e "${BLUE}🔍 Running agent compliance analysis...${NC}"
 echo
 
 if $VERBOSE; then
@@ -108,10 +109,25 @@ else
 fi
 
 echo
+echo -e "${BLUE}🔗 Running chain configuration validation...${NC}"
+echo
+
+if $VERBOSE; then
+    python3 .claude/hooks/utils/validate-chains.py --verbose
+    CHAIN_EXIT_CODE=$?
+else
+    python3 .claude/hooks/utils/validate-chains.py
+    CHAIN_EXIT_CODE=$?
+fi
+
+# Combine exit codes - fail if either check fails
+OVERALL_EXIT_CODE=$((COMPLIANCE_EXIT_CODE + CHAIN_EXIT_CODE))
+
+echo
 echo "============================================="
 
-if [[ $COMPLIANCE_EXIT_CODE -eq 0 ]]; then
-    echo -e "${GREEN}🎉 SUCCESS: All agents are compliant!${NC}"
+if [[ $OVERALL_EXIT_CODE -eq 0 ]]; then
+    echo -e "${GREEN}🎉 SUCCESS: All agents and chains are compliant!${NC}"
     echo -e "${GREEN}   Your agent architecture follows ADR-007 and ADR-008${NC}"
     echo
     echo -e "${BLUE}💡 Next steps:${NC}"
@@ -141,5 +157,5 @@ fi
 echo
 echo -e "${PURPLE}🤖 Agent compliance check complete${NC}"
 
-# Exit with the same code as the compliance checker
-exit $COMPLIANCE_EXIT_CODE
+# Exit with the combined exit code
+exit $OVERALL_EXIT_CODE

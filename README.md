@@ -4,7 +4,7 @@
 [![Security Tests](https://img.shields.io/badge/security-passing-brightgreen)](https://github.com/USERNAME/cc-boilerplate/actions)
 [![Test Coverage](https://img.shields.io/badge/coverage-60%25-yellow)](https://github.com/USERNAME/cc-boilerplate/actions)
 [![Hooks](https://img.shields.io/badge/hooks-8-blue)](#-all-8-claude-code-hooks)
-[![Agents](https://img.shields.io/badge/agents-10-purple)](#-essential-agents)
+[![Agents](https://img.shields.io/badge/agents-17-purple)](#-hierarchical-agent-system)
 [![Commands](https://img.shields.io/badge/commands-5-cyan)](#-claude-commands-5-total)
 [![Output Styles](https://img.shields.io/badge/styles-9-orange)](#-9-output-styles)
 [![Release](https://img.shields.io/github/v/release/USERNAME/cc-boilerplate?include_prereleases)](https://github.com/USERNAME/cc-boilerplate/releases)
@@ -28,23 +28,47 @@ Copy this exact prompt into Claude Code:
 start with latest tag of neilinger/cc-boilerplate repository as skeleton for this project. then guide me through whats next.
 ```
 
-### Modern Setup (Recommended - PRP-003 Synchronization)
+### For Existing Projects (Recommended)
 
-Use the new boilerplate synchronization system for seamless updates:
+Add cc-boilerplate to your existing project with one command:
 
 ```bash
-# 1. Initialize cc-boilerplate in new/existing project
+# Single command setup - works in any existing project
 curl -sSL https://raw.githubusercontent.com/neilinger/cc-boilerplate/main/scripts/init-boilerplate.sh | bash
+```
 
-# 2. Build configurations
+This will:
+- ✅ Detect your existing project structure
+- ✅ Add cc-boilerplate without conflicts
+- ✅ Preserve your existing files
+- ✅ Create project-specific customization area
+- ✅ Build merged configurations
+
+**Then customize for your domain:**
+```bash
+# Edit project-specific instructions
+vim .claude/project/CLAUDE.project.md
+
+# Edit custom settings
+vim .claude/project/settings.project.json
+
+# Rebuild when you make changes
 scripts/build-config.sh
 
-# 3. Customize for your domain
-vim .claude/project/CLAUDE.project.md     # Domain-specific instructions
-vim .claude/project/settings.project.json # Custom settings
+# Check for updates periodically
+scripts/update-boilerplate.sh --dry-run
+```
 
-# 4. Update from upstream (anytime)
-scripts/update-boilerplate.sh
+### For New Projects
+
+```bash
+# 1. Create your project
+git init my-project && cd my-project
+
+# 2. Add cc-boilerplate
+curl -sSL https://raw.githubusercontent.com/neilinger/cc-boilerplate/main/scripts/init-boilerplate.sh | bash
+
+# 3. Start building!
 ```
 ### Manual Setup Steps
 
@@ -112,8 +136,10 @@ See `.env.sample` for all available configuration options.
 
 ## Core Features
 
-**🛡️ Security**: Comprehensive `rm -rf` protection with 30+ dangerous command patterns
-**🤖 Agent Automation**: Meta-agent creates new specialized agents from descriptions
+**🛡️ Security**: Comprehensive `rm -rf` protection with role-based tool permissions and mandatory security chains
+**🤖 Hierarchical Orchestration**: ADR-007 compliant multi-agent system with autonomous coordination
+**🔗 Agent Chains**: Mandatory security workflows (code-reviewer → security-orchestrator → security-scanner)
+**🧠 Cognitive Load Optimization**: Model allocation based on task complexity (haiku→sonnet→opus)
 **🎨 Workflow Styles**: Output formats optimized for different development phases
 **🔧 Development Tools**: serena-mcp semantic coding for intelligent codebase analysis
 **🔊 Smart TTS**: Multi-provider fallback (ElevenLabs → OpenAI → pyttsx3)
@@ -260,20 +286,46 @@ Security-first hooks that execute in sequence:
 - **[pre_compact](/.claude/hooks/pre_compact.py)** - Backup before conversation compaction
 - **[session_start](/.claude/hooks/session_start.py)** - Context loading and initialization
 
-## 🤖 Essential Agents
+## 🤖 Hierarchical Agent System
 
-Specialized agents for different development workflows:
+Implements ADR-007 (Hierarchical Multi-Agent Architecture) with autonomous orchestration and security-first tool allocation:
 
+### Primary Orchestrators (Opus Models)
+- **[workflow-orchestrator](/.claude/agents/orchestrators/workflow-orchestrator.md)** - Complex multi-step coordination and feature implementation
+- **[security-orchestrator](/.claude/agents/orchestrators/security-orchestrator.md)** - Security validation chain coordination
+
+### Specialized Agents (Sonnet Models)
 - **[meta-agent](/.claude/agents/meta-agent.md)** - Generate new specialized agents from descriptions
-- **[smart-doc-generator](/.claude/agents/smart-doc-generator.md)** - Comprehensive documentation generation
-- **[engineer-code-reviewer](/.claude/agents/engineer-code-reviewer.md)** - Security and quality code reviews
-- **[test-automator](/.claude/agents/test-automator.md)** - Automated test suite creation
-- **[test-coverage-analyzer](/.claude/agents/test-coverage-analyzer.md)** - Test coverage analysis and gap identification
-- **[work-completion-summary](/.claude/agents/work-completion-summary.md)** - Audio summaries for long operations
-- **[llm-ai-agents-and-eng-research](/.claude/agents/llm-ai-agents-and-eng-research.md)** - AI/ML research and analysis
-- **[technical.researcher](/.claude/agents/technical.researcher.md)** - Deep technical research and documentation
-- **[github-checker](/.claude/agents/github-checker.md)** - GitHub repository analysis and validation
-- **[adr-creator](/.claude/agents/adr-creator.md)** - Architectural Decision Record generation
+- **[smart-doc-generator](/.claude/agents/specialists/smart-doc-generator.md)** - Comprehensive documentation generation
+- **[test-automator](/.claude/agents/specialists/test-automator.md)** - Automated test suite creation
+- **[debugger](/.claude/agents/specialists/debugger.md)** - Root cause analysis and fix implementation
+- **[security-scanner](/.claude/agents/specialists/security-scanner.md)** - OWASP vulnerability detection
+- **[technical-researcher](/.claude/agents/specialists/technical-researcher.md)** - Deep technical research and analysis
+- **[adr-creator](/.claude/agents/specialists/adr-creator.md)** - Architectural Decision Record generation
+- **[pr-optimizer](/.claude/agents/specialists/pr-optimizer.md)** - GitHub PR optimization and management
+- **[dependency-manager](/.claude/agents/specialists/dependency-manager.md)** - Package management and security updates
+- **[context-engineer](/.claude/agents/specialists/context-engineer.md)** - Context window and prompt optimization
+- **[ai-engineering-researcher](/.claude/agents/specialists/ai-engineering-researcher.md)** - AI/ML research specialist
+
+### Analysis Agents (Sonnet/Haiku Models)
+- **[code-reviewer](/.claude/agents/analyzers/code-reviewer.md)** - Security and quality code reviews (read-only)
+- **[test-coverage-analyzer](/.claude/agents/analyzers/test-coverage-analyzer.md)** - Test coverage analysis and gap identification
+- **[work-completion-summary](/.claude/agents/analyzers/work-completion-summary.md)** - Audio summaries for long operations
+- **[github-checker](/.claude/agents/specialists/github-checker.md)** - GitHub repository analysis and validation
+
+### Agent Selection Protocol
+
+**Always use workflow-orchestrator for:**
+- Feature implementations requiring multiple domains (code + tests + docs + security)
+- Cross-cutting concerns spanning multiple agents
+- Complex workflows requiring coordination
+- Any task involving 3+ distinct steps
+
+**Mandatory security chain integration:**
+- ANY code modification touching security boundaries
+- The security chain is NON-NEGOTIABLE: code-reviewer → security-orchestrator → security-scanner
+
+**Agent architecture compliance**: Run `./claude/hooks/check-agents.sh --verbose` for validation
 
 ## 🎯 Claude Commands (5 Total)
 
@@ -324,6 +376,7 @@ python tests/test_hook_integration.py
 - **[System Reference](docs/reference/index.md)** - Essential system information
 - **[Serena MCP Integration](docs/reference/serena-mcp.md)** - Semantic coding tools
 - **[TTS System](docs/reference/tts-system.md)** - Audio notification system
+- **[Agent System Reference](docs/reference/agent-system.md)** - Hierarchical orchestration guide
 - **[Synchronization Guide](docs/SYNCHRONIZATION.md)** - Boilerplate update workflow
 
 ### Troubleshooting
@@ -340,6 +393,8 @@ python tests/test_hook_integration.py
 - **[ADR-004: Documentation Standards](docs/adr/adr-004-documentation-standards.md)**
 - **[ADR-005: ADR/PRP Separation](docs/adr/adr-005-adr-prp-separation.md)**
 - **[ADR-006: Issue Management Process](docs/adr/adr-006-issue-management-process.md)**
+- **[ADR-007: Hierarchical Multi-Agent Architecture](docs/adr/adr-007-agent-system-architecture.md)**
+- **[ADR-008: Cognitive Load Model Allocation](docs/adr/adr-008-cognitive-load-model-allocation.md)**
 
 ## 🎨 9 Output Styles
 

@@ -1,0 +1,306 @@
+# Agent Chain Configuration System
+# Defines formal execution chains with validation, handoff protocols, and runtime enforcement
+#
+# This extends agent-orchestration.yaml with detailed chain execution logic,
+# validation rules, and dynamic chain configuration capabilities.
+
+version: "1.0"
+created: "2025-01-17"
+description: "Formal agent chain configuration with validation and runtime enforcement"
+
+# =============================================================================
+# CHAIN DEFINITIONS
+# =============================================================================
+
+chains:
+  # MANDATORY SECURITY CHAIN
+  security_validation:
+    id: "SEC001"
+    name: "Mandatory Security Validation Chain"
+    description: "All code changes must pass through security validation"
+    type: "mandatory"
+    triggers:
+      - "code modification"
+      - "new file creation"
+      - "dependency changes"
+    sequence:
+      - agent: "code-reviewer"
+        role: "initial_analysis"
+        required: true
+        timeout_minutes: 5
+        outputs: ["security_issues", "complexity_assessment"]
+      - agent: "security-orchestrator"
+        role: "security_checkpoint"
+        required: true
+        timeout_minutes: 3
+        inputs: ["security_issues"]
+        outputs: ["security_clearance", "additional_scans_needed"]
+      - agent: "security-scanner"
+        role: "deep_scan"
+        required: false  # Only if security-orchestrator flags need
+        condition: "additional_scans_needed == true"
+        timeout_minutes: 10
+        outputs: ["vulnerability_report", "mitigation_recommendations"]
+    validation_rules:
+      - "security_clearance must be 'approved' to proceed"
+      - "critical vulnerabilities must be zero"
+      - "all security issues must have mitigation plans"
+
+  # TESTING CHAIN
+  comprehensive_testing:
+    id: "TEST001"
+    name: "Comprehensive Testing Chain"
+    description: "Full testing lifecycle from creation to coverage analysis"
+    type: "optional"
+    triggers:
+      - "new feature implementation"
+      - "test coverage below threshold"
+      - "explicit testing request"
+    sequence:
+      - agent: "test-automator"
+        role: "test_creation"
+        required: true
+        timeout_minutes: 15
+        outputs: ["test_suite", "coverage_baseline"]
+      - agent: "test-coverage-analyzer"
+        role: "coverage_analysis"
+        required: true
+        timeout_minutes: 5
+        inputs: ["test_suite", "coverage_baseline"]
+        outputs: ["coverage_report", "gap_analysis"]
+      - agent: "debugger"
+        role: "test_optimization"
+        required: false
+        condition: "coverage_report.gaps > 0"
+        timeout_minutes: 10
+        outputs: ["optimized_tests", "debugging_insights"]
+    validation_rules:
+      - "coverage must be >= 80% for critical paths"
+      - "all tests must pass"
+      - "no flaky tests allowed"
+
+  # DOCUMENTATION CHAIN
+  documentation_lifecycle:
+    id: "DOC001"
+    name: "Documentation Lifecycle Chain"
+    description: "From code to comprehensive documentation"
+    type: "auto_trigger"
+    triggers:
+      - "public API changes"
+      - "new feature completion"
+      - "architecture modifications"
+    sequence:
+      - agent: "smart-doc-generator"
+        role: "documentation_creation"
+        required: true
+        timeout_minutes: 10
+        outputs: ["api_docs", "user_guides", "architecture_docs"]
+      - agent: "technical-researcher"
+        role: "documentation_validation"
+        required: false
+        condition: "architecture_docs.complexity > threshold"
+        timeout_minutes: 15
+        outputs: ["research_validation", "best_practices"]
+      - agent: "workflow-orchestrator"
+        role: "integration_coordination"
+        required: true
+        timeout_minutes: 5
+        inputs: ["api_docs", "user_guides"]
+        outputs: ["integration_plan", "deployment_ready"]
+    validation_rules:
+      - "all public APIs must have documentation"
+      - "examples must be executable"
+      - "documentation must pass readability tests"
+
+  # DEPLOYMENT CHAIN
+  deployment_pipeline:
+    id: "DEPLOY001"
+    name: "Safe Deployment Pipeline"
+    description: "Complete deployment workflow with safety checks"
+    type: "manual_trigger"
+    triggers:
+      - "release preparation"
+      - "production deployment"
+    sequence:
+      - agent: "dependency-manager"
+        role: "dependency_validation"
+        required: true
+        timeout_minutes: 8
+        outputs: ["dependency_report", "security_updates"]
+      - agent: "pr-optimizer"
+        role: "pr_preparation"
+        required: true
+        timeout_minutes: 5
+        inputs: ["dependency_report"]
+        outputs: ["optimized_pr", "deployment_checklist"]
+      - agent: "github-checker"
+        role: "repository_validation"
+        required: true
+        timeout_minutes: 3
+        outputs: ["repo_health", "deployment_clearance"]
+      - agent: "workflow-orchestrator"
+        role: "deployment_coordination"
+        required: true
+        timeout_minutes: 10
+        inputs: ["deployment_checklist", "deployment_clearance"]
+        outputs: ["deployment_plan", "rollback_strategy"]
+    validation_rules:
+      - "all dependencies must be up to date"
+      - "no critical security vulnerabilities"
+      - "all tests must pass"
+      - "deployment checklist must be 100% complete"
+
+# =============================================================================
+# CHAIN EXECUTION RULES
+# =============================================================================
+
+execution_rules:
+  parallel_execution:
+    enabled: true
+    max_concurrent_agents: 3
+    priority_order: ["security", "testing", "documentation", "deployment"]
+
+  failure_handling:
+    retry_attempts: 2
+    retry_delay_seconds: 30
+    escalation_policy:
+      - agent_failure: "continue_with_warnings"
+      - validation_failure: "halt_chain"
+      - timeout: "escalate_to_orchestrator"
+      - critical_error: "emergency_halt"
+
+  resource_management:
+    memory_limit_mb: 512
+    cpu_time_limit_seconds: 300
+    concurrent_tool_limit: 5
+
+  audit_trail:
+    log_all_executions: true
+    include_intermediate_outputs: true
+    retention_days: 90
+    compliance_logging: true
+
+# =============================================================================
+# DYNAMIC CHAIN CONFIGURATION
+# =============================================================================
+
+dynamic_configuration:
+  context_aware_chains:
+    # Automatically adjust chains based on context
+    code_complexity_threshold: 50  # McCabe complexity
+    file_size_threshold_kb: 100
+    security_risk_factors:
+      - "external_dependencies"
+      - "network_operations"
+      - "file_system_access"
+      - "user_input_handling"
+
+  adaptive_sequencing:
+    # Chains can modify themselves based on intermediate results
+    enable_adaptive_sequencing: true
+    decision_points:
+      security_validation:
+        condition: "security_issues.critical > 0"
+        action: "insert_additional_security_agents"
+        agents_to_insert: ["security-scanner", "dependency-manager"]
+      testing_coverage:
+        condition: "coverage_report.percentage < 80"
+        action: "extend_testing_chain"
+        agents_to_insert: ["test-automator", "debugger"]
+      documentation_complexity:
+        condition: "api_changes.breaking_changes > 0"
+        action: "enhance_documentation_chain"
+        agents_to_insert: ["technical-researcher", "adr-creator"]
+
+# =============================================================================
+# CHAIN VALIDATION FRAMEWORK
+# =============================================================================
+
+validation_framework:
+  pre_execution_checks:
+    - "validate_agent_availability"
+    - "check_resource_constraints"
+    - "verify_input_compatibility"
+    - "validate_security_clearance"
+
+  mid_execution_monitoring:
+    - "monitor_execution_progress"
+    - "track_resource_usage"
+    - "validate_intermediate_outputs"
+    - "check_timeout_conditions"
+
+  post_execution_validation:
+    - "verify_all_outputs_generated"
+    - "validate_chain_completion_criteria"
+    - "check_audit_trail_completeness"
+    - "confirm_security_compliance"
+
+# =============================================================================
+# INTEGRATION HOOKS
+# =============================================================================
+
+integration_hooks:
+  claude_md_integration:
+    # Integration with CLAUDE.md agent selection
+    selection_priority: "chain_context_aware"
+    fallback_behavior: "use_orchestrator"
+    override_mechanism: "explicit_agent_request"
+
+  tool_permission_enforcement:
+    # Enforce tool permissions from tool-permissions.yaml
+    strict_enforcement: true
+    violation_handling: "log_and_block"
+    exception_escalation: "security-orchestrator"
+
+  soft_hook_compliance:
+    # Integration with compliance checker
+    run_compliance_check: "before_chain_execution"
+    compliance_failure_action: "warn_and_continue"
+    report_compliance_metrics: true
+
+# =============================================================================
+# MONITORING AND METRICS
+# =============================================================================
+
+monitoring:
+  chain_execution_metrics:
+    - "execution_time_per_chain"
+    - "success_rate_by_chain_type"
+    - "resource_utilization"
+    - "agent_performance_scores"
+
+  quality_metrics:
+    - "validation_rule_compliance"
+    - "output_quality_scores"
+    - "user_satisfaction_ratings"
+    - "error_rate_by_agent"
+
+  security_metrics:
+    - "security_validation_coverage"
+    - "vulnerability_detection_rate"
+    - "false_positive_rate"
+    - "security_escalation_frequency"
+
+# =============================================================================
+# CHAIN TEMPLATES
+# =============================================================================
+
+chain_templates:
+  quick_validation:
+    description: "Fast validation for simple changes"
+    agents: ["code-reviewer", "security-orchestrator"]
+    estimated_time_minutes: 8
+    use_cases: ["typo fixes", "documentation updates", "simple bug fixes"]
+
+  comprehensive_review:
+    description: "Full review for complex changes"
+    agents: ["code-reviewer", "security-orchestrator", "security-scanner", "test-coverage-analyzer"]
+    estimated_time_minutes: 25
+    use_cases: ["new features", "API changes", "security-sensitive modifications"]
+
+  emergency_hotfix:
+    description: "Minimal validation for critical production fixes"
+    agents: ["security-orchestrator", "debugger"]
+    estimated_time_minutes: 5
+    use_cases: ["production outages", "critical security patches"]
+    bypass_conditions: ["production_emergency", "security_incident"]

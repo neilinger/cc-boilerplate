@@ -127,8 +127,8 @@ class AgentComplianceChecker:
             "specialists": ["security-scanner", "test-automator", "smart-doc-generator", "debugger",
                            "pr-optimizer", "dependency-manager", "technical-researcher", "adr-creator",
                            "ai-engineering-researcher", "context-engineer", "github-checker"],
-            "analyzers": ["code-reviewer", "test-coverage-analyzer", "work-completion-summary"],
-            "root": ["meta-agent"]
+            "analyzers": ["code-reviewer", "test-coverage-analyzer", "work-completion-summary", "codebase-researcher"],
+            "root": ["meta-agent", "the-librarian"]
         }
 
         # Find expected directory for agent
