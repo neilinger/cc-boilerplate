@@ -331,6 +331,20 @@ show_dry_run_summary() {
     info "To generate files, run without --dry-run"
 }
 
+# Check for update reminders
+check_update_reminder() {
+    if [[ -f ".boilerplate-version" ]]; then
+        # Check if version file is older than 90 days
+        if [[ $(find .boilerplate-version -mtime +90 2>/dev/null) ]]; then
+            echo ""
+            echo "${YELLOW}💡 Update Available${RESET}"
+            echo "   Your boilerplate hasn't been updated in 90+ days."
+            echo "   Check for updates: ${BLUE}scripts/update-boilerplate.sh --dry-run${RESET}"
+            echo ""
+        fi
+    fi
+}
+
 # Show completion summary
 show_completion() {
     echo ""
@@ -362,6 +376,9 @@ show_completion() {
     echo "  ⚙️  .claude/project/settings.project.json - Edit for custom settings"
     echo ""
     info "Next time you update boilerplate, run this script again to rebuild"
+
+    # Check for gentle update reminder
+    check_update_reminder
 }
 
 # Main execution
