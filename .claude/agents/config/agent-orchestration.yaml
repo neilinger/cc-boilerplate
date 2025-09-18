@@ -1,252 +1,122 @@
-# Agent Orchestration Configuration
-# Defines hierarchical agent relationships, chains, and autonomous selection rules
-# Based on ADR-007: Hierarchical Multi-Agent System Architecture
+# Agent Orchestration Configuration - Simplified
+# Minimal orchestration focusing on security chain and core coordination
+# Updated: 2025-01-18 - KISS/YAGNI Simplification
 
-version: "1.0"
-created: "2025-01-17"
-description: "Hierarchical orchestration system with autonomous agent selection and security-first tool allocation"
+version: "1.1"
+created: "2025-01-18"
+description: "Simplified orchestration system maintaining security-first approach with minimal complexity"
 
-# Primary Orchestrators - High-level coordination agents
+# Primary Orchestrator - Single point of coordination
 orchestrators:
   workflow-orchestrator:
     model: opus
-    role: "complex_multi_step_coordination"
+    role: "multi_step_coordination"
     triggers:
       - "multi-step workflow"
       - "complex feature implementation"
       - "cross-domain coordination"
-    delegates_to:
-      - "code-lifecycle-manager"
-      - "security-orchestrator"
-      - "technical-researcher"
     tools: ["Task", "TodoWrite", "Read"]
 
-  code-lifecycle-manager:
-    model: sonnet
-    role: "development_workflow_management"
-    triggers:
-      - "code modification"
-      - "development workflow"
-      - "quality assurance"
-    delegates_to:
-      - "code-reviewer"
-      - "test-automator"
-      - "debugger"
-    tools: ["Task", "Read", "Bash(git:*)"]
-
   security-orchestrator:
-    model: haiku
-    role: "security_chain_coordination"
+    model: sonnet
+    role: "security_coordination"
     triggers:
       - "security validation"
-      - "vulnerability check"
-      - "security chain trigger"
-    delegates_to:
-      - "security-scanner"
-      - "code-reviewer"
+      - "security incident response"
     tools: ["Task", "Read"]
 
-# Mandatory Agent Chains - Enforce quality and security
+# Essential Security Chain - Only keep what adds measurable value
 chains:
-  code_quality_chain:
-    name: "Code Quality Validation Chain"
+  security_chain:
+    name: "Security Validation Chain"
     trigger: "code_modified"
     sequence:
       - agent: "code-reviewer"
         required: true
-        tools_allowed: ["Read", "Grep", "Glob", "Bash(git diff:*)", "Task"]
       - agent: "security-scanner"
         required: true
         triggered_by: "code-reviewer"
-        tools_allowed: ["Read", "Grep", "Glob", "Bash(security:*)", "WebSearch"]
-      - agent: "test-automator"
-        required: false
-        condition: "new_functionality_detected"
-        tools_allowed: ["Read", "Write", "Edit", "Bash(test:*)", "Task"]
 
-  feature_development_chain:
-    name: "Feature Development Chain"
-    trigger: "feature_request"
-    sequence:
-      - agent: "technical-researcher"
-        required: true
-        tools_allowed: ["Read", "WebSearch", "WebFetch", "mcp__Ref__*"]
-      - agent: "workflow-orchestrator"
-        required: true
-        triggered_by: "technical-researcher"
-      - agent: "test-automator"
-        required: true
-        condition: "implementation_complete"
-
-  security_validation_chain:
-    name: "Security Validation Chain"
-    trigger: "security_scan_required"
-    sequence:
-      - agent: "security-scanner"
-        required: true
-        tools_allowed: ["Read", "Grep", "Bash(security:*)", "Bash(gh api:*)", "WebSearch"]
-      - agent: "code-reviewer"
-        required: true
-        triggered_by: "security-scanner"
-        condition: "vulnerabilities_found"
-
-# Agent Categories and Boundaries
+# Simplified Agent Categories - Basic organization only
 categories:
-  analysis_agents:
-    description: "Read-only analysis and review agents"
-    tool_restrictions: ["Read", "Grep", "Glob", "Bash(git:*)", "Task", "WebSearch"]
-    editing_forbidden: true
+  specialists:
+    description: "Domain-specific expert agents"
     agents:
-      - "code-reviewer"
-      - "security-scanner"
-      - "test-coverage-analyzer"
-      - "codebase-researcher"
+      - "python-pro"
+      - "typescript-pro"
+      - "react-expert"
+      - "postgres-expert"
+      - "aws-expert"
+      - "docker-expert"
+      - "performance-optimizer"
+      - "api-architect"
+      - "nextjs-expert"
+      - "graphql-architect"
+      - "terraform-specialist"
+      - "kubernetes-architect"
+      - "deployment-engineer"
+      - "ml-engineer"
+      - "data-scientist"
 
-  creation_agents:
-    description: "Agents that create or modify files"
-    tool_restrictions: ["Read", "Write", "Edit", "MultiEdit", "Task"]
-    confirmation_required: true
-    agents:
-      - "smart-doc-generator"
-      - "test-automator"
-      - "meta-agent"
-      - "debugger"
-
-  research_agents:
-    description: "Information gathering and analysis agents"
-    tool_restrictions: ["Read", "WebSearch", "WebFetch", "mcp__Ref__*", "mcp__neil-knowledge-graph__*", "Task"]
-    editing_forbidden: true
-    agents:
-      - "technical-researcher"
-      - "the-librarian"
-      - "codebase-researcher"
-      - "ai-engineering-researcher"
-
-  github_agents:
-    description: "GitHub-specific workflow agents"
-    tool_restrictions: ["Bash(gh:*)", "Read", "Task"]
-    editing_forbidden: false
-    agents:
-      - "pr-optimizer"
-      - "github-checker"
-      - "dependency-manager"
-
-# Autonomous Selection Rules
-selection_rules:
-  triggers:
-    code_modified:
-      primary: "code-lifecycle-manager"
-      chain: "code_quality_chain"
-
-    error_encountered:
-      primary: "debugger"
-      fallback: "workflow-orchestrator"
-
-    research_needed:
-      conditions:
-        - pattern: "external.*research"
-          agent: "technical-researcher"
-        - pattern: "codebase.*analysis"
-          agent: "codebase-researcher"
-        - pattern: "knowledge.*base"
-          agent: "the-librarian"
-
-    documentation_request:
-      conditions:
-        - pattern: "architecture.*decision"
-          agent: "adr-creator"
-        - pattern: "implementation.*plan"
-          agent: "prp-creator"
-        - pattern: "readme|api.*docs"
-          agent: "smart-doc-generator"
-
-    github_workflow:
-      conditions:
-        - pattern: "pull.*request|pr"
-          agent: "pr-optimizer"
-        - pattern: "dependency.*update"
-          agent: "dependency-manager"
-        - pattern: "maintenance.*check"
-          agent: "github-checker"
-
-# Model Allocation Strategy (from ADR-008)
-model_allocation:
-  opus:
-    cognitive_load: "high"
-    use_cases: ["complex_reasoning", "synthesis", "creation", "judgment"]
+  core_agents:
+    description: "Essential workflow agents"
     agents:
       - "workflow-orchestrator"
-      - "meta-agent"
-      - "technical-researcher"
-      - "context-engineer"
-      - "debugger"
-      - "adr-creator"
-
-  sonnet:
-    cognitive_load: "medium"
-    use_cases: ["analysis", "pattern_matching", "structured_execution"]
-    agents:
+      - "security-orchestrator"
       - "code-reviewer"
       - "security-scanner"
       - "test-automator"
-      - "prp-creator"
-      - "the-librarian"
-      - "codebase-researcher"
+      - "test-coverage-analyzer"
       - "smart-doc-generator"
-      - "code-lifecycle-manager"
-
-  haiku:
-    cognitive_load: "low"
-    use_cases: ["simple_tasks", "formatting", "checks", "template_operations"]
-    agents:
+      - "debugger"
+      - "technical-researcher"
+      - "dependency-manager"
       - "pr-optimizer"
       - "github-checker"
-      - "dependency-manager"
-      - "work-completion-summary"
+
+# Simple Model Allocation - Essential only
+model_allocation:
+  opus:
+    description: "High complexity coordination and architecture"
+    agents:
+      - "workflow-orchestrator"
+      - "technical-researcher"
+      - "terraform-specialist"
+      - "kubernetes-architect"
+      - "ml-engineer"
+      - "data-scientist"
+      - "aws-expert"
+      - "performance-optimizer"
+      - "api-architect"
+      - "graphql-architect"
+
+  sonnet:
+    description: "Standard development and analysis tasks"
+    agents:
+      - "python-pro"
+      - "typescript-pro"
+      - "react-expert"
+      - "postgres-expert"
+      - "docker-expert"
+      - "nextjs-expert"
+      - "deployment-engineer"
+      - "code-reviewer"
       - "security-orchestrator"
+      - "security-scanner"
+      - "test-automator"
+      - "test-coverage-analyzer"
+      - "smart-doc-generator"
+      - "debugger"
+      - "dependency-manager"
+      - "pr-optimizer"
+      - "github-checker"
 
-# Drift Prevention Configuration
-drift_prevention:
-  hooks:
-    pre_execution:
-      - "validate_tool_permissions"
-      - "check_agent_boundaries"
+  haiku:
+    description: "Simple tasks with minimal cognitive load"
+    agents:
+      - "work-completion-summary"
 
-    post_execution:
-      - "verify_kiss_yagni_compliance"
-      - "validate_security_boundaries"
-
-    context_threshold:
-      trigger_percentage: 50
-      action: "invoke_context_engineer"
-
-    principle_validation:
-      frequency: "every_5_operations"
-      validator: "the-librarian"
-      criteria: ["KISS", "YAGNI", "security_boundaries"]
-
-# Error Handling and Fallbacks
-error_handling:
-  agent_failure:
-    action: "escalate_to_orchestrator"
-    max_retries: 2
-
-  tool_permission_violation:
-    action: "block_and_log"
-    notification: "security_orchestrator"
-
-  chain_interruption:
-    action: "resume_from_checkpoint"
-    fallback: "workflow_orchestrator"
-
-  confidence_threshold:
-    minimum: 80
-    low_confidence_action: "upgrade_to_higher_model"
-    escalation_path: "sonnet -> opus"
-
-# Integration Points
+# Basic Integration
 integration:
+  security_chain: true
   claude_md_rules: true
-  hook_system: true
-  existing_agents: "maintain_compatibility"
-  tool_system: "enforce_permissions"

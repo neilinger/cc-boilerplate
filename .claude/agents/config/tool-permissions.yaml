@@ -253,22 +253,6 @@ agent_permissions:
     specific_tools: ["*"]
     rationale: "Primary orchestrator requires full capabilities for coordination"
 
-  code-lifecycle-manager:
-    security_level: "execution_restricted"
-    specific_tools:
-      - "Task"
-      - "Read"
-      - "Bash(git:*)"
-      - "TodoWrite"
-    rationale: "Lifecycle management requires coordination but limited execution"
-
-  security-orchestrator:
-    security_level: "read_only"
-    specific_tools:
-      - "Task"
-      - "Read"
-    rationale: "Security orchestrator only coordinates, doesn't execute"
-
   # Meta Agents (Full Access)
   meta-agent:
     security_level: "full_access"
@@ -284,6 +268,231 @@ agent_permissions:
       - "MultiEdit"
       - "Task"
     rationale: "Context optimization requires prompt modification capabilities"
+
+  # Imported Specialist Agents (New)
+  python-pro:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(python:*)"
+      - "Bash(pip:*)"
+      - "Bash(uv:*)"
+      - "Task"
+    rationale: "Python development requires code modification and Python tooling"
+
+  typescript-pro:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(npm:*)"
+      - "Bash(tsc:*)"
+      - "Bash(node:*)"
+      - "Task"
+    rationale: "TypeScript development requires code modification and Node.js tooling"
+
+  react-expert:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(npm:*)"
+      - "Bash(next:*)"
+      - "Bash(react:*)"
+      - "Task"
+    rationale: "React development requires code modification and React/Next.js tooling"
+
+  postgres-expert:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(psql:*)"
+      - "Bash(pg_dump:*)"
+      - "Bash(createdb:*)"
+      - "Task"
+    rationale: "PostgreSQL work requires database commands and schema modification"
+
+  aws-expert:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(aws:*)"
+      - "Bash(terraform:*)"
+      - "Bash(cdk:*)"
+      - "Task"
+    rationale: "AWS architecture requires infrastructure-as-code and AWS CLI access"
+
+  docker-expert:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(docker:*)"
+      - "Bash(kubectl:*)"
+      - "Bash(podman:*)"
+      - "Task"
+    rationale: "Container work requires Docker/Kubernetes commands and configuration"
+
+  performance-optimizer:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(performance:*)"
+      - "Bash(profiling:*)"
+      - "Task"
+    rationale: "Performance optimization requires profiling tools and code modification"
+
+  api-architect:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(curl:*)"
+      - "Bash(postman:*)"
+      - "Task"
+    rationale: "API architecture requires code modification and API testing tools"
+
+  nextjs-expert:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(npm:*)"
+      - "Bash(next:*)"
+      - "Bash(vercel:*)"
+      - "Task"
+    rationale: "Next.js development requires code modification and Next.js tooling"
+
+  graphql-architect:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(graphql:*)"
+      - "Bash(apollo:*)"
+      - "Task"
+    rationale: "GraphQL architecture requires schema modification and GraphQL tooling"
+
+  # Phase 2 Specialist Agents - AI-Centric Engineering Focus
+  terraform-specialist:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(terraform:*)"
+      - "Bash(tofu:*)"
+      - "Bash(aws:*)"
+      - "Bash(git:*)"
+      - "Task"
+    rationale: "Infrastructure as Code requires Terraform/OpenTofu commands and AWS CLI access"
+
+  kubernetes-architect:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(kubectl:*)"
+      - "Bash(helm:*)"
+      - "Bash(aws:*)"
+      - "Task"
+    rationale: "Kubernetes orchestration requires kubectl, Helm, and AWS EKS integration"
+
+  deployment-engineer:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(git:*)"
+      - "Bash(docker:*)"
+      - "Bash(kubectl:*)"
+      - "Bash(aws:*)"
+      - "Task"
+    rationale: "CI/CD pipelines require Git, Docker, Kubernetes, and AWS deployment tools"
+
+  ml-engineer:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(python:*)"
+      - "Bash(aws:*)"
+      - "Bash(docker:*)"
+      - "Task"
+    rationale: "ML production systems require Python, AWS Bedrock, and containerization"
+
+  data-scientist:
+    security_level: "execution_restricted"
+    specific_tools:
+      - "Read"
+      - "Write"
+      - "Edit"
+      - "MultiEdit"
+      - "Grep"
+      - "Glob"
+      - "Bash(python:*)"
+      - "Bash(jupyter:*)"
+      - "Task"
+    rationale: "Data science work requires Python data stack and Jupyter environments"
 
 # Tool Categories and Risk Assessment
 tool_categories:
