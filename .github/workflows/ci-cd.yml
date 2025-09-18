@@ -46,7 +46,12 @@ jobs:
         run: |
           source .venv/bin/activate
           python tests/test_base.py
-        
+
+      - name: URL Validation (Critical - User Experience)
+        run: |
+          source .venv/bin/activate
+          python tests/test_url_validation.py
+
       - name: Run Tier 1 unit tests
         run: |
           source .venv/bin/activate

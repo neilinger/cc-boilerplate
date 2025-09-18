@@ -107,6 +107,7 @@ def main():
     # Define test suites with priorities
     test_suites = [
         # HIGH PRIORITY - Security and Core Functionality
+        (tests_dir / "test_url_validation.py", "URL Validation Testing (Critical UX)", "HIGH PRIORITY"),
         (tests_dir / "test_safety_unit.py", "Safety Unit Testing (Tier 1)", "HIGH PRIORITY"),
         (tests_dir / "test_ci_integration.py", "CI Integration Testing (Tier 2A)", "HIGH PRIORITY"),
         (tests_dir / "test_portable_functionality.py", "Portable Functionality Testing (Tier 2B)", "HIGH PRIORITY"),
