@@ -103,18 +103,43 @@ get_repo_url() {
     echo ""
     success "Setup is working correctly! Almost done..."
     echo ""
-    info "Repository Configuration (Step 6/9)"
-    echo "------------------------"
-    echo "${BLUE}💡 Press ENTER to use defaults, or type custom values${RESET}"
-    echo ""
-    read -r -p "${BOLD}Repository URL [${default_url}]: ${RESET}" REPO_URL
-    REPO_URL=${REPO_URL:-$default_url}
 
-    read -r -p "${BOLD}Branch to use [main]: ${RESET}" BRANCH
-    BRANCH=${BRANCH:-main}
+    if [ "$INTERACTIVE" = false ]; then
+        # Non-interactive mode - explain and use defaults
+        info "🤖 Auto-configuration Mode (piped execution detected)"
+        echo "------------------------"
+        echo ""
+        success "Installing CC-Boilerplate - Claude Code enhancement toolkit"
+        echo ""
+        info "What this adds to your project:"
+        echo "  • AI agents for documentation, testing, security, and development"
+        echo "  • Automated quality checks and security validation"
+        echo "  • Enhanced Claude Code commands and workflows"
+        echo "  • Intelligent task orchestration and coordination"
+        echo ""
+        info "Using default configuration:"
+        echo "  📦 Repository: neilinger/cc-boilerplate (official)"
+        echo "  🔖 Branch: main (stable release)"
+        echo "  📁 Location: .claude/boilerplate/"
+        echo ""
+        REPO_URL="$default_url"
+        BRANCH="main"
+        success "Configuration set automatically"
+    else
+        # Interactive mode - existing prompting code
+        info "Repository Configuration (Step 6/9)"
+        echo "------------------------"
+        echo "${BLUE}💡 Press ENTER to use defaults, or type custom values${RESET}"
+        echo ""
+        read -r -p "${BOLD}Repository URL [${default_url}]: ${RESET}" REPO_URL
+        REPO_URL=${REPO_URL:-$default_url}
 
-    echo ""
-    success "Configuration set: $(basename "$REPO_URL") (branch: $BRANCH)"
+        read -r -p "${BOLD}Branch to use [main]: ${RESET}" BRANCH
+        BRANCH=${BRANCH:-main}
+
+        echo ""
+        success "Configuration set: $(basename "$REPO_URL") (branch: $BRANCH)"
+    fi
 }
 
 # Check if boilerplate already exists
@@ -288,6 +313,16 @@ show_completion() {
 main() {
     setup_colors
     detect_os
+
+    # Detect if running via pipe/non-interactive (like curl | bash)
+    if [ -t 0 ]; then
+        INTERACTIVE=true
+    else
+        INTERACTIVE=false
+        echo "${BOLD}${BLUE}🚀 Installing Claude Code Boilerplate...${RESET}"
+        echo "This enhances your project with AI-powered development tools"
+        echo ""
+    fi
 
     echo "${BOLD}======================================"
     echo "    CC-Boilerplate Initialization"
