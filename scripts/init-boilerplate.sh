@@ -101,13 +101,20 @@ get_repo_url() {
     local default_url="${CC_BOILERPLATE_REPO:-https://github.com/neilinger/cc-boilerplate.git}"
 
     echo ""
-    info "Repository Configuration"
+    success "Setup is working correctly! Almost done..."
+    echo ""
+    info "Repository Configuration (Step 6/9)"
     echo "------------------------"
-    read -r -p "Enter cc-boilerplate repository URL [$default_url]: " REPO_URL
+    echo "${BLUE}💡 Press ENTER to use defaults, or type custom values${RESET}"
+    echo ""
+    read -r -p "${BOLD}Repository URL [${default_url}]: ${RESET}" REPO_URL
     REPO_URL=${REPO_URL:-$default_url}
 
-    read -r -p "Enter branch to use [main]: " BRANCH
+    read -r -p "${BOLD}Branch to use [main]: ${RESET}" BRANCH
     BRANCH=${BRANCH:-main}
+
+    echo ""
+    success "Configuration set: $(basename "$REPO_URL") (branch: $BRANCH)"
 }
 
 # Check if boilerplate already exists
@@ -253,19 +260,28 @@ show_completion() {
     echo ""
     echo "${GREEN}${BOLD}🎉 CC-Boilerplate Initialization Complete!${RESET}"
     echo ""
+    success "Your project is now enhanced with Claude Code superpowers!"
+    echo ""
     info "What was set up:"
     echo "  📁 .claude/boilerplate/     - Core boilerplate files"
     echo "  📁 .claude/project/         - Your project customizations"
     echo "  📄 .boilerplate-version     - Version tracking"
     echo "  ⚙️  Updated .gitignore       - Ignore generated files"
     echo ""
-    info "Next steps:"
+    echo "${BOLD}${BLUE}🚀 Ready to start coding!${RESET}"
+    echo ""
+    info "Try these commands in Claude Code:"
+    echo "  • Type ${BOLD}/code-quality${RESET} - Run comprehensive code analysis"
+    echo "  • Type ${BOLD}/git-ops${RESET} - Advanced git operations"
+    echo "  • Ask for ${BOLD}workflow-orchestrator${RESET} - Coordinate complex tasks"
+    echo "  • Ask for ${BOLD}smart-doc-generator${RESET} - Create documentation"
+    echo ""
+    info "Optional customization:"
     echo "  1. Edit .claude/project/CLAUDE.project.md for project-specific instructions"
     echo "  2. Edit .claude/project/settings.project.json for custom settings"
     echo "  3. Run 'scripts/build-config.sh' to generate merged configurations"
-    echo "  4. Run 'scripts/update-boilerplate.sh' to pull future updates"
     echo ""
-    info "Documentation: docs/SYNCHRONIZATION.md"
+    echo "${GREEN}💡 Everything is safe and ready to use. Start by asking Claude Code to help with your project!${RESET}"
 }
 
 # Main execution
