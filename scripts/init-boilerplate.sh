@@ -96,6 +96,29 @@ check_clean_workdir() {
     fi
 }
 
+# Get latest release tag
+get_latest_tag() {
+    local repo_url="$1"
+    local latest_tag
+
+    # Extract owner/repo from URL
+    local repo_path
+    repo_path=$(echo "$repo_url" | sed -E 's|^https://github\.com/([^/]+/[^/]+)\.git$|\1|')
+
+    # Try to get latest release tag via GitHub API
+    if command -v curl >/dev/null 2>&1; then
+        latest_tag=$(curl -s "https://api.github.com/repos/$repo_path/releases/latest" | grep '"tag_name":' | cut -d'"' -f4 2>/dev/null)
+    fi
+
+    # Fall back to git ls-remote if API fails
+    if [[ -z "$latest_tag" ]]; then
+        latest_tag=$(git ls-remote --tags --refs "$repo_url" | grep -o 'refs/tags/v[0-9]*\.[0-9]*\.[0-9]*$' | sed 's|refs/tags/||' | sort -V | tail -1 2>/dev/null)
+    fi
+
+    # Ultimate fallback to main
+    echo "${latest_tag:-main}"
+}
+
 # Get repository URL
 get_repo_url() {
     local default_url="${CC_BOILERPLATE_REPO:-https://github.com/neilinger/cc-boilerplate.git}"
@@ -119,11 +142,13 @@ get_repo_url() {
         echo ""
         info "Using default configuration:"
         echo "  📦 Repository: neilinger/cc-boilerplate (official)"
-        echo "  🔖 Branch: main (stable release)"
+        local default_branch
+        default_branch=$(get_latest_tag "$default_url")
+        echo "  🔖 Version: $default_branch (latest stable)"
         echo "  📁 Location: .claude/boilerplate/"
         echo ""
         REPO_URL="$default_url"
-        BRANCH="main"
+        BRANCH="$default_branch"
         success "Configuration set automatically"
     else
         # Interactive mode - existing prompting code
@@ -134,8 +159,10 @@ get_repo_url() {
         read -r -p "${BOLD}Repository URL [${default_url}]: ${RESET}" REPO_URL
         REPO_URL=${REPO_URL:-$default_url}
 
-        read -r -p "${BOLD}Branch to use [main]: ${RESET}" BRANCH
-        BRANCH=${BRANCH:-main}
+        local default_branch
+        default_branch=$(get_latest_tag "$REPO_URL")
+        read -r -p "${BOLD}Version to use [$default_branch]: ${RESET}" BRANCH
+        BRANCH=${BRANCH:-$default_branch}
 
         echo ""
         success "Configuration set: $(basename "$REPO_URL") (branch: $BRANCH)"

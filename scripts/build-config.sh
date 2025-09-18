@@ -87,8 +87,23 @@ check_requirements() {
 
     # Check for required directories and files
     [[ -d ".claude/boilerplate" ]] || abort "Boilerplate not found. Run init-boilerplate.sh first"
-    [[ -f ".claude/boilerplate/.claude/settings.template.json" ]] || abort "Settings template not found"
-    [[ -f ".claude/boilerplate/templates/CLAUDE.template.md" ]] || abort "CLAUDE template not found"
+
+    # Check for template files with helpful error messages
+    if [[ ! -f ".claude/boilerplate/.claude/settings.template.json" ]]; then
+        echo "❌ Settings template not found at: .claude/boilerplate/.claude/settings.template.json"
+        echo "📁 Contents of .claude/boilerplate/:"
+        ls -la .claude/boilerplate/ 2>/dev/null || echo "   Directory not found or empty"
+        echo "📁 Contents of .claude/boilerplate/.claude/:"
+        ls -la .claude/boilerplate/.claude/ 2>/dev/null || echo "   Directory not found or empty"
+        abort "Settings template not found. Boilerplate installation may be incomplete."
+    fi
+
+    if [[ ! -f ".claude/boilerplate/templates/CLAUDE.template.md" ]]; then
+        echo "❌ CLAUDE template not found at: .claude/boilerplate/templates/CLAUDE.template.md"
+        echo "📁 Contents of .claude/boilerplate/templates/:"
+        ls -la .claude/boilerplate/templates/ 2>/dev/null || echo "   Directory not found or empty"
+        abort "CLAUDE template not found. Boilerplate installation may be incomplete."
+    fi
 
     # Create project directory if it doesn't exist
     mkdir -p .claude/project
