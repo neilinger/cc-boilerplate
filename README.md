@@ -30,11 +30,20 @@ start with latest tag of neilinger/cc-boilerplate repository as skeleton for thi
 
 ### For Existing Projects (Recommended)
 
-Add cc-boilerplate to your existing project with one command:
+Add cc-boilerplate to your existing project. **Choose your preferred method**:
 
+#### Option 1: One-Liner (Fastest)
 ```bash
 # Single command setup - works in any existing project
 curl -sSL https://raw.githubusercontent.com/neilinger/cc-boilerplate/main/scripts/init-boilerplate.sh | bash
+```
+
+#### Option 2: GitHub CLI (Most Reliable)
+```bash
+# Alternative if curl fails - uses GitHub CLI
+gh repo clone neilinger/cc-boilerplate temp-boilerplate
+./temp-boilerplate/scripts/init-boilerplate.sh
+rm -rf temp-boilerplate
 ```
 
 This will:
@@ -43,6 +52,13 @@ This will:
 - ✅ Preserve your existing files
 - ✅ Create project-specific customization area
 - ✅ Build merged configurations
+
+**Verify installation worked:**
+```bash
+# Quick test - should show cc-boilerplate components
+ls -la .claude/
+ls -la scripts/
+```
 
 **Then customize for your domain:**
 ```bash
@@ -61,12 +77,26 @@ scripts/update-boilerplate.sh --dry-run
 
 ### For New Projects
 
+**Option 1: One-Liner**
 ```bash
 # 1. Create your project
 git init my-project && cd my-project
 
 # 2. Add cc-boilerplate
 curl -sSL https://raw.githubusercontent.com/neilinger/cc-boilerplate/main/scripts/init-boilerplate.sh | bash
+
+# 3. Start building!
+```
+
+**Option 2: GitHub CLI (Alternative)**
+```bash
+# 1. Create your project
+git init my-project && cd my-project
+
+# 2. Add cc-boilerplate (GitHub CLI method)
+gh repo clone neilinger/cc-boilerplate temp-boilerplate
+./temp-boilerplate/scripts/init-boilerplate.sh
+rm -rf temp-boilerplate
 
 # 3. Start building!
 ```
