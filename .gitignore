@@ -116,6 +116,8 @@ extras/
 
 # Claude Code data
 .claude/data/
+boilerplate/.claude/data/
+.claude/hooks/utils/tts/logs/
 # Serena MCP memories (should not be version controlled)
 .serena/
 
