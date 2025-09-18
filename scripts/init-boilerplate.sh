@@ -206,6 +206,7 @@ check_existing_boilerplate() {
 setup_directories() {
     info "Setting up directory structure..."
     mkdir -p .claude/project
+    mkdir -p .claude/boilerplate
     success "Directory structure created"
 }
 
@@ -233,7 +234,21 @@ add_subtree() {
         if ! cp -r "$temp_dir/boilerplate/"* .claude/boilerplate/; then
             abort "Failed to copy boilerplate content"
         fi
-        success "Boilerplate content installed successfully"
+
+        # Copy essential project root files from the source repository
+        info "Setting up project root files..."
+
+        # Copy setup.sh to project root (where it should be executed)
+        if [[ -f "$temp_dir/setup.sh" ]]; then
+            cp "$temp_dir/setup.sh" ./setup.sh
+            chmod +x ./setup.sh
+        fi
+
+        # Copy sample configuration files to project root
+        [[ -f "$temp_dir/.env.sample" ]] && cp "$temp_dir/.env.sample" ./.env.sample
+        [[ -f "$temp_dir/.mcp.json.sample" ]] && cp "$temp_dir/.mcp.json.sample" ./.mcp.json.sample
+
+        success "Boilerplate content and project files installed successfully"
     else
         abort "Boilerplate directory not found in repository"
     fi
@@ -379,7 +394,8 @@ show_completion() {
     echo ""
     echo "  ${BOLD}4.${RESET} You'll see a menu = success! 🎉"
     echo ""
-    echo "${BLUE}The setup.sh script configures your project name, API keys, and personalizes TTS.${RESET}"
+    echo "${BLUE}The setup.sh script configures your project (name, API keys, TTS) and integrates${RESET}"
+    echo "${BLUE}the boilerplate into your existing project structure.${RESET}"
     echo ""
 
     # Offer to run setup automatically for interactive mode
