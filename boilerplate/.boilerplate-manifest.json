@@ -14,7 +14,8 @@
     ".claude/settings.template.json",
     "scripts/init-boilerplate.sh",
     "scripts/update-boilerplate.sh",
-    "scripts/build-config.sh"
+    "scripts/build-config.sh",
+    "setup.sh"
   ],
   "generated_files": [
     "CLAUDE.md",
