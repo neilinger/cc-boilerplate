@@ -365,18 +365,43 @@ show_completion() {
     echo "${BOLD}📁 Location: ${current_dir}${RESET}"
     echo ""
 
-    # Simple 3-step process
-    echo "${BOLD}${BLUE}Next steps:${RESET}"
+    # Complete setup workflow
+    echo "${BOLD}${BLUE}Complete setup with these steps:${RESET}"
     echo ""
-    echo "  ${BOLD}1.${RESET} Open Claude Code in this directory:"
+    echo "  ${BOLD}1.${RESET} Run the project setup script:"
+    echo "     ${BOLD}${GREEN}./setup.sh${RESET}"
+    echo ""
+    echo "  ${BOLD}2.${RESET} Open Claude Code in this directory:"
     echo "     ${BOLD}${GREEN}${claude_cmd} ${current_dir}${RESET}"
     echo ""
-    echo "  ${BOLD}2.${RESET} Test it works - type this command:"
+    echo "  ${BOLD}3.${RESET} Test it works - type this command:"
     echo "     ${BOLD}${GREEN}/code-quality${RESET}"
     echo ""
-    echo "  ${BOLD}3.${RESET} You'll see a menu = success! 🎉"
+    echo "  ${BOLD}4.${RESET} You'll see a menu = success! 🎉"
     echo ""
-    echo "${BLUE}That's it! Your project now has AI superpowers.${RESET}"
+    echo "${BLUE}The setup.sh script configures your project name, API keys, and personalizes TTS.${RESET}"
+    echo ""
+
+    # Offer to run setup automatically for interactive mode
+    if [[ "$INTERACTIVE" == "true" ]]; then
+        echo "${YELLOW}Would you like to run ./setup.sh now? (recommended)${RESET}"
+        read -p "Run setup script? (Y/n): " run_setup
+        run_setup=${run_setup:-Y}
+
+        if [[ "$run_setup" =~ ^[Yy]$ ]]; then
+            echo ""
+            echo "${GREEN}🚀 Running project setup...${RESET}"
+            echo ""
+            if [[ -f ./setup.sh ]]; then
+                bash ./setup.sh
+            else
+                warn "Setup script not found. Please run ./setup.sh manually later."
+            fi
+        else
+            echo ""
+            echo "${YELLOW}Remember to run ./setup.sh when you're ready!${RESET}"
+        fi
+    fi
 
     # Create verification file
     echo "$(date): CC-Boilerplate ready" > .claude/.cc-installed
