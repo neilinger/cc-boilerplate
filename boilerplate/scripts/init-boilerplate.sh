@@ -320,17 +320,28 @@ add_subtree() {
     if [[ -d "$temp_dir/boilerplate" ]]; then
         info "Extracting boilerplate content..."
 
-        # CRITICAL: Only copy .claude directory to avoid overwriting project PRPs/ADRs
+        # CRITICAL: Install .claude content directly AND keep reference copy
         if [[ -d "$temp_dir/boilerplate/.claude" ]]; then
             if command -v rsync >/dev/null 2>&1; then
+                # Main installation: Copy directly to .claude/ for immediate Claude access
+                if ! rsync -a "$temp_dir/boilerplate/.claude/" .claude/; then
+                    abort "Failed to copy .claude content to main directory"
+                fi
+                # Reference copy: Keep copy in .claude/boilerplate/ for build-config.sh
                 if ! rsync -a "$temp_dir/boilerplate/.claude/" .claude/boilerplate/.claude/; then
-                    abort "Failed to copy .claude boilerplate content"
+                    abort "Failed to copy .claude boilerplate reference"
                 fi
             else
                 # Enable dotglob to include hidden files
                 shopt -s dotglob
+                # Main installation
+                if ! cp -r "$temp_dir/boilerplate/.claude/"* .claude/; then
+                    abort "Failed to copy .claude content to main directory"
+                fi
+                # Reference copy
+                mkdir -p .claude/boilerplate/.claude
                 if ! cp -r "$temp_dir/boilerplate/.claude/"* .claude/boilerplate/.claude/; then
-                    abort "Failed to copy .claude boilerplate content"
+                    abort "Failed to copy .claude boilerplate reference"
                 fi
                 shopt -u dotglob
             fi

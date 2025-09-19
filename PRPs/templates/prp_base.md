@@ -1,4 +1,4 @@
-name: "Base PRP Template v3 - Implementation-Focused with Precision Standards"
+name: "Base PRP Template v4 - Spec-Kit Integration with Context Engineering"
 description: |
 
 ---
@@ -100,49 +100,36 @@ Examples:
 
 ```
 
-### Implementation Tasks (ordered by dependencies)
+### Spec-Kit Integration
+
+**Next Phase**: After completing this PRP, proceed to structured implementation phases:
 
 ```yaml
-Task 1: CREATE src/models/{domain}_models.py
-  - IMPLEMENT: {SpecificModel}Request, {SpecificModel}Response Pydantic models
-  - FOLLOW pattern: src/models/existing_model.py (field validation approach)
-  - NAMING: CamelCase for classes, snake_case for fields
-  - PLACEMENT: Domain-specific model file in src/models/
+# Phase 1: Technical Planning
+next_command: /plan
+input: This PRP's context and requirements
+output: specs/{feature-number}-{feature-name}/plan.md
+purpose: Architectural decisions and technical strategy
 
-Task 2: CREATE src/services/{domain}_service.py
-  - IMPLEMENT: {Domain}Service class with async methods
-  - FOLLOW pattern: src/services/database_service.py (service structure, error handling)
-  - NAMING: {Domain}Service class, async def create_*, get_*, update_*, delete_* methods
-  - DEPENDENCIES: Import models from Task 1
-  - PLACEMENT: Service layer in src/services/
+# Phase 2: Task Breakdown
+next_command: /tasks
+input: Plan from Phase 1
+output: specs/{feature-number}-{feature-name}/tasks.md
+purpose: Implementation breakdown with dependencies
 
-Task 3: CREATE src/tools/{action}_{resource}.py
-  - IMPLEMENT: MCP tool wrapper calling service methods
-  - FOLLOW pattern: src/tools/existing_tool.py (FastMCP tool structure)
-  - NAMING: snake_case file name, descriptive tool function name
-  - DEPENDENCIES: Import service from Task 2
-  - PLACEMENT: Tool layer in src/tools/
-
-Task 4: MODIFY src/main.py or src/server.py
-  - INTEGRATE: Register new tool with MCP server
-  - FIND pattern: existing tool registrations
-  - ADD: Import and register new tool following existing pattern
-  - PRESERVE: Existing tool registrations and server configuration
-
-Task 5: CREATE src/services/tests/test_{domain}_service.py
-  - IMPLEMENT: Unit tests for all service methods (happy path, edge cases, error handling)
-  - FOLLOW pattern: src/services/tests/test_existing_service.py (fixture usage, assertion patterns)
-  - NAMING: test_{method}_{scenario} function naming
-  - COVERAGE: All public methods with positive and negative test cases
-  - PLACEMENT: Tests alongside the code they test
-
-Task 6: CREATE src/tools/tests/test_{action}_{resource}.py
-  - IMPLEMENT: Unit tests for MCP tool functionality
-  - FOLLOW pattern: src/tools/tests/test_existing_tool.py (MCP tool testing approach)
-  - MOCK: External service dependencies
-  - COVERAGE: Tool input validation, success responses, error handling
-  - PLACEMENT: Tool tests in src/tools/tests/
+# Phase 3: Implementation
+next_command: /implement
+input: Tasks from Phase 2
+output: Working code with validation
+purpose: TDD execution with KISS/YAGNI gates
 ```
+
+**Handoff Context**: The following sections provide all context needed for `/plan`:
+- Documentation & References (URLs, file patterns, gotchas)
+- Current/Desired Codebase Tree (structure understanding)
+- Implementation Patterns & Key Details (coding patterns)
+- Integration Points (system connections)
+- Validation Loop (quality gates)
 
 ### Implementation Patterns & Key Details
 

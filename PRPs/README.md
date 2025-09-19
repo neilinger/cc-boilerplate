@@ -47,4 +47,76 @@ The industry mantra “Garbage In → Garbage Out” applies doubly to prompt en
 A PRP is PRD + curated codebase intelligence + agent/runbook—the minimum viable packet an AI needs to plausibly ship production-ready code on the first pass.
 
 The PRP can be small and focusing on a single task or large and covering multiple tasks.
-The true power of PRP is in the ability to chain tasks together in a PRP to build, self-validate and ship complex features.
+The true power of PRP is in the ability to chain tasks together to build, self-validate and ship complex features.
+
+## NEW: Spec-Kit Integration Workflow
+
+**Enhanced PRP System (v4+)**: PRPs now integrate with GitHub's spec-kit to provide structured phase separation while preserving automatic context discovery.
+
+### The Enhanced Workflow
+
+```
+1. PRP Creation (Automatic Context Discovery)
+   └─ /prp:create → PRPs/prp-XXX-feature.md
+   └─ WHAT & WHY with curated context
+
+2. Specification Transformation
+   └─ /prp:to-spec → specs/XXX-feature/spec.md
+   └─ PRP context → spec-kit format
+
+3. Technical Planning
+   └─ /plan → specs/XXX-feature/plan.md
+   └─ Architecture decisions (HOW at system level)
+
+4. Task Breakdown
+   └─ /tasks → specs/XXX-feature/tasks.md
+   └─ Implementation steps (HOW at code level)
+
+5. Implementation
+   └─ /implement → Working code
+   └─ TDD execution with validation gates
+```
+
+### Why This Hybrid Approach
+
+**Problem Solved**: The original PRP system mixed "WHAT" with "HOW" causing implementation drift and scope creep.
+
+**Solution**:
+- **Keep PRP's strength**: Automatic context discovery (superior to manual specification)
+- **Add spec-kit's strength**: Clear phase separation prevents drift
+- **Skip redundancy**: Don't use spec-kit's `/specify` - PRP already does it better
+
+### Available Commands
+
+```bash
+# Install spec-kit integration
+/prp:install-speckit
+
+# Transform PRP to spec-kit format
+/prp:to-spec PRPs/prp-005-my-feature.md
+
+# Transform and proceed to planning
+/prp:to-plan PRPs/prp-005-my-feature.md
+
+# Validate KISS/YAGNI compliance
+/prp:validate specs/005-my-feature/
+
+# Check workflow status
+/prp:workflow-status
+```
+
+### Context Engineering vs Specification Engineering
+
+**PRP = Context Engineering**:
+- Automatic discovery through codebase analysis
+- Environmental awareness and pattern detection
+- Minimal user input required
+- AI actively curates context
+
+**Spec-Kit = Specification Engineering**:
+- Manual, exhaustive specification
+- Clear phase boundaries
+- Structured handoffs
+- TDD-driven implementation
+
+**Hybrid = Best of Both Worlds**: Automatic discovery + structured execution

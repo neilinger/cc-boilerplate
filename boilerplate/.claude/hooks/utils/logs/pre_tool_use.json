@@ -1,0 +1,51 @@
+[
+  {
+    "session_id": "39c9c72d-0b08-4f3d-9d5d-71e31c1fa3a5",
+    "transcript_path": "/Users/neil/.claude/projects/-Users-neil-src-solo-cc-boilerplate/39c9c72d-0b08-4f3d-9d5d-71e31c1fa3a5.jsonl",
+    "cwd": "/Users/neil/src/solo/cc-boilerplate/.claude/hooks/utils",
+    "permission_mode": "acceptEdits",
+    "hook_event_name": "PreToolUse",
+    "tool_name": "TodoWrite",
+    "tool_input": {
+      "todos": [
+        {
+          "content": "Fix escape sequences in agent-compliance-checker.py (Issue #24)",
+          "status": "completed",
+          "activeForm": "Fixing escape sequences in agent-compliance-checker.py"
+        },
+        {
+          "content": "Fix escape sequences in validate-chains.py (Issue #25)",
+          "status": "completed",
+          "activeForm": "Fixing escape sequences in validate-chains.py"
+        },
+        {
+          "content": "Add type hints to pre_tool_use.py functions (Issue #26)",
+          "status": "completed",
+          "activeForm": "Adding type hints to pre_tool_use.py functions"
+        },
+        {
+          "content": "Add type annotations to elevenlabs_tts.py (Issue #27)",
+          "status": "completed",
+          "activeForm": "Adding type annotations to elevenlabs_tts.py"
+        },
+        {
+          "content": "Add unit tests for agent compliance validation utilities (Issue #28)",
+          "status": "completed",
+          "activeForm": "Adding unit tests for agent compliance validation utilities"
+        }
+      ]
+    }
+  },
+  {
+    "session_id": "39c9c72d-0b08-4f3d-9d5d-71e31c1fa3a5",
+    "transcript_path": "/Users/neil/.claude/projects/-Users-neil-src-solo-cc-boilerplate/39c9c72d-0b08-4f3d-9d5d-71e31c1fa3a5.jsonl",
+    "cwd": "/Users/neil/src/solo/cc-boilerplate/.claude/hooks/utils",
+    "permission_mode": "acceptEdits",
+    "hook_event_name": "PreToolUse",
+    "tool_name": "Bash",
+    "tool_input": {
+      "command": "uv run .claude/hooks/utils/tts/elevenlabs_tts.py \"neil, I've successfully fixed all 5 GitHub issues - from escape sequence bugs to type hints and security function tests, your repository is now in excellent shape.\"",
+      "description": "Generate TTS summary"
+    }
+  }
+]

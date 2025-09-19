@@ -6,8 +6,8 @@ description: |
 ## Status
 
 Status: IN_PROGRESS
-Status_Date: 2025-01-17
-Status_Note: Implementation started - transforming agent system from ad-hoc collection to hierarchical orchestration with security boundaries
+Status_Date: 2025-01-19
+Status_Note: MIGRATED to spec-kit workflow - specification extracted to specs/004-agent-system/spec.md. Implementation details remain here as reference. Next phase: use /plan in specs/004-agent-system/ directory.
 
 ## Goal
 
