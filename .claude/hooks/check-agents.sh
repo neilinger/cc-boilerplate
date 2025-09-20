@@ -101,10 +101,10 @@ echo -e "${BLUE}🔍 Running agent compliance analysis...${NC}"
 echo
 
 if $VERBOSE; then
-    python3 .claude/hooks/utils/agent-compliance-checker.py --verbose
+    python3 scripts/agent-validation/agent-compliance-checker.py --verbose
     COMPLIANCE_EXIT_CODE=$?
 else
-    python3 .claude/hooks/utils/agent-compliance-checker.py
+    python3 scripts/agent-validation/agent-compliance-checker.py
     COMPLIANCE_EXIT_CODE=$?
 fi
 
@@ -113,10 +113,10 @@ echo -e "${BLUE}🔗 Running chain configuration validation...${NC}"
 echo
 
 if $VERBOSE; then
-    python3 .claude/hooks/utils/validate-chains.py --verbose
+    python3 scripts/agent-validation/validate-chains.py --verbose
     CHAIN_EXIT_CODE=$?
 else
-    python3 .claude/hooks/utils/validate-chains.py
+    python3 scripts/agent-validation/validate-chains.py
     CHAIN_EXIT_CODE=$?
 fi
 
