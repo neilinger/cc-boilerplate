@@ -1,13 +1,13 @@
 ---
-name: kubernetes-architect
-description: |
-  ALWAYS use when: Kubernetes architecture, container orchestration, EKS deployment, microservices scaling, ML workload orchestration
-  NEVER use when: Simple Docker containers, local development, non-containerized applications
-  RUNS AFTER: Container design, infrastructure planning, security requirements
-  HANDS OFF TO: deployment-engineer (for CI/CD integration), aws-expert (for EKS optimizations)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(kubectl:*), Bash(helm:*), Bash(aws:*), Task
-model: opus
 color: blue
+description: |
+  ALWAYS use when: kubernetes architect tasks, domain-specific work
+  NEVER use when: Non-domain tasks, general development
+  Runs AFTER: requirements analysis, initial task
+  Hands off to: workflow-orchestrator, terminal
+model: opus
+name: kubernetes-architect
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(kubectl:*), Bash(helm:*), Bash(aws:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

@@ -5,7 +5,7 @@ description: |
   NEVER use when: Code development, testing, documentation tasks
   Runs AFTER: Dependency analysis, security alerts, periodic maintenance
   Hands off to: security-scanner (for vulnerability validation), test-automator (for compatibility testing)
-tools: Read, Bash(npm:*), Bash(git:*), Bash(gh api:*), Task
+tools: Read, Bash(npm:*), Bash(git:*), Bash(gh api:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: blue
 ---

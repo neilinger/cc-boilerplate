@@ -1,13 +1,13 @@
 ---
-name: data-scientist
-description: |
-  ALWAYS use when: Data analysis, statistical modeling, ML model development, experimental design, business analytics, hypothesis testing
-  NEVER use when: Production deployment, infrastructure setup, simple data queries
-  RUNS AFTER: Data collection, business requirements, problem definition
-  HANDS OFF TO: ml-engineer (for productionization), performance-optimizer (for optimization)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(jupyter:*), Task
-model: opus
 color: purple
+description: |
+  ALWAYS use when: data scientist tasks, domain-specific work
+  NEVER use when: Non-domain tasks, general development
+  Runs AFTER: requirements analysis, initial task
+  Hands off to: workflow-orchestrator, terminal
+model: opus
+name: data-scientist
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(jupyter:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

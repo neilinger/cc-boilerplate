@@ -373,6 +373,46 @@ add_subtree() {
         [[ -f "$temp_dir/.env.sample" ]] && cp "$temp_dir/.env.sample" ./.env.sample
         [[ -f "$temp_dir/.mcp.json.sample" ]] && cp "$temp_dir/.mcp.json.sample" ./.mcp.json.sample
 
+        # Handle CLAUDE.md template
+        if [[ -f "$temp_dir/boilerplate/CLAUDE.template.md" ]]; then
+            if [[ -f ./CLAUDE.md ]]; then
+                # Existing CLAUDE.md found - create backup and advise
+                local backup_name="CLAUDE.md.backup.$(date +%Y%m%d_%H%M%S)"
+                cp ./CLAUDE.md "$backup_name"
+                warn "Existing CLAUDE.md detected!"
+                info "  - Backup created: $backup_name"
+                info "  - New template saved as: CLAUDE.md.boilerplate"
+
+                # Save template separately for manual merge
+                cp "$temp_dir/boilerplate/CLAUDE.template.md" ./CLAUDE.md.boilerplate
+
+                # Replace placeholders in the boilerplate version
+                if [[ "$OSTYPE" == "darwin"* ]]; then
+                    sed -i '' "s/{{PROJECT_NAME}}/${PROJECT_NAME:-my-project}/g" ./CLAUDE.md.boilerplate
+                else
+                    sed -i "s/{{PROJECT_NAME}}/${PROJECT_NAME:-my-project}/g" ./CLAUDE.md.boilerplate
+                fi
+
+                echo ""
+                echo "  📋 MANUAL MERGE REQUIRED:"
+                echo "     Please use Claude Code to merge:"
+                echo "     - Your existing: CLAUDE.md"
+                echo "     - New features from: CLAUDE.md.boilerplate"
+                echo "     - Especially the new Dynamic Agent Discovery section"
+                echo ""
+            else
+                # No existing CLAUDE.md - safe to create
+                cp "$temp_dir/boilerplate/CLAUDE.template.md" ./CLAUDE.md
+                # Replace placeholder with actual project name
+                if [[ "$OSTYPE" == "darwin"* ]]; then
+                    sed -i '' "s/{{PROJECT_NAME}}/${PROJECT_NAME:-my-project}/g" ./CLAUDE.md
+                else
+                    sed -i "s/{{PROJECT_NAME}}/${PROJECT_NAME:-my-project}/g" ./CLAUDE.md
+                fi
+                success "Created CLAUDE.md from template"
+            fi
+        fi
+
         success "Boilerplate content and project files installed successfully"
     else
         abort "Boilerplate directory not found in repository"
@@ -400,7 +440,13 @@ create_version_file() {
   "date": "$date",
   "branch": "$BRANCH",
   "repository": "$REPO_URL",
-  "initialized_at": "$timestamp"
+  "initialized_at": "$timestamp",
+  "dependencies": {
+    "spec-kit": {
+      "version": "pending",
+      "installed_at": null
+    }
+  }
 }
 EOF
 

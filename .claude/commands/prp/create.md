@@ -1,10 +1,15 @@
-# Create BASE PRP
+# Create Implementation PRP
 
 ## Feature: $ARGUMENTS
 
 ## PRP Creation Mission
 
-Create a comprehensive PRP that enables **one-pass implementation success** through systematic research and context curation.
+Create a comprehensive implementation PRP that enables **one-pass implementation success** through systematic research and context curation.
+
+**Position in Workflow**: This command creates technical implementation PRPs with codebase context. For feature discovery and business requirements, use:
+- `/prp/init` → Creates PRD with research and architecture
+- `/specify` → Creates formal business requirements from PRD
+- `/prp/create` → Creates implementation PRP (this command)
 
 **Critical Understanding**: The executing AI agent only receives:
 
@@ -76,6 +81,8 @@ After research completion, create comprehensive PRP writing plan using TodoWrite
 
 ## Output
 
+### Phase 1: PRP Creation
+
 Save as: `PRPs/prp-{next-sequence-number}-{feature-name}.md`
 
 **Naming Pattern**: prp-XXX-feature-name.md where:
@@ -89,6 +96,53 @@ Save as: `PRPs/prp-{next-sequence-number}-{feature-name}.md`
 1. Set `Status: PROPOSED`
 2. Set `Status_Date:` to today's date (YYYY-MM-DD format)
 3. Leave `Status_Note:` empty unless there's specific context to add
+
+### Phase 2: Architectural Analysis & Spec Generation
+
+After PRP creation, automatically spawn the `architect-review` agent to analyze the feature for spec splitting:
+
+**Agent Task**: "Analyze this PRP for architectural boundaries and decide spec structure. Consider:
+- Bounded contexts and domain separation
+- Frontend/backend/infrastructure split needs
+- Team ownership boundaries
+- Implementation complexity and phasing
+- Service decomposition opportunities
+
+Decide between:
+1. Single spec: One cohesive feature (specs/{number}-{feature}/spec.md)
+2. Multiple specs: Split by components (specs/{number}-{feature}-{component}/spec.md)
+
+For splits, use clear component names: frontend, backend, database, infrastructure, api, webhooks, auth, notifications."
+
+### Phase 3: Spec File Generation
+
+Based on architect decision, create spec files following **exact naming convention**:
+
+**Single Spec Pattern**:
+```
+specs/{3-digit-sequence-number}-{feature-name}/spec.md
+```
+
+**Multiple Specs Pattern**:
+```
+specs/{3-digit-sequence-number}-{feature-name}-{component}/spec.md
+```
+
+**Examples**:
+- Single: `specs/007-user-profile/spec.md`
+- Multiple: `specs/008-auth-system-frontend/spec.md`, `specs/008-auth-system-backend/spec.md`
+
+**Spec Content**: Transform PRP sections into spec-kit format:
+- PRP Goal → Spec Overview & Functional Requirements
+- PRP Why → Spec Business Value
+- PRP What → Spec User-Visible Behavior
+- PRP Context → Spec Context and Constraints
+
+### Phase 4: Branch & Status Management
+
+1. Create feature branch: `feature/prp-{3-digit-sequence-number}-{feature-name}`
+2. Update PRP status to `IN_PROGRESS`
+3. Add spec file references to PRP status note
 
 ## PRP Quality Gates
 

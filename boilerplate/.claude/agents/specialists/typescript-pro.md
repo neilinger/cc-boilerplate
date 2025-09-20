@@ -1,13 +1,13 @@
 ---
-name: typescript-pro
-description: |
-  ALWAYS use when: TypeScript development, advanced type systems, generics, strict type safety, enterprise TypeScript patterns
-  NEVER use when: Plain JavaScript tasks, non-TypeScript codebases, simple scripting
-  RUNS AFTER: Code requirements analysis, architecture decisions, framework selection
-  HANDS OFF TO: test-automator (for TypeScript test creation), code-reviewer (for type safety review)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(tsc:*), Bash(node:*), Task
-model: sonnet
 color: blue
+description: |
+  ALWAYS use when: Typescript development, Typescript code optimization
+  NEVER use when: Non-Typescript tasks, general scripting
+  Runs AFTER: requirements analysis, initial task
+  Hands off to: workflow-orchestrator, terminal
+model: sonnet
+name: typescript-pro
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(tsc:*), Bash(node:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

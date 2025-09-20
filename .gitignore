@@ -121,6 +121,9 @@ boilerplate/.claude/data/
 # Serena MCP memories (should not be version controlled)
 .serena/
 
+# Spec-kit (sideloaded dependency)
+.specify/
+
 # Boilerplate Synchronization System
 .claude/build/
 .claude/backups/

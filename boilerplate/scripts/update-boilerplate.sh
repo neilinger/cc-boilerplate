@@ -307,6 +307,67 @@ rebuild_configs() {
     fi
 }
 
+# Handle CLAUDE.md template updates
+update_claude_template() {
+    info "Checking for CLAUDE.md template updates..."
+
+    # Check if new template exists in boilerplate
+    if [[ ! -f ".claude/boilerplate/CLAUDE.template.md" ]]; then
+        info "No CLAUDE.template.md found in boilerplate, skipping"
+        return 0
+    fi
+
+    # Extract project name from existing configs or use fallback
+    local project_name="my-project"
+    if [[ -f ".env" ]]; then
+        project_name=$(grep "^PROJECT_NAME=" .env 2>/dev/null | cut -d'=' -f2 | tr -d '"' || echo "my-project")
+    fi
+
+    if [[ -f "CLAUDE.md" ]]; then
+        # Existing CLAUDE.md found - create backup and offer template
+        local backup_name="CLAUDE.md.backup.$(date +%Y%m%d_%H%M%S)"
+        cp CLAUDE.md "$backup_name"
+        warn "Existing CLAUDE.md detected during update!"
+        info "  - Backup created: $backup_name"
+        info "  - New template saved as: CLAUDE.md.boilerplate"
+
+        # Save template separately for manual merge
+        cp .claude/boilerplate/CLAUDE.template.md CLAUDE.md.boilerplate
+
+        # Replace placeholders in the boilerplate version
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            sed -i '' "s/{{PROJECT_NAME}}/$project_name/g" CLAUDE.md.boilerplate
+        else
+            sed -i "s/{{PROJECT_NAME}}/$project_name/g" CLAUDE.md.boilerplate
+        fi
+
+        echo ""
+        warn "📋 MANUAL MERGE REQUIRED:"
+        echo "     The boilerplate CLAUDE.md has been updated with new features"
+        echo "     including Dynamic Agent Discovery enforcement."
+        echo ""
+        echo "     Please use Claude Code to merge:"
+        echo "     - Your existing: CLAUDE.md"
+        echo "     - New features from: CLAUDE.md.boilerplate"
+        echo "     - Especially the new Dynamic Agent Discovery section"
+        echo ""
+        echo "     After merging, you can delete CLAUDE.md.boilerplate"
+        echo ""
+    else
+        # No existing CLAUDE.md - safe to create from template
+        cp .claude/boilerplate/CLAUDE.template.md CLAUDE.md
+
+        # Replace placeholder with actual project name
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            sed -i '' "s/{{PROJECT_NAME}}/$project_name/g" CLAUDE.md
+        else
+            sed -i "s/{{PROJECT_NAME}}/$project_name/g" CLAUDE.md
+        fi
+
+        success "Created CLAUDE.md from updated template"
+    fi
+}
+
 # Show completion message
 show_completion() {
     local new_version
@@ -323,9 +384,10 @@ show_completion() {
     echo ""
     info "Next steps:"
     echo "  1. Review changes in .claude/boilerplate/"
-    echo "  2. Test your project to ensure compatibility"
-    echo "  3. Update your project customizations if needed"
-    echo "  4. If issues occur, rollback with: cp -r $BACKUP_DIR/* ."
+    echo "  2. If CLAUDE.md.boilerplate exists, merge it with your CLAUDE.md"
+    echo "  3. Test your project to ensure compatibility"
+    echo "  4. Update your project customizations if needed"
+    echo "  5. If issues occur, rollback with: cp -r $BACKUP_DIR/* ."
     echo ""
     info "View changes: git log --oneline .claude/boilerplate/"
 }
@@ -354,6 +416,7 @@ main() {
     perform_update
     update_version_file
     rebuild_configs
+    update_claude_template
     show_completion
 }
 

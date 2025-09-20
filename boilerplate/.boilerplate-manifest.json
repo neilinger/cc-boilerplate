@@ -50,6 +50,22 @@
       "output": ".pre-commit-config.yaml"
     }
   },
+  "dependencies": {
+    "spec-kit": {
+      "version": "v0.0.45",
+      "source": "git+https://github.com/github/spec-kit.git",
+      "install_method": "uvx",
+      "install_command": "uvx --from git+https://github.com/github/spec-kit.git@v0.0.45 specify init . --ai claude --ignore-agent-tools",
+      "target_dir": ".specify/",
+      "validation": {
+        "required_dirs": [".specify/templates", ".specify/scripts"],
+        "required_files": [".specify/templates/spec-template.md"]
+      }
+    }
+  },
+  "exclude_from_sync": [
+    ".specify/**/*"
+  ],
   "ignore_patterns": [
     ".DS_Store",
     "*.tmp",

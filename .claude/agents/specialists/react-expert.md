@@ -1,13 +1,13 @@
 ---
-name: react-expert
-description: |
-  ALWAYS use when: React development, Next.js applications, frontend component architecture, modern React patterns, UI optimization
-  NEVER use when: Backend-only tasks, non-React frontend frameworks, simple HTML/CSS without React
-  RUNS AFTER: UI/UX requirements, architecture decisions, design system establishment
-  HANDS OFF TO: test-automator (for React component testing), code-reviewer (for frontend security review)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(next:*), Bash(react:*), Task
-model: sonnet
 color: cyan
+description: |
+  ALWAYS use when: react expert tasks, domain-specific work
+  NEVER use when: Non-domain tasks, general development
+  Runs AFTER: requirements analysis, initial task
+  Hands off to: workflow-orchestrator, terminal
+model: sonnet
+name: react-expert
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(next:*), Bash(react:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

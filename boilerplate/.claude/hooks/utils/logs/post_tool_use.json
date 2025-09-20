@@ -1,0 +1,113 @@
+[
+  {
+    "session_id": "39c9c72d-0b08-4f3d-9d5d-71e31c1fa3a5",
+    "transcript_path": "/Users/neil/.claude/projects/-Users-neil-src-solo-cc-boilerplate/39c9c72d-0b08-4f3d-9d5d-71e31c1fa3a5.jsonl",
+    "cwd": "/Users/neil/src/solo/cc-boilerplate/.claude/hooks/utils",
+    "permission_mode": "acceptEdits",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Bash",
+    "tool_input": {
+      "command": "cd /Users/neil/src/solo/cc-boilerplate/.claude/hooks/utils && python test_validation_utilities.py",
+      "description": "Run the corrected validation tests"
+    },
+    "tool_response": {
+      "stdout": "\ud83e\uddea Running Agent Compliance Validation Utility Tests\n=======================================================\n\n=======================================================\n\u2705 All tests passed! Validation utilities are working correctly.\ntest_dangerous_rm_command_detection (__main__.TestSecurityFunctions.test_dangerous_rm_command_detection)\nTest detection of dangerous rm commands ... ok\ntest_env_bash_command_detection (__main__.TestSecurityFunctions.test_env_bash_command_detection)\nTest .env file access detection in bash commands ... ok\ntest_env_file_access_allowed (__main__.TestSecurityFunctions.test_env_file_access_allowed)\nTest that safe .env operations are allowed ... ok\ntest_env_file_access_detection (__main__.TestSecurityFunctions.test_env_file_access_detection)\nTest detection of .env file access ... ok\ntest_safe_rm_commands (__main__.TestSecurityFunctions.test_safe_rm_commands)\nTest that safe rm commands are not blocked ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.001s\n\nOK",
+      "stderr": "",
+      "interrupted": false,
+      "isImage": false
+    }
+  },
+  {
+    "session_id": "39c9c72d-0b08-4f3d-9d5d-71e31c1fa3a5",
+    "transcript_path": "/Users/neil/.claude/projects/-Users-neil-src-solo-cc-boilerplate/39c9c72d-0b08-4f3d-9d5d-71e31c1fa3a5.jsonl",
+    "cwd": "/Users/neil/src/solo/cc-boilerplate/.claude/hooks/utils",
+    "permission_mode": "acceptEdits",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "TodoWrite",
+    "tool_input": {
+      "todos": [
+        {
+          "content": "Fix escape sequences in agent-compliance-checker.py (Issue #24)",
+          "status": "completed",
+          "activeForm": "Fixing escape sequences in agent-compliance-checker.py"
+        },
+        {
+          "content": "Fix escape sequences in validate-chains.py (Issue #25)",
+          "status": "completed",
+          "activeForm": "Fixing escape sequences in validate-chains.py"
+        },
+        {
+          "content": "Add type hints to pre_tool_use.py functions (Issue #26)",
+          "status": "completed",
+          "activeForm": "Adding type hints to pre_tool_use.py functions"
+        },
+        {
+          "content": "Add type annotations to elevenlabs_tts.py (Issue #27)",
+          "status": "completed",
+          "activeForm": "Adding type annotations to elevenlabs_tts.py"
+        },
+        {
+          "content": "Add unit tests for agent compliance validation utilities (Issue #28)",
+          "status": "completed",
+          "activeForm": "Adding unit tests for agent compliance validation utilities"
+        }
+      ]
+    },
+    "tool_response": {
+      "oldTodos": [
+        {
+          "content": "Fix escape sequences in agent-compliance-checker.py (Issue #24)",
+          "status": "completed",
+          "activeForm": "Fixing escape sequences in agent-compliance-checker.py"
+        },
+        {
+          "content": "Fix escape sequences in validate-chains.py (Issue #25)",
+          "status": "completed",
+          "activeForm": "Fixing escape sequences in validate-chains.py"
+        },
+        {
+          "content": "Add type hints to pre_tool_use.py functions (Issue #26)",
+          "status": "completed",
+          "activeForm": "Adding type hints to pre_tool_use.py functions"
+        },
+        {
+          "content": "Add type annotations to elevenlabs_tts.py (Issue #27)",
+          "status": "completed",
+          "activeForm": "Adding type annotations to elevenlabs_tts.py"
+        },
+        {
+          "content": "Add unit tests for agent compliance validation utilities (Issue #28)",
+          "status": "in_progress",
+          "activeForm": "Adding unit tests for agent compliance validation utilities"
+        }
+      ],
+      "newTodos": [
+        {
+          "content": "Fix escape sequences in agent-compliance-checker.py (Issue #24)",
+          "status": "completed",
+          "activeForm": "Fixing escape sequences in agent-compliance-checker.py"
+        },
+        {
+          "content": "Fix escape sequences in validate-chains.py (Issue #25)",
+          "status": "completed",
+          "activeForm": "Fixing escape sequences in validate-chains.py"
+        },
+        {
+          "content": "Add type hints to pre_tool_use.py functions (Issue #26)",
+          "status": "completed",
+          "activeForm": "Adding type hints to pre_tool_use.py functions"
+        },
+        {
+          "content": "Add type annotations to elevenlabs_tts.py (Issue #27)",
+          "status": "completed",
+          "activeForm": "Adding type annotations to elevenlabs_tts.py"
+        },
+        {
+          "content": "Add unit tests for agent compliance validation utilities (Issue #28)",
+          "status": "completed",
+          "activeForm": "Adding unit tests for agent compliance validation utilities"
+        }
+      ]
+    }
+  }
+]

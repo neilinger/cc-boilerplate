@@ -1,13 +1,13 @@
 ---
-name: aws-expert
-description: |
-  ALWAYS use when: AWS infrastructure design, cloud architecture, cost optimization, AWS migration, serverless design, multi-region deployments
-  NEVER use when: Non-AWS cloud platforms, basic server administration, local development setup
-  RUNS AFTER: Architecture decisions, requirements analysis, scalability planning
-  HANDS OFF TO: security-orchestrator (for cloud security review), code-reviewer (for IaC review)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(aws:*), Bash(terraform:*), Bash(cdk:*), Task
-model: opus
 color: orange
+description: |
+  ALWAYS use when: aws expert tasks, domain-specific work
+  NEVER use when: Non-domain tasks, general development
+  Runs AFTER: requirements analysis, initial task
+  Hands off to: workflow-orchestrator, terminal
+model: opus
+name: aws-expert
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(aws:*), Bash(terraform:*), Bash(cdk:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

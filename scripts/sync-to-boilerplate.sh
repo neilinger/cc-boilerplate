@@ -162,12 +162,25 @@ show_stats() {
     echo ""
     echo "${BLUE}PRPs:${RESET}"
     echo "  Development (PRPs/): $(ls PRPs/*.md 2>/dev/null | wc -l | tr -d ' ') files"
-    echo "  Boilerplate: $(ls boilerplate/PRPs/*.md 2>/dev/null | wc -l | tr -d ' ') files"
+    echo "  Boilerplate: Structure only (README, templates, code_reviews)"
+
+    echo ""
+    echo "${BLUE}CLAUDE.md Template:${RESET}"
+    if [[ -f "CLAUDE.md" ]]; then
+        echo "  Development: CLAUDE.md (exists)"
+    else
+        echo "  Development: CLAUDE.md (missing)"
+    fi
+    if [[ -f "boilerplate/CLAUDE.template.md" ]]; then
+        echo "  Boilerplate: CLAUDE.template.md (exists)"
+    else
+        echo "  Boilerplate: CLAUDE.template.md (missing)"
+    fi
 
     echo ""
     echo "${BLUE}Total MD Files:${RESET}"
     echo "  Development: $(find .claude docs/adr PRPs -name "*.md" 2>/dev/null | wc -l | tr -d ' ') files"
-    echo "  Boilerplate: $(find boilerplate -name "*.md" 2>/dev/null | wc -l | tr -d ' ') files"
+    echo "  Boilerplate: $(find boilerplate/.claude boilerplate/docs/adr boilerplate/PRPs -name "*.md" 2>/dev/null | wc -l | tr -d ' ') files + template"
     echo ""
 }
 
@@ -276,6 +289,87 @@ sync_file() {
     fi
 }
 
+# Sync PRPs structure only (not actual PRP files)
+sync_prps_structure() {
+    info "Syncing PRPs structure (README, templates, code_reviews) to boilerplate..."
+
+    if [[ ! -d "PRPs" ]]; then
+        warn "Source directory PRPs/ does not exist, skipping"
+        return
+    fi
+
+    if [[ "$DRY_RUN" == "true" ]]; then
+        info "[DRY RUN] Would create boilerplate/PRPs/ structure"
+        info "[DRY RUN] Would sync README.md, templates/, and code_reviews/"
+    else
+        # Create PRPs directory structure
+        mkdir -p boilerplate/PRPs
+
+        # Sync README.md if it exists
+        if [[ -f "PRPs/README.md" ]]; then
+            cp PRPs/README.md boilerplate/PRPs/README.md
+            success "Synced PRPs/README.md"
+        fi
+
+        # Sync templates/ directory if it exists
+        if [[ -d "PRPs/templates" ]]; then
+            sync_directory "PRPs/templates" "boilerplate/PRPs/templates" "PRP templates"
+        fi
+
+        # Sync code_reviews/ directory if it exists
+        if [[ -d "PRPs/code_reviews" ]]; then
+            sync_directory "PRPs/code_reviews" "boilerplate/PRPs/code_reviews" "PRP code reviews"
+        fi
+
+        success "Synced PRPs structure (excluding actual PRP files)"
+    fi
+}
+
+# Sync CLAUDE.md as template
+sync_claude_template() {
+    info "Syncing CLAUDE.md to boilerplate as CLAUDE.template.md..."
+
+    if [[ ! -f "CLAUDE.md" ]]; then
+        warn "Source file CLAUDE.md does not exist, skipping"
+        return
+    fi
+
+    if [[ "$DRY_RUN" == "true" ]]; then
+        info "[DRY RUN] Would copy CLAUDE.md to boilerplate/CLAUDE.template.md"
+        info "[DRY RUN] Would replace project-specific references with placeholders"
+    else
+        # Copy CLAUDE.md as template
+        cp CLAUDE.md boilerplate/CLAUDE.template.md
+
+        # Replace project-specific references with placeholders
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            # macOS
+            sed -i '' 's/cc-boilerplate/{{PROJECT_NAME}}/g' boilerplate/CLAUDE.template.md
+        else
+            # Linux
+            sed -i 's/cc-boilerplate/{{PROJECT_NAME}}/g' boilerplate/CLAUDE.template.md
+        fi
+
+        success "Synced CLAUDE.md as CLAUDE.template.md"
+    fi
+}
+
+# Clean data directory after .claude sync
+clean_data_directory() {
+    info "Cleaning boilerplate/.claude/data/ directory..."
+
+    if [[ "$DRY_RUN" == "true" ]]; then
+        info "[DRY RUN] Would remove all contents from boilerplate/.claude/data/"
+    else
+        if [[ -d "boilerplate/.claude/data" ]]; then
+            find boilerplate/.claude/data -type f -delete 2>/dev/null || true
+            find boilerplate/.claude/data -type d -empty -delete 2>/dev/null || true
+            mkdir -p boilerplate/.claude/data
+            success "Cleaned boilerplate/.claude/data/ directory"
+        fi
+    fi
+}
+
 # Perform the sync
 perform_sync() {
     info "Starting synchronization..."
@@ -283,16 +377,22 @@ perform_sync() {
     # Sync .claude/ directory
     sync_directory ".claude" "boilerplate/.claude" "Claude Code configuration"
 
+    # Clean data directory after .claude sync
+    clean_data_directory
+
     # Sync docs/adr/ directory
     sync_directory "docs/adr" "boilerplate/docs/adr" "Architecture Decision Records"
 
-    # Sync PRPs/ directory
-    sync_directory "PRPs" "boilerplate/PRPs" "Product Requirements Process"
+    # Sync PRPs/ structure only (not actual PRP files)
+    sync_prps_structure
 
     # Sync individual files
     sync_file "setup.sh" "boilerplate/setup.sh" "Setup script"
     sync_file ".env.sample" "boilerplate/.env.sample" "Environment template"
     sync_file ".mcp.json.sample" "boilerplate/.mcp.json.sample" "MCP configuration template"
+
+    # Sync CLAUDE.md as template
+    sync_claude_template
 
     # Sync scripts directory (needed for users)
     sync_directory "scripts" "boilerplate/scripts" "Scripts directory"

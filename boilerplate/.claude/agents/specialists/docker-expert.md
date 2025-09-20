@@ -1,13 +1,13 @@
 ---
-name: docker-expert
-description: |
-  ALWAYS use when: Docker containerization, multi-stage builds, container optimization, Kubernetes deployment, container security
-  NEVER use when: Non-containerized applications, basic scripting, infrastructure that doesn't involve containers
-  RUNS AFTER: Application development, architecture decisions, deployment planning
-  HANDS OFF TO: security-orchestrator (for container security review), aws-expert (for cloud container deployment)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(docker:*), Bash(kubectl:*), Bash(podman:*), Task
-model: sonnet
 color: blue
+description: |
+  ALWAYS use when: docker expert tasks, domain-specific work
+  NEVER use when: Non-domain tasks, general development
+  Runs AFTER: requirements analysis, initial task
+  Hands off to: workflow-orchestrator, terminal
+model: sonnet
+name: docker-expert
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(docker:*), Bash(kubectl:*), Bash(podman:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

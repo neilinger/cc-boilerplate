@@ -5,7 +5,7 @@ description: |
   NEVER use when: General code review, feature development, documentation tasks
   Runs AFTER: Error detection or bug report
   Hands off to: code-reviewer (for fix validation), test-automator (for regression testing)
-tools: Read, Write, Edit, Bash, Grep, Task
+tools: Read, Write, Edit, Bash, Grep, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: opus
 color: yellow
 ---

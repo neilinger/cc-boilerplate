@@ -5,7 +5,7 @@ description: |
   NEVER use when: Implementation tasks, analysis, non-summary tasks
   Runs AFTER: Work completion, task finalization
   Hands off to: None (terminal agent)
-tools: Read, mcp__ElevenLabs__text_to_speech, mcp__ElevenLabs__play_audio, Task
+tools: Read, Task, mcp__ElevenLabs__text_to_speech, mcp__ElevenLabs__play_audio, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: green
 ---
