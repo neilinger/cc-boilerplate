@@ -1,8 +1,0 @@
-{
-  "session_id": "e3dae9f2-b46b-47d0-8f52-8a39db73c6e5",
-  "prompts": [
-    "/prp:execute PRPs/prp-003-boilerplate-synchronization.md ",
-    "/prp:review "
-  ],
-  "agent_name": "Nova"
-}

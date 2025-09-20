@@ -1,9 +1,0 @@
-{
-  "session_id": "2333b1d1-bf66-4f73-bfdf-db7c48d03ce8",
-  "prompts": [
-    "/prp:review prp-003",
-    "finalize PR #20",
-    "ok, proceed and finalize this thing."
-  ],
-  "agent_name": "Atlas"
-}

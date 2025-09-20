@@ -1,9 +1,0 @@
-{
-  "session_id": "57071d32-dc63-40d1-b75f-03006e187e3b",
-  "prompts": [
-    "/all_tools ",
-    "explain why tts does not work, you got a 401, but I've set the api key in @.env",
-    "revert your changes to @.claude/hooks/utils/tts/elevenlabs_tts.py "
-  ],
-  "agent_name": "Vortex"
-}

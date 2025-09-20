@@ -1,9 +1,0 @@
-{
-  "session_id": "22707ad8-b6d7-4ca0-8002-7fdebc5d46ec",
-  "prompts": [
-    "serena onboarding",
-    "can i configure the serena mcp in a way that the project is automatically choosen on claude-initialisation?",
-    "option 2"
-  ],
-  "agent_name": "Cipher"
-}

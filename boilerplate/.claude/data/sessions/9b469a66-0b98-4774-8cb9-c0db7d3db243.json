@@ -1,9 +1,0 @@
-{
-  "session_id": "9b469a66-0b98-4774-8cb9-c0db7d3db243",
-  "prompts": [
-    "hi claude",
-    "try this last command again",
-    "should be fixed now, try again"
-  ],
-  "agent_name": "Sage"
-}
