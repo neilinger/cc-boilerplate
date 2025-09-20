@@ -5,7 +5,7 @@ description: |
   NEVER use when: Non-AWS cloud platforms, basic server administration, local development setup
   RUNS AFTER: Architecture decisions, requirements analysis, scalability planning
   HANDS OFF TO: security-orchestrator (for cloud security review), code-reviewer (for IaC review)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(aws:*), Bash(terraform:*), Bash(cdk:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(aws:*), Bash(terraform:*), Bash(cdk:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: opus
 color: orange
 ---

@@ -5,7 +5,7 @@ description: |
   NEVER use when: Plain React apps, non-Next.js frameworks, backend-only tasks
   RUNS AFTER: React component development, architecture decisions, performance requirements
   HANDS OFF TO: test-automator (for Next.js testing), aws-expert (for Next.js deployment)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(next:*), Bash(vercel:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(next:*), Bash(vercel:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: black
 ---

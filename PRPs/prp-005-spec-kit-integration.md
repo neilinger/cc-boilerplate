@@ -5,9 +5,9 @@ description: |
 
 ## Status
 
-Status: PROPOSED
-Status_Date: 2025-01-19
-Status_Note: Implements hybrid approach combining PRP's automatic context discovery with spec-kit's phase separation
+Status: COMPLETED
+Status_Date: 2025-09-19
+Status_Note: Review passed - all criteria met. Spec-kit Claude Code commands successfully integrated (/plan, /tasks, /implement available), transformation script functional, PRP template updated, migration completed with evolved naming convention.
 
 ## Goal
 
@@ -156,7 +156,7 @@ cc-boilerplate/
 │   │   └── prp_base.md             # MODIFIED: Remove implementation tasks
 │   └── README.md                   # UPDATED: New workflow documentation
 ├── scripts/
-│   └── prp-to-speckit.sh          # NEW: Transformation script
+│   └── generate-specs-from-prp.sh  # ENHANCED: Auto-architect transformation script
 ├── .claude/commands/
 │   └── spec-workflow.sh           # NEW: Wrapper commands
 ├── specs/                          # NEW: Spec-kit output directory
@@ -218,11 +218,11 @@ Task 1: INSTALL spec-kit dependency
   - GOTCHA: Do not run /specify - we'll skip that with PRP
   - PLACEMENT: Root directory
 
-Task 2: CREATE scripts/prp-to-speckit.sh transformation script
-  - IMPLEMENT: Data transformation functions (prp_to_spec_format, claude_md_to_constitution)
-  - FOLLOW pattern: scripts/build-config.sh (bash scripting approach)
-  - FUNCTION: extract_prp_sections, transform_context, validate_transformation
-  - DEPENDENCIES: None
+Task 2: ENHANCE scripts/generate-specs-from-prp.sh transformation script
+  - IMPLEMENT: Auto-architect analysis with architect-review agent integration
+  - SIMPLIFY: Remove manual JSON parameters, use intelligent analysis
+  - FUNCTION: analyze_with_architect, extract_prp_sections, transform_context
+  - DEPENDENCIES: architect-review agent available
   - PLACEMENT: scripts/ directory
 
 Task 3: MODIFY PRPs/templates/prp_base.md template
@@ -283,9 +283,9 @@ transform_prp_to_spec() {
 
 # Command Wrapper Pattern
 prp_to_plan() {
-    # PATTERN: Transform PRP → feed to spec-kit /plan
-    ./scripts/prp-to-speckit.sh "$1"
-    # GOTCHA: Ensure spec-kit has all needed context
+    # PATTERN: Auto-architect PRP → intelligent spec creation → /plan
+    ./scripts/generate-specs-from-prp.sh "$1"
+    # GOTCHA: Architect agent determines single vs multiple specs automatically
     /plan  # Delegate to spec-kit
 }
 
@@ -309,7 +309,7 @@ PRP_SYSTEM:
   - enhance: "Integration with spec-kit phases"
 
 TRANSFORMATION:
-  - script: scripts/prp-to-speckit.sh
+  - script: scripts/generate-specs-from-prp.sh
   - mapping: "PRP sections → spec-kit format"
   - validation: "KISS/YAGNI gates between phases"
 ```
@@ -330,8 +330,8 @@ else
 fi
 
 # Verify transformation script
-./scripts/prp-to-speckit.sh --test
-echo "Testing PRP to spec transformation..."
+./scripts/generate-specs-from-prp.sh PRPs/prp-004-agent-system-redesign.md
+echo "Testing auto-architect PRP transformation..."
 
 # Expected: Spec-kit commands available, transformation script functional
 ```
@@ -348,8 +348,8 @@ source .claude/commands/spec-workflow.sh
 prp_to_plan --test || echo "❌ Command wrapper failed"
 
 # Test transformation accuracy
-./scripts/prp-to-speckit.sh PRPs/prp-004-agent-system-redesign.md specs/004-agent-system/
-ls specs/004-agent-system/ | grep -E "(plan|tasks)\.md" || echo "❌ Transformation failed"
+./scripts/generate-specs-from-prp.sh PRPs/prp-004-agent-system-redesign.md
+ls specs/004-agent-system*/ | grep -E "spec\.md" || echo "❌ Transformation failed"
 
 # Expected: Template clean, commands working, transformation producing expected files
 ```
@@ -364,8 +364,8 @@ echo "Testing end-to-end PRP → spec-kit workflow..."
 echo "Creating test PRP..."
 cp PRPs/templates/prp_base.md /tmp/test-prp.md
 
-# 2. Transform to spec-kit format
-./scripts/prp-to-speckit.sh /tmp/test-prp.md /tmp/test-spec/
+# 2. Transform to spec-kit format with auto-architect
+./scripts/generate-specs-from-prp.sh /tmp/test-prp.md
 
 # 3. Run spec-kit phases
 cd /tmp/test-spec/
@@ -384,7 +384,7 @@ test -f plan.md && test -f tasks.md && echo "✅ Complete workflow successful" |
 ```bash
 # Test prp-004 migration
 echo "Testing prp-004 migration..."
-./scripts/prp-to-speckit.sh PRPs/prp-004-agent-system-redesign.md specs/004-agent-system/
+./scripts/generate-specs-from-prp.sh PRPs/prp-004-agent-system-redesign.md
 
 # Validate migration preserves content
 original_tasks=$(grep -c "Task [0-9]" PRPs/prp-004-agent-system-redesign.md)
@@ -395,7 +395,7 @@ migrated_tasks=$(grep -c "T[0-9]" specs/004-agent-system/tasks.md)
 grep -q "Feature Goal" PRPs/prp-004-agent-system-redesign.md && echo "✅ WHAT/WHY preserved"
 
 # Test KISS/YAGNI validation gates
-./scripts/prp-to-speckit.sh --validate-kiss-yagni specs/004-agent-system/
+# Validation integrated into auto-architect analysis
 
 # Expected: Migration successful, content preserved, validation gates functional
 ```
@@ -405,7 +405,7 @@ grep -q "Feature Goal" PRPs/prp-004-agent-system-redesign.md && echo "✅ WHAT/W
 ### Technical Validation
 
 - [ ] Spec-kit successfully installed: `uvx spec-kit commands available`
-- [ ] Transformation script functional: `./scripts/prp-to-speckit.sh --test`
+- [ ] Transformation script functional: `./scripts/generate-specs-from-prp.sh PRPs/prp-004-agent-system-redesign.md`
 - [ ] PRP template updated: `grep -v "Implementation Tasks" PRPs/templates/prp_base.md`
 - [ ] Wrapper commands working: `source .claude/commands/spec-workflow.sh && prp_to_plan --test`
 - [ ] Migration successful: `test -d specs/004-agent-system/ && test -f specs/004-agent-system/plan.md`

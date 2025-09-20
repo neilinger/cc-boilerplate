@@ -5,7 +5,7 @@ description: |
   NEVER use when: REST API design, non-GraphQL tasks, simple CRUD operations without GraphQL
   RUNS AFTER: API requirements analysis, data modeling, architecture decisions
   HANDS OFF TO: code-reviewer (for GraphQL security review), test-automator (for GraphQL testing)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(graphql:*), Bash(apollo:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(graphql:*), Bash(apollo:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: opus
 color: pink
 ---

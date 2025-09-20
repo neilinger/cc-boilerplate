@@ -5,7 +5,7 @@ description: |
   NEVER use when: Non-Python tasks, basic scripting that doesn't need expertise
   RUNS AFTER: Code requirements analysis, architecture decisions
   HANDS OFF TO: test-automator (for Python test creation), code-reviewer (for code review)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(pip:*), Bash(uv:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(pip:*), Bash(uv:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: blue
 ---

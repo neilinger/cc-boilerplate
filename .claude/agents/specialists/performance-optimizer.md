@@ -5,7 +5,7 @@ description: |
   NEVER use when: Basic development tasks, non-performance related issues, simple bug fixes
   RUNS AFTER: Application development, architecture implementation, performance issues identified
   HANDS OFF TO: code-reviewer (for optimization review), test-automator (for performance testing)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(performance:*), Bash(profiling:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(performance:*), Bash(profiling:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: opus
 color: red
 ---

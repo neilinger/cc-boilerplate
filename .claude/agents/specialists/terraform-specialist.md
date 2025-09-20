@@ -5,7 +5,7 @@ description: |
   NEVER use when: Manual infrastructure setup, simple cloud configuration without IaC
   RUNS AFTER: Architecture planning, resource requirements, security planning
   HANDS OFF TO: aws-expert (for AWS-specific optimizations), deployment-engineer (for CI/CD integration)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(terraform:*), Bash(aws:*), Bash(git:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(terraform:*), Bash(aws:*), Bash(git:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: opus
 color: purple
 ---

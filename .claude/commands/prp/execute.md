@@ -1,4 +1,13 @@
-# Execute PRP - Feature Branch Implementation
+# Execute PRP - Feature Branch Implementation [LEGACY]
+
+⚠️ **LEGACY COMMAND**: This command provides direct PRP implementation. For new workflows, use the spec-kit integration:
+
+1. `/prp:create "feature"` → creates PRP + spec files
+2. `/plan` → create technical plan
+3. `/tasks` → create implementation breakdown
+4. `/implement` → execute with TDD
+
+This legacy command remains for backwards compatibility and simple PRPs that don't need the full spec-kit workflow.
 
 ## Arguments: PRP File Path
 

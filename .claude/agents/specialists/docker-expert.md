@@ -5,7 +5,7 @@ description: |
   NEVER use when: Non-containerized applications, basic scripting, infrastructure that doesn't involve containers
   RUNS AFTER: Application development, architecture decisions, deployment planning
   HANDS OFF TO: security-orchestrator (for container security review), aws-expert (for cloud container deployment)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(docker:*), Bash(kubectl:*), Bash(podman:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(docker:*), Bash(kubectl:*), Bash(podman:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: blue
 ---

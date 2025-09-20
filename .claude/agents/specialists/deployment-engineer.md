@@ -5,7 +5,7 @@ description: |
   NEVER use when: Development tasks, local builds, manual deployment processes
   RUNS AFTER: Code development, testing completion, infrastructure provisioning
   HANDS OFF TO: aws-expert (for cloud-specific optimizations), kubernetes-architect (for orchestration)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(git:*), Bash(docker:*), Bash(kubectl:*), Bash(aws:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(git:*), Bash(docker:*), Bash(kubectl:*), Bash(aws:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: green
 ---

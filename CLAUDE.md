@@ -56,6 +56,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### 5. Agent Selection Decision Tree
 
 ```text
+Did a command just get invoked?
+├─ YES → Check Pre-Command Orchestration Protocol FIRST
+└─ NO ↓
+
 Is this a complex multi-step task?
 ├─ YES → workflow-orchestrator
 └─ NO ↓

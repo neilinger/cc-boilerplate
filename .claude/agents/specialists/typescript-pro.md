@@ -5,7 +5,7 @@ description: |
   NEVER use when: Plain JavaScript tasks, non-TypeScript codebases, simple scripting
   RUNS AFTER: Code requirements analysis, architecture decisions, framework selection
   HANDS OFF TO: test-automator (for TypeScript test creation), code-reviewer (for type safety review)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(tsc:*), Bash(node:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(tsc:*), Bash(node:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: blue
 ---

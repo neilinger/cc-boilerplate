@@ -5,7 +5,7 @@ description: |
   NEVER use when: Data analysis, research experiments, basic ML model training
   RUNS AFTER: Data science model development, architecture planning, infrastructure setup
   HANDS OFF TO: deployment-engineer (for CI/CD), aws-expert (for cloud optimization)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(aws:*), Bash(docker:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(aws:*), Bash(docker:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: opus
 color: orange
 ---

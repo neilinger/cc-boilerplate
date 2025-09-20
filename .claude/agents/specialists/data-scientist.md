@@ -5,7 +5,7 @@ description: |
   NEVER use when: Production deployment, infrastructure setup, simple data queries
   RUNS AFTER: Data collection, business requirements, problem definition
   HANDS OFF TO: ml-engineer (for productionization), performance-optimizer (for optimization)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(jupyter:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(jupyter:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: opus
 color: purple
 ---

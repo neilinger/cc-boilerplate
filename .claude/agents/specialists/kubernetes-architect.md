@@ -5,7 +5,7 @@ description: |
   NEVER use when: Simple Docker containers, local development, non-containerized applications
   RUNS AFTER: Container design, infrastructure planning, security requirements
   HANDS OFF TO: deployment-engineer (for CI/CD integration), aws-expert (for EKS optimizations)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(kubectl:*), Bash(helm:*), Bash(aws:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(kubectl:*), Bash(helm:*), Bash(aws:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: opus
 color: blue
 ---

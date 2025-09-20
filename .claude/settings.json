@@ -75,7 +75,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/subagent_stop.py --notify"
+            "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/subagent_stop.py --chat --notify"
           }
         ]
       }
@@ -96,7 +96,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/pre_compact.py"
+            "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/pre_compact.py --backup"
           }
         ]
       }

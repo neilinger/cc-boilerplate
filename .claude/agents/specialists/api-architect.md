@@ -5,7 +5,7 @@ description: |
   NEVER use when: Frontend-only tasks, non-API backend work, simple CRUD operations
   RUNS AFTER: Requirements analysis, system architecture decisions, service boundary definition
   HANDS OFF TO: code-reviewer (for API security review), test-automator (for API testing)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(curl:*), Bash(postman:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(curl:*), Bash(postman:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: opus
 color: purple
 ---

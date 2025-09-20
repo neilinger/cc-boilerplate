@@ -5,7 +5,7 @@ description: |
   NEVER use when: Backend-only tasks, non-React frontend frameworks, simple HTML/CSS without React
   RUNS AFTER: UI/UX requirements, architecture decisions, design system establishment
   HANDS OFF TO: test-automator (for React component testing), code-reviewer (for frontend security review)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(next:*), Bash(react:*), Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(next:*), Bash(react:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: cyan
 ---
