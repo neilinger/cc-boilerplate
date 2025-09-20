@@ -5,8 +5,8 @@ description: |
   NEVER use when: Non-security tasks, general development workflows
   Runs AFTER: code-reviewer, any code modification, security-sensitive operations
   Hands off to: security-scanner, code-reviewer (for security-focused review)
-tools: Task, Read
-model: haiku
+tools: Task, Read, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+model: opus
 color: orange
 ---
 

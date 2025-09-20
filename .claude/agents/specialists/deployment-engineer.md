@@ -1,16 +1,13 @@
 ---
 color: green
-description: 'ALWAYS use when: Application deployment, production setup, release management
-
+description: |
+  ALWAYS use when: Application deployment, production setup, release management
   NEVER use when: Development tasks, feature implementation
-
   Runs AFTER: application completion, testing complete
-
-  Hands off to: monitoring-specialist, terminal'
+  Hands off to: monitoring-specialist, terminal monitoring-specialist, terminal'
 model: opus
 name: deployment-engineer
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(git:*), Bash(docker:*), Bash(kubectl:*),
-  Bash(aws:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(git:*), Bash(docker:*), Bash(kubectl:*), Bash(aws:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

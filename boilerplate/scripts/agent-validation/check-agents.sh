@@ -101,10 +101,10 @@ echo -e "${BLUE}🔍 Running agent compliance analysis...${NC}"
 echo
 
 if $VERBOSE; then
-    python3 .claude/hooks/utils/agent-compliance-checker.py --verbose
+    python3 "$SCRIPT_DIR/agent-compliance-checker.py" --verbose
     COMPLIANCE_EXIT_CODE=$?
 else
-    python3 .claude/hooks/utils/agent-compliance-checker.py
+    python3 "$SCRIPT_DIR/agent-compliance-checker.py"
     COMPLIANCE_EXIT_CODE=$?
 fi
 
@@ -113,10 +113,10 @@ echo -e "${BLUE}🔗 Running chain configuration validation...${NC}"
 echo
 
 if $VERBOSE; then
-    python3 .claude/hooks/utils/validate-chains.py --verbose
+    python3 "$SCRIPT_DIR/validate-chains.py" --verbose
     CHAIN_EXIT_CODE=$?
 else
-    python3 .claude/hooks/utils/validate-chains.py
+    python3 "$SCRIPT_DIR/validate-chains.py"
     CHAIN_EXIT_CODE=$?
 fi
 
@@ -132,7 +132,7 @@ if [[ $OVERALL_EXIT_CODE -eq 0 ]]; then
     echo
     echo -e "${BLUE}💡 Next steps:${NC}"
     echo -e "   • Continue developing with confidence"
-    echo -e "   • Consider setting up git hooks: ln -sf ../../.claude/hooks/pre-commit-agent-check.sh .git/hooks/pre-commit"
+    echo -e "   • Consider setting up git hooks: ln -sf ../../scripts/agent-validation/pre-commit-agent-check.sh .git/hooks/pre-commit"
     echo -e "   • Add CI/CD validation using .claude/hooks/ci-agent-validation.yml"
 else
     echo -e "${YELLOW}⚠️  COMPLIANCE ISSUES FOUND${NC}"

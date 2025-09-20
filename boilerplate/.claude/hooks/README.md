@@ -16,12 +16,12 @@ The soft hook system prevents agents from drifting away from architectural princ
 
 ### Core Validation
 
-- **`utils/agent-compliance-checker.py`** - Main compliance validation script
-- **`check-agents.sh`** - Developer-friendly wrapper script
+- **`scripts/agent-validation/agent-compliance-checker.py`** - Main compliance validation script
+- **`scripts/agent-validation/check-agents.sh`** - Developer-friendly wrapper script
 
 ### Integration Options
 
-- **`pre-commit-agent-check.sh`** - Optional git pre-commit hook
+- **`scripts/agent-validation/pre-commit-agent-check.sh`** - Optional git pre-commit hook
 - **`ci-agent-validation.yml`** - GitHub Actions workflow template
 
 ### Documentation
@@ -35,13 +35,13 @@ The soft hook system prevents agents from drifting away from architectural princ
 
 ```bash
 # Quick compliance check
-./.claude/hooks/check-agents.sh
+./scripts/agent-validation/check-agents.sh
 
 # Detailed analysis with suggestions
-./.claude/hooks/check-agents.sh --verbose
+./scripts/agent-validation/check-agents.sh --verbose
 
 # Direct Python script usage
-python3 .claude/hooks/utils/agent-compliance-checker.py --verbose
+python3 scripts/agent-validation/agent-compliance-checker.py --verbose
 ```
 
 ### Expected Output
@@ -70,10 +70,10 @@ Run compliance checks manually during development:
 
 ```bash
 # Make script executable
-chmod +x .claude/hooks/check-agents.sh
+chmod +x scripts/agent-validation/check-agents.sh
 
 # Run before committing changes
-./.claude/hooks/check-agents.sh --verbose
+./scripts/agent-validation/check-agents.sh --verbose
 ```
 
 ### Option 2: Git Hook Integration (Optional)
@@ -82,7 +82,7 @@ Enable automatic checking during commits:
 
 ```bash
 # Link the pre-commit hook
-ln -sf ../../.claude/hooks/pre-commit-agent-check.sh .git/hooks/pre-commit
+ln -sf ../../scripts/agent-validation/pre-commit-agent-check.sh .git/hooks/pre-commit
 
 # Make executable
 chmod +x .git/hooks/pre-commit
@@ -265,14 +265,14 @@ def _check_custom_rule(self, agent_file: Path, frontmatter: Dict) -> None:
 
 ```bash
 # Use in scripts
-if ./.claude/hooks/check-agents.sh; then
+if ./scripts/agent-validation/check-agents.sh; then
     echo "Agents compliant, proceeding..."
 else
     echo "Compliance issues found, see above"
 fi
 
 # JSON output (future feature)
-python3 .claude/hooks/utils/agent-compliance-checker.py --json > compliance.json
+python3 scripts/agent-validation/agent-compliance-checker.py --json > compliance.json
 ```
 
 ## 📈 Metrics and Monitoring

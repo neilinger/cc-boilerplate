@@ -400,7 +400,13 @@ create_version_file() {
   "date": "$date",
   "branch": "$BRANCH",
   "repository": "$REPO_URL",
-  "initialized_at": "$timestamp"
+  "initialized_at": "$timestamp",
+  "dependencies": {
+    "spec-kit": {
+      "version": "pending",
+      "installed_at": null
+    }
+  }
 }
 EOF
 

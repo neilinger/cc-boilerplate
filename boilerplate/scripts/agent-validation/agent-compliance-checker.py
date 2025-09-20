@@ -182,6 +182,10 @@ class AgentComplianceChecker:
         # Check for restricted tools
         if agent_name in self.tool_permissions.get('agent_permissions', {}):
             allowed_tools = self.tool_permissions['agent_permissions'][agent_name].get('specific_tools', [])
+            # Add MCP global access patterns
+            mcp_patterns = self.tool_permissions.get('mcp_global_access', {}).get('allowed_patterns', [])
+            allowed_tools.extend(mcp_patterns)
+
             for tool in tools:
                 if tool == 'Task':  # Task is generally allowed
                     continue

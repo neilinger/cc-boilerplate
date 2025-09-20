@@ -5,7 +5,7 @@ description: |
   NEVER use when: Code generation, file modification, non-review tasks
   Runs AFTER: Code implementation complete
   Hands off to: security-orchestrator (mandatory security chain)
-tools: Read, Grep, Glob, Bash(git diff:*), Bash(gh pr diff:*), Task
+tools: Read, Grep, Glob, Bash(git diff:*), Bash(gh pr diff:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: blue
 ---

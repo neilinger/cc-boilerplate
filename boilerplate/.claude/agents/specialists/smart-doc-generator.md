@@ -5,7 +5,7 @@ description: |
   NEVER use when: Code implementation, testing, non-documentation tasks
   Runs AFTER: Code implementation complete
   Hands off to: workflow-orchestrator (for integration)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Task
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: green
 ---

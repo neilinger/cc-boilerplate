@@ -1,13 +1,13 @@
 ---
-name: performance-optimizer
-description: |
-  ALWAYS use when: Performance analysis, bottleneck identification, system optimization, load testing, performance tuning
-  NEVER use when: Basic development tasks, non-performance related issues, simple bug fixes
-  RUNS AFTER: Application development, architecture implementation, performance issues identified
-  HANDS OFF TO: code-reviewer (for optimization review), test-automator (for performance testing)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(performance:*), Bash(profiling:*), Task
-model: opus
 color: red
+description: |
+  ALWAYS use when: performance optimizer tasks, domain-specific work
+  NEVER use when: Non-domain tasks, general development
+  Runs AFTER: requirements analysis, initial task
+  Hands off to: workflow-orchestrator, terminal
+model: opus
+name: performance-optimizer
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(performance:*), Bash(profiling:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

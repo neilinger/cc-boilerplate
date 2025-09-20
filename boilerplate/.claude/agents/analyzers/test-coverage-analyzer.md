@@ -5,7 +5,7 @@ description: |
   NEVER use when: Test creation, code modification, non-analysis tasks
   Runs AFTER: test-automator (for coverage validation)
   Hands off to: workflow-orchestrator (for improvements)
-tools: Read, Grep, Glob, Bash(test:*), Bash(coverage:*), Bash(gh run view:*), Task
+tools: Read, Grep, Glob, Bash(test:*), Bash(coverage:*), Bash(gh run view:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: orange
 ---

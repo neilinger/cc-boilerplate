@@ -321,4 +321,23 @@ Output would include:
 - Edge cases like offline users, rate limiting
 - Success metrics like delivery rate, user engagement
 
-The resulting PRD becomes the `$ARGUMENTS` input for implementation PRPs like BASE_PRP or SPEC_PRP.
+## Next Steps
+
+**Spec-Kit Integration**: Use this complete PRD as input to the `/specify` command to generate formal business requirements:
+
+```bash
+claude /specify "$(cat generated_prd.md)"
+```
+
+The `/specify` command will extract and formalize:
+- User stories → Given/When/Then scenarios
+- Success metrics → Testable functional requirements (FR-XXX)
+- Risk analysis → Edge cases and error scenarios
+- Data models → Simplified key entities (business-focused)
+
+This creates a clean separation:
+- **PRD (this output)**: Discovery, research, architecture, technical planning
+- **Spec (from /specify)**: Business requirements, user scenarios, formalized criteria
+- **Implementation PRP**: Technical context for coding
+
+The resulting PRD becomes the `$ARGUMENTS` input for spec-kit workflow via `/specify` command.

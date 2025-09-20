@@ -1,16 +1,13 @@
 ---
 color: blue
-description: 'ALWAYS use when: Typescript development, Typescript code optimization
-
+description: |
+  ALWAYS use when: Typescript development, Typescript code optimization
   NEVER use when: Non-Typescript tasks, general scripting
-
   Runs AFTER: requirements analysis, initial task
-
-  Hands off to: workflow-orchestrator, terminal'
+  Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: typescript-pro
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(tsc:*), Bash(node:*),
-  Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(tsc:*), Bash(node:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

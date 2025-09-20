@@ -1,16 +1,13 @@
 ---
 color: black
-description: 'ALWAYS use when: nextjs expert tasks, domain-specific work
-
+description: |
+  ALWAYS use when: nextjs expert tasks, domain-specific work
   NEVER use when: Non-domain tasks, general development
-
   Runs AFTER: requirements analysis, initial task
-
-  Hands off to: workflow-orchestrator, terminal'
+  Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: nextjs-expert
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(next:*), Bash(vercel:*),
-  Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(npm:*), Bash(next:*), Bash(vercel:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

@@ -247,6 +247,48 @@ agent_permissions:
       - "Task"
     rationale: "Summary generation requires only reading and TTS"
 
+  # New Analyzers from wshobson/agents (Read-Only)
+  security-auditor:
+    security_level: "read_only"
+    specific_tools:
+      - "Read"
+      - "Grep"
+      - "Glob"
+      - "WebSearch"
+      - "WebFetch"
+      - "Task"
+    rationale: "Security auditing requires analysis but no modifications"
+
+  ui-visual-validator:
+    security_level: "read_only"
+    specific_tools:
+      - "Read"
+      - "Grep"
+      - "Glob"
+      - "Task"
+    rationale: "Visual validation requires analysis but no modifications"
+
+  seo-content-auditor:
+    security_level: "read_only"
+    specific_tools:
+      - "Read"
+      - "Grep"
+      - "Glob"
+      - "WebSearch"
+      - "WebFetch"
+      - "Task"
+    rationale: "Content auditing requires analysis and research but no modifications"
+
+  seo-cannibalization-detector:
+    security_level: "read_only"
+    specific_tools:
+      - "Read"
+      - "Grep"
+      - "Glob"
+      - "WebSearch"
+      - "Task"
+    rationale: "SEO analysis requires research but no modifications"
+
   # Orchestrators (Full Access)
   workflow-orchestrator:
     security_level: "full_access"
@@ -541,6 +583,32 @@ enforcement:
     file_modification: "This agent will modify files. Continue? (y/N)"
     command_execution: "This agent will execute commands. Continue? (y/N)"
     full_access: "This agent has full system access. Continue? (y/N)"
+
+# MCP Exception to Least Privilege Principle
+# MCP tools are granted globally to preserve functionality
+# Regular tools still follow least privilege per ADR-007
+mcp_global_access:
+  rationale: "MCP functionality preservation over security restriction"
+  exception_scope: "MCP tools only - regular tools still restricted"
+  allowed_patterns:
+    - "mcp__Ref__*"
+    - "mcp__sequential_thinking__*"
+    - "mcp__serena__*"
+    - "mcp__neil_knowledge_graph__*"  # the-librarian only
+
+# Default Permissions for New Agents
+# All agents not explicitly listed follow these defaults:
+default_permissions:
+  specialists:
+    # New specialists from wshobson/agents follow specialist security level
+    # All language pros, framework experts, domain specialists
+    security_level: "specialist"
+    rationale: "Domain experts need standard specialist tools for their area"
+
+  analyzers:
+    # All agents ending in -auditor, -validator, -analyzer, -detector
+    security_level: "read_only"
+    rationale: "Analysis agents should never modify files"
 
 # Exception Handling
 exceptions:

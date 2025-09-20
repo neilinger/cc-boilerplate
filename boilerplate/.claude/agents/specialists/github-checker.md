@@ -5,7 +5,7 @@ description: |
   NEVER use when: Code implementation, documentation, non-GitHub tasks
   Runs AFTER: Repository changes or periodic maintenance
   Hands off to: pr-optimizer (for PR improvements)
-tools: Read, Bash(gh:*), Task
+tools: Read, Bash(gh:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: haiku
 color: purple
 ---

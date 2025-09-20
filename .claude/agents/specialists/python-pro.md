@@ -1,6 +1,10 @@
 ---
 color: blue
-description: 'ALWAYS use when: Python development, Python code optimization, modern
+description: |
+  ALWAYS use when: Python development, Python code optimization, modern Python patterns, async programming
+  NEVER use when: Non-Python tasks, basic scripting that doesn't need expertise
+  Runs AFTER: technical-researcher, requirements clarification
+  Hands off to: test-automator, code-reviewer
   Python patterns, async programming
 
   NEVER use when: Non-Python tasks, basic scripting that doesn''t need expertise
@@ -10,8 +14,7 @@ description: 'ALWAYS use when: Python development, Python code optimization, mod
   Hands off to: test-automator, code-reviewer'
 model: sonnet
 name: python-pro
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(pip:*), Bash(uv:*),
-  Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(pip:*), Bash(uv:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose
