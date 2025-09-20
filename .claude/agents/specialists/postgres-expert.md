@@ -1,13 +1,16 @@
 ---
-name: postgres-expert
-description: |
-  ALWAYS use when: PostgreSQL database design, query optimization, performance tuning, advanced PostgreSQL features, schema design
-  NEVER use when: Non-PostgreSQL databases, simple database queries that don't need optimization
-  RUNS AFTER: Data modeling requirements, architecture decisions, performance analysis
-  HANDS OFF TO: code-reviewer (for database security review), test-automator (for database testing)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(psql:*), Bash(pg_dump:*), Bash(createdb:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
-model: sonnet
 color: green
+description: 'ALWAYS use when: postgres expert tasks, domain-specific work
+
+  NEVER use when: Non-domain tasks, general development
+
+  Runs AFTER: requirements analysis, initial task
+
+  Hands off to: workflow-orchestrator, terminal'
+model: sonnet
+name: postgres-expert
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(psql:*), Bash(pg_dump:*), Bash(createdb:*),
+  Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

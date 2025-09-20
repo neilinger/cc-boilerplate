@@ -6,7 +6,7 @@ description: |
   Runs AFTER: code-reviewer, any code modification, security-sensitive operations
   Hands off to: security-scanner, code-reviewer (for security-focused review)
 tools: Task, Read, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
-model: haiku
+model: opus
 color: orange
 ---
 

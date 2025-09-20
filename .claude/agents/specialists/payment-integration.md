@@ -1,8 +1,15 @@
 ---
-name: payment-integration
-description: Integrate Stripe, PayPal, and payment processors. Handles checkout flows, subscriptions, webhooks, and PCI compliance. Use PROACTIVELY when implementing payments, billing, or subscription features.
+description: 'ALWAYS use when: payment integration tasks, domain-specific work
+
+  NEVER use when: Non-domain tasks, general development
+
+  Runs AFTER: requirements analysis, initial task
+
+  Hands off to: workflow-orchestrator, terminal'
 model: sonnet
-tools: Read, Grep, Glob, WebSearch, WebFetch, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+name: payment-integration
+tools: Read, Grep, Glob, WebSearch, WebFetch, Task, mcp__Ref__*, mcp__sequential_thinking__*,
+  mcp__serena__*
 ---
 
 You are a payment integration specialist focused on secure, reliable payment processing.

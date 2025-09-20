@@ -1,7 +1,13 @@
 ---
-name: ui-visual-validator
-description: Rigorous visual validation expert specializing in UI testing, design system compliance, and accessibility verification. Masters screenshot analysis, visual regression testing, and component validation. Use PROACTIVELY to verify UI modifications have achieved their intended goals through comprehensive visual analysis.
+description: 'ALWAYS use when: ui visual validator tasks, domain-specific work
+
+  NEVER use when: Non-domain tasks, general development
+
+  Runs AFTER: requirements analysis, initial task
+
+  Hands off to: workflow-orchestrator, terminal'
 model: sonnet
+name: ui-visual-validator
 tools: Read, Grep, Glob, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 

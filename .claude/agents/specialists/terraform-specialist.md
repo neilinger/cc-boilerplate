@@ -1,13 +1,16 @@
 ---
-name: terraform-specialist
-description: |
-  ALWAYS use when: Infrastructure as Code, Terraform/OpenTofu development, state management, multi-cloud automation, AWS resource provisioning
-  NEVER use when: Manual infrastructure setup, simple cloud configuration without IaC
-  RUNS AFTER: Architecture planning, resource requirements, security planning
-  HANDS OFF TO: aws-expert (for AWS-specific optimizations), deployment-engineer (for CI/CD integration)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(terraform:*), Bash(aws:*), Bash(git:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
-model: opus
 color: purple
+description: 'ALWAYS use when: Terraform tasks, specialized Terraform work
+
+  NEVER use when: Non-domain tasks, general development
+
+  Runs AFTER: requirements analysis, initial task
+
+  Hands off to: workflow-orchestrator, terminal'
+model: opus
+name: terraform-specialist
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(terraform:*), Bash(aws:*), Bash(git:*),
+  Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

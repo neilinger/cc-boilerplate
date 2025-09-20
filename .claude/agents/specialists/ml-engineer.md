@@ -1,13 +1,16 @@
 ---
-name: ml-engineer
-description: |
-  ALWAYS use when: ML model deployment, MLOps pipelines, production ML systems, AWS Bedrock integration, RAG productionization
-  NEVER use when: Data analysis, research experiments, basic ML model training
-  RUNS AFTER: Data science model development, architecture planning, infrastructure setup
-  HANDS OFF TO: deployment-engineer (for CI/CD), aws-expert (for cloud optimization)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(aws:*), Bash(docker:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
-model: opus
 color: orange
+description: 'ALWAYS use when: ml engineer tasks, domain-specific work
+
+  NEVER use when: Non-domain tasks, general development
+
+  Runs AFTER: requirements analysis, initial task
+
+  Hands off to: workflow-orchestrator, terminal'
+model: opus
+name: ml-engineer
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(aws:*), Bash(docker:*),
+  Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

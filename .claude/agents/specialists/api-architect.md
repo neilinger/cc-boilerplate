@@ -1,13 +1,16 @@
 ---
-name: api-architect
-description: |
-  ALWAYS use when: API design, RESTful architecture, microservices boundaries, API versioning, service communication patterns
-  NEVER use when: Frontend-only tasks, non-API backend work, simple CRUD operations
-  RUNS AFTER: Requirements analysis, system architecture decisions, service boundary definition
-  HANDS OFF TO: code-reviewer (for API security review), test-automator (for API testing)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(curl:*), Bash(postman:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
-model: opus
 color: purple
+description: 'ALWAYS use when: api architect tasks, domain-specific work
+
+  NEVER use when: Non-domain tasks, general development
+
+  Runs AFTER: requirements analysis, initial task
+
+  Hands off to: workflow-orchestrator, terminal'
+model: opus
+name: api-architect
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(curl:*), Bash(postman:*), Task,
+  mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

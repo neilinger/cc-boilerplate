@@ -1,8 +1,16 @@
 ---
+description: 'ALWAYS use when: seo cannibalization detector tasks, domain-specific
+  work
+
+  NEVER use when: Non-domain tasks, general development
+
+  Runs AFTER: requirements analysis, initial task
+
+  Hands off to: workflow-orchestrator, terminal'
+model: sonnet
 name: seo-cannibalization-detector
-description: Analyzes multiple provided pages to identify keyword overlap and potential cannibalization issues. Suggests differentiation strategies. Use PROACTIVELY when reviewing similar content.
-model: haiku
-tools: Read, Grep, Glob, WebSearch, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: Read, Grep, Glob, WebSearch, Task, mcp__Ref__*, mcp__sequential_thinking__*,
+  mcp__serena__*
 ---
 
 You are a keyword cannibalization specialist analyzing content overlap between provided pages.

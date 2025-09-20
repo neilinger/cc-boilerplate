@@ -1,13 +1,16 @@
 ---
-name: graphql-architect
-description: |
-  ALWAYS use when: GraphQL schema design, federation architecture, GraphQL performance optimization, subscription implementation, GraphQL security
-  NEVER use when: REST API design, non-GraphQL tasks, simple CRUD operations without GraphQL
-  RUNS AFTER: API requirements analysis, data modeling, architecture decisions
-  HANDS OFF TO: code-reviewer (for GraphQL security review), test-automator (for GraphQL testing)
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(graphql:*), Bash(apollo:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
-model: opus
 color: pink
+description: 'ALWAYS use when: graphql architect tasks, domain-specific work
+
+  NEVER use when: Non-domain tasks, general development
+
+  Runs AFTER: requirements analysis, initial task
+
+  Hands off to: workflow-orchestrator, terminal'
+model: opus
+name: graphql-architect
+tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(graphql:*), Bash(apollo:*),
+  Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

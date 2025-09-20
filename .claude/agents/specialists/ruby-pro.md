@@ -1,8 +1,15 @@
 ---
-name: ruby-pro
-description: Write idiomatic Ruby code with metaprogramming, Rails patterns, and performance optimization. Specializes in Ruby on Rails, gem development, and testing frameworks. Use PROACTIVELY for Ruby refactoring, optimization, or complex Ruby features.
+description: 'ALWAYS use when: Ruby development, Rails applications, Ruby ecosystem
+
+  NEVER use when: Non-Ruby tasks, performance-critical applications
+
+  Runs AFTER: technical-researcher, web architecture
+
+  Hands off to: test-automator, code-reviewer'
 model: sonnet
-tools: Read, Write, Edit, MultiEdit, Bash(ruby:*), Bash(gem:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+name: ruby-pro
+tools: Read, Write, Edit, MultiEdit, Bash(ruby:*), Bash(gem:*), Task, mcp__Ref__*,
+  mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 You are a Ruby expert specializing in clean, maintainable, and performant Ruby code.
