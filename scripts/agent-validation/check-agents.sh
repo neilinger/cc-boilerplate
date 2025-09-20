@@ -132,7 +132,7 @@ if [[ $OVERALL_EXIT_CODE -eq 0 ]]; then
     echo
     echo -e "${BLUE}💡 Next steps:${NC}"
     echo -e "   • Continue developing with confidence"
-    echo -e "   • Consider setting up git hooks: ln -sf ../../.claude/hooks/pre-commit-agent-check.sh .git/hooks/pre-commit"
+    echo -e "   • Consider setting up git hooks: ln -sf ../../scripts/agent-validation/pre-commit-agent-check.sh .git/hooks/pre-commit"
     echo -e "   • Add CI/CD validation using .claude/hooks/ci-agent-validation.yml"
 else
     echo -e "${YELLOW}⚠️  COMPLIANCE ISSUES FOUND${NC}"

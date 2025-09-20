@@ -5,7 +5,7 @@
 # It provides gentle guidance but does not block commits (soft hook approach).
 #
 # To enable this hook:
-#   ln -sf ../../.claude/hooks/pre-commit-agent-check.sh .git/hooks/pre-commit
+#   ln -sf ../../scripts/agent-validation/pre-commit-agent-check.sh .git/hooks/pre-commit
 
 set -e
 
@@ -45,7 +45,8 @@ echo
 # Run compliance checker
 echo -e "${BLUE}🔍 Running compliance checks...${NC}"
 
-if python3 .claude/hooks/utils/agent-compliance-checker.py --verbose; then
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if python3 "$SCRIPT_DIR/agent-compliance-checker.py" --verbose; then
     echo -e "${GREEN}✅ All agent changes are compliant!${NC}"
     echo -e "${GREEN}   Commit proceeding...${NC}"
     exit 0
@@ -66,7 +67,7 @@ else
         echo -e "${BLUE}🔧 To fix issues:${NC}"
         echo -e "   1. Review the compliance report above"
         echo -e "   2. Update agents according to ADR-007 and ADR-008"
-        echo -e "   3. Run: python3 .claude/hooks/utils/agent-compliance-checker.py"
+        echo -e "   3. Run: python3 scripts/agent-validation/agent-compliance-checker.py"
         echo -e "   4. Commit again when compliant"
         exit $COMPLIANCE_EXIT_CODE
     else
@@ -79,7 +80,7 @@ else
         echo -e "   • docs/adr/ directory for details"
         echo
         echo -e "${BLUE}🔧 To check compliance manually:${NC}"
-        echo -e "   python3 .claude/hooks/utils/agent-compliance-checker.py --verbose"
+        echo -e "   python3 scripts/agent-validation/agent-compliance-checker.py --verbose"
 
         # Still exit 0 in soft mode to allow commit
         exit 0
