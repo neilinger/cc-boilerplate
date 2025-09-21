@@ -13,7 +13,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: seo-cannibalization-detector
-tools: ["*"]
 ---
 
 You are a keyword cannibalization specialist analyzing content overlap between provided pages.

@@ -6,7 +6,6 @@ description: |
   Hands off to: test-automator, code-reviewer test-automator, code-reviewer'
 model: sonnet
 name: php-pro
-tools: ["*"]
 ---
 
 You are a PHP expert specializing in modern PHP development with focus on performance and idiomatic patterns.

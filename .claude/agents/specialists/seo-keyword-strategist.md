@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: seo-keyword-strategist
-tools: ["*"]
 ---
 
 You are a keyword strategist analyzing content for semantic optimization opportunities.

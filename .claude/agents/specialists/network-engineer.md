@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: network-engineer
-tools: ["*"]
 ---
 
 You are a network engineer specializing in modern cloud networking, security, and performance optimization.

@@ -5,7 +5,6 @@ description: |
   NEVER use when: Non-security analysis, general code review without security focus
   Runs AFTER: code-reviewer (in security chain)
   Hands off to: code-reviewer (for security-focused follow-up), security-orchestrator
-tools: ["*"]
 model: sonnet
 color: red
 ---

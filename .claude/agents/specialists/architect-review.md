@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: architect-review
-tools: ["*"]
 ---
 
 # Architect Review Agent

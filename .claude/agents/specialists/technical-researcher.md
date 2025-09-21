@@ -5,7 +5,6 @@ description: |
   NEVER use when: Simple code questions, internal codebase analysis, file modification tasks
   Runs AFTER: Initial requirement analysis
   Hands off to: workflow-orchestrator (for implementation planning), adr-creator (for decisions)
-tools: ["*"]
 model: opus
 color: purple
 ---

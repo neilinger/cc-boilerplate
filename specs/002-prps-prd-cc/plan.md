@@ -1,8 +1,8 @@
 
-# Implementation Plan: CC-Boilerplate Strategic Accelerator Framework
+# Implementation Plan: [FEATURE]
 
-**Branch**: `002-prps-prd-cc` | **Date**: 2025-01-21 | **Spec**: [spec.md](./spec.md)
-**Input**: Feature specification from `/specs/002-prps-prd-cc/spec.md`
+**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
+**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
 
 ## Execution Flow (/plan command scope)
 ```
@@ -31,30 +31,23 @@
 - Phase 3-4: Implementation execution (manual or via tools)
 
 ## Summary
-Implement comprehensive development framework enabling rapid project recovery and MVP creation within 6 hours. Primary focus on LLM behavioral testing framework (FR-021-025) to validate CEO role adherence, delegation patterns, and contrarian discipline compliance through automated conversation analysis and regression testing.
+[Extract from feature spec: primary requirement + technical approach from research]
 
 ## Technical Context
-**Language/Version**: Python 3.11+ (behavioral testing framework, agent validation)
-**Primary Dependencies**: pytest (testing), langchain/anthropic (LLM integration), Linear API (task management), GitHub API (repo management)
-**Storage**: File-based specs structure, conversation logs (JSON), git-tracked artifacts
-**Testing**: pytest (behavioral validation), LLM-as-Judge methodology, regression testing suite
-**Target Platform**: macOS/Linux development environments, Claude Code CLI
-**Project Type**: single - CLI framework with agent coordination
-**Performance Goals**: <6 hours idea-to-MVP, >95% behavioral compliance detection, <30 minutes onboarding
-**Constraints**: Zero security incidents tolerance, maintain <150 lines CLAUDE.md, non-blocking quality gates
-**Scale/Scope**: 100+ agents, enterprise-grade security, 10x productivity multiplier target
+**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
+**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
+**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
+**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
+**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
+**Project Type**: [single/web/mobile - determines source structure]  
+**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
+**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
+**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
 
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-**CEO Framework Compliance**:
-- ✓ Delegation through workflow-orchestrator (not direct implementation)
-- ✓ Contrarian discipline application to architectural decisions
-- ✓ Security-orchestrator mandatory for sensitive operations
-- ✓ KISS/YAGNI principles: behavioral testing essential, not over-engineering
-- ✓ 10x productivity goal aligns with strategic framework purpose
-
-**No Constitution Violations Detected** - Framework enhances rather than violates CEO principles
+[Gates determined based on constitution file]
 
 ## Project Structure
 
@@ -106,7 +99,7 @@ ios/ or android/
 └── [platform-specific structure]
 ```
 
-**Structure Decision**: Option 1 (Single project) - CLI framework with agent coordination, no frontend/backend separation needed
+**Structure Decision**: [DEFAULT to Option 1 unless Technical Context indicates web/mobile app]
 
 ## Phase 0: Outline & Research
 1. **Extract unknowns from Technical Context** above:
@@ -137,19 +130,21 @@ ios/ or android/
    - Validation rules from requirements
    - State transitions if applicable
 
-2. **Design Python-based behavioral testing framework**:
-   - Leverage existing `.claude/hooks/` Python infrastructure
-   - Use `uv run --script` pattern for cross-platform execution
-   - External CLI testing via subprocess (black-box validation)
-   - No API contracts needed - direct Claude Code CLI invocation
+2. **Generate API contracts** from functional requirements:
+   - For each user action → endpoint
+   - Use standard REST/GraphQL patterns
+   - Output OpenAPI/GraphQL schema to `/contracts/`
 
-3. **Generate behavioral test specifications**:
-   - CEO delegation pattern tests
-   - Contrarian discipline validation
-   - Security routing compliance
-   - Framework implementation deferred to Phase 3
+3. **Generate contract tests** from contracts:
+   - One test file per endpoint
+   - Assert request/response schemas
+   - Tests must fail (no implementation yet)
 
-4. **Update agent file incrementally** (O(1) operation):
+4. **Extract test scenarios** from user stories:
+   - Each story → integration test scenario
+   - Quickstart test = story validation steps
+
+5. **Update agent file incrementally** (O(1) operation):
    - Run `.specify/scripts/bash/update-agent-context.sh claude` for your AI assistant
    - If exists: Add only NEW tech from current plan
    - Preserve manual additions between markers
@@ -157,42 +152,25 @@ ios/ or android/
    - Keep under 150 lines for token efficiency
    - Output to repository root
 
-**Output**: data-model.md, behavioral test specifications, quickstart.md, agent-specific file
+**Output**: data-model.md, /contracts/*, failing tests, quickstart.md, agent-specific file
 
 ## Phase 2: Task Planning Approach
 *This section describes what the /tasks command will do - DO NOT execute during /plan*
 
 **Task Generation Strategy**:
 - Load `.specify/templates/tasks-template.md` as base
-- Generate tasks from behavioral testing requirements (FR-021-025)
-- Each behavioral test category → Python test implementation task [P]
-- Each CLI testing scenario → subprocess invocation task [P]
-- Each data entity → model creation task [P]
-- Conversation log analysis → Python processing task
-- LLM-as-Judge integration → Python evaluation service task
-- Regression analysis → Python reporting task
-- pytest integration → test suite enhancement task
-
-**Specific Task Categories**:
-1. **Python Testing Infrastructure**: Core behavioral testing framework using existing hooks patterns
-2. **CLI Testing Module**: Claude Code subprocess invocation and response parsing
-3. **Conversation Log Processing**: Python-based real-time analysis pipeline
-4. **Baseline Management**: Behavioral baseline creation and maintenance via Python
-5. **Regression Detection**: Automated regression analysis using pytest
-6. **Behavioral Assertions**: Python assertion library for CEO compliance
-7. **Integration Tests**: End-to-end behavioral validation via external CLI testing
-8. **Documentation**: Python behavioral testing guide and examples
+- Generate tasks from Phase 1 design docs (contracts, data model, quickstart)
+- Each contract → contract test task [P]
+- Each entity → model creation task [P] 
+- Each user story → integration test task
+- Implementation tasks to make tests pass
 
 **Ordering Strategy**:
-- Infrastructure first: Python testing framework foundation
-- TDD order: Behavioral tests before implementation
-- Dependency order: Models → CLI Testing → Behavioral Analysis → Integration
-- Mark [P] for parallel execution (independent components)
-- Critical path: CLI Testing → Conversation logging → Analysis → Regression detection
+- TDD order: Tests before implementation 
+- Dependency order: Models before services before UI
+- Mark [P] for parallel execution (independent files)
 
-**Estimated Output**: 25-30 numbered, ordered tasks focusing on behavioral testing framework
-
-**Priority Focus**: FR-021-025 implementation (LLM behavioral regression testing) as highest priority
+**Estimated Output**: 25-30 numbered, ordered tasks in tasks.md
 
 **IMPORTANT**: This phase is executed by the /tasks command, NOT by /plan
 
@@ -216,18 +194,18 @@ ios/ or android/
 *This checklist is updated during execution flow*
 
 **Phase Status**:
-- [x] Phase 0: Research complete (/plan command)
-- [x] Phase 1: Design complete (/plan command)
-- [x] Phase 2: Task planning complete (/plan command - describe approach only)
+- [ ] Phase 0: Research complete (/plan command)
+- [ ] Phase 1: Design complete (/plan command)
+- [ ] Phase 2: Task planning complete (/plan command - describe approach only)
 - [ ] Phase 3: Tasks generated (/tasks command)
 - [ ] Phase 4: Implementation complete
 - [ ] Phase 5: Validation passed
 
 **Gate Status**:
-- [x] Initial Constitution Check: PASS
-- [x] Post-Design Constitution Check: PASS
-- [x] All NEEDS CLARIFICATION resolved
-- [x] Complexity deviations documented
+- [ ] Initial Constitution Check: PASS
+- [ ] Post-Design Constitution Check: PASS
+- [ ] All NEEDS CLARIFICATION resolved
+- [ ] Complexity deviations documented
 
 ---
 *Based on Constitution v2.1.1 - See `/memory/constitution.md`*

@@ -5,7 +5,6 @@ description: |
   NEVER use when: General development tasks, code review, non-GitHub operations
   Runs AFTER: Code implementation complete, ready for PR creation
   Hands off to: the-librarian (for context), github-checker (for maintenance)
-tools: ["*"]
 model: sonnet
 color: green
 ---

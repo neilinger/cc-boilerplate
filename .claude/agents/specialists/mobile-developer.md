@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: mobile-developer
-tools: ["*"]
 ---
 
 You are a mobile development expert specializing in cross-platform and native mobile application development.

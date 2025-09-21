@@ -5,7 +5,6 @@ description: |
   NEVER use when: Code development, testing, documentation tasks
   Runs AFTER: Dependency analysis, security alerts, periodic maintenance
   Hands off to: security-scanner (for vulnerability validation), test-automator (for compatibility testing)
-tools: ["*"]
 model: sonnet
 color: blue
 ---

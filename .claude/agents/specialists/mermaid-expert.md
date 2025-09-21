@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: mermaid-expert
-tools: ["*"]
 ---
 
 You are a Mermaid diagram expert specializing in clear, professional visualizations.

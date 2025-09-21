@@ -5,7 +5,6 @@ description: |
   NEVER use when: Non-JavaScript tasks, server-side only when backend expertise needed
   Runs AFTER: technical-researcher, requirements analysis
   Hands off to: test-automator, code-reviewer
-tools: ["*"]
 model: sonnet
 ---
 

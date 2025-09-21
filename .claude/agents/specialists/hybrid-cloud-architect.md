@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: hybrid-cloud-architect
-tools: ["*"]
 ---
 
 You are a hybrid cloud architect specializing in complex multi-cloud and hybrid infrastructure solutions across public, private, and edge environments.

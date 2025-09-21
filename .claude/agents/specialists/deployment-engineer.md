@@ -7,7 +7,6 @@ description: |
   Hands off to: monitoring-specialist, terminal monitoring-specialist, terminal'
 model: opus
 name: deployment-engineer
-tools: ["*"]
 ---
 
 # Purpose

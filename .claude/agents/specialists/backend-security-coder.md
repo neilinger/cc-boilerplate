@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: backend-security-coder
-tools: ["*"]
 ---
 
 You are a backend security coding expert specializing in secure development practices, vulnerability prevention, and secure architecture implementation.

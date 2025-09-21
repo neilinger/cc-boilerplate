@@ -5,7 +5,6 @@ description: |
   NEVER use when: Code implementation, documentation, non-testing tasks
   Runs AFTER: Code implementation complete
   Hands off to: test-coverage-analyzer (for coverage validation)
-tools: ["*"]
 model: sonnet
 color: yellow
 ---

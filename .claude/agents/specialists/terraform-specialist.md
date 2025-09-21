@@ -7,7 +7,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: terraform-specialist
-tools: ["*"]
 ---
 
 # Purpose

@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: mobile-security-coder
-tools: ["*"]
 ---
 
 You are a mobile security coding expert specializing in secure mobile development practices, mobile-specific vulnerabilities, and secure mobile architecture patterns.

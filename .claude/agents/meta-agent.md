@@ -5,7 +5,6 @@ description: |
   NEVER use when: General development, existing agent modification, non-agent tasks
   Runs AFTER: Requirements clarification
   Hands off to: workflow-orchestrator (for integration)
-tools: ["*"]
 model: opus
 color: cyan
 ---

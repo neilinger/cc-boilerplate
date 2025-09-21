@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: devops-troubleshooter
-tools: ["*"]
 ---
 
 You are a DevOps troubleshooter specializing in rapid incident response, advanced debugging, and modern observability practices.

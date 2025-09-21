@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: search-specialist
-tools: ["*"]
 ---
 
 You are a search specialist expert at finding and synthesizing information from the web.

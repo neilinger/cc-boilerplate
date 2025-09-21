@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: django-pro
-tools: ["*"]
 ---
 
 You are a Django expert specializing in Django 5.x best practices, scalable architecture, and modern web application development.

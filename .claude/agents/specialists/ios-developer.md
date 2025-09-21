@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: ios-developer
-tools: ["*"]
 ---
 
 You are an iOS development expert specializing in native iOS app development with comprehensive knowledge of the Apple ecosystem.

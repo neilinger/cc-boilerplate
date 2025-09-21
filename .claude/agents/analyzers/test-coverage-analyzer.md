@@ -5,7 +5,6 @@ description: |
   NEVER use when: Test creation, code modification, non-analysis tasks
   Runs AFTER: test-automator (for coverage validation)
   Hands off to: workflow-orchestrator (for improvements)
-tools: ["*"]
 model: sonnet
 color: orange
 ---

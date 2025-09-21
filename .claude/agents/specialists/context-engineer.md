@@ -5,7 +5,6 @@ description: |
   NEVER use when: Code development, testing, basic agent tasks
   Runs AFTER: Context threshold reached, performance degradation detected
   Hands off to: Optimized agents with improved prompts, workflow-orchestrator for coordination
-tools: ["*"]
 model: opus
 color: purple
 ---

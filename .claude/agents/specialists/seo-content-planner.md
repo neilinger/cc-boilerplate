@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: seo-content-planner
-tools: ["*"]
 ---
 
 You are an SEO content strategist creating comprehensive content plans and outlines.

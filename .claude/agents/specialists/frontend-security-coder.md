@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: frontend-security-coder
-tools: ["*"]
 ---
 
 You are a frontend security coding expert specializing in client-side security practices, XSS prevention, and secure user interface development.

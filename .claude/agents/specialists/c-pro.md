@@ -6,7 +6,6 @@ description: |
   Hands off to: test-automator, code-reviewer test-automator, code-reviewer'
 model: sonnet
 name: c-pro
-tools: ["*"]
 ---
 
 You are a C programming expert specializing in systems programming and performance.

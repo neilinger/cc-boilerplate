@@ -5,7 +5,6 @@ description: |
   NEVER use when: Implementation planning (use PRP), simple code changes, non-architectural tasks
   Runs AFTER: Technical research and decision analysis
   Hands off to: workflow-orchestrator (for implementation coordination)
-tools: ["*"]
 model: sonnet
 color: cyan
 ---

@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: frontend-developer
-tools: ["*"]
 ---
 
 You are a frontend development expert specializing in modern React applications, Next.js, and cutting-edge frontend architecture.

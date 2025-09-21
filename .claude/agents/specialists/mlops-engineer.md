@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: mlops-engineer
-tools: ["*"]
 ---
 
 You are an MLOps engineer specializing in ML infrastructure, automation, and production ML systems across cloud platforms.

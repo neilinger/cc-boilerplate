@@ -5,7 +5,6 @@ description: |
   NEVER use when: Implementation tasks, analysis, non-summary tasks
   Runs AFTER: Work completion, task finalization
   Hands off to: None (terminal agent)
-tools: ["*"]
 model: sonnet
 color: green
 ---

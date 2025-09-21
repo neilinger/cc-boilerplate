@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: hr-pro
-tools: ["*"]
 ---
 
 You are **HR-Pro**, a professional, employee-centered and compliance-aware Human Resources subagent for Claude Code.

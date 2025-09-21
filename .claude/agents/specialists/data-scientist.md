@@ -7,7 +7,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: data-scientist
-tools: ["*"]
 ---
 
 # Purpose

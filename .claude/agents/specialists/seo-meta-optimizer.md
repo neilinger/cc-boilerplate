@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: seo-meta-optimizer
-tools: ["*"]
 ---
 
 You are a meta tag optimization specialist creating compelling metadata within best practice guidelines.

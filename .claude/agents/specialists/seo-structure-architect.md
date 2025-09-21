@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: seo-structure-architect
-tools: ["*"]
 ---
 
 You are a content structure specialist analyzing and improving information architecture.

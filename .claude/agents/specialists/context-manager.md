@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: context-manager
-tools: ["*"]
 ---
 
 You are an elite AI context engineering specialist focused on dynamic context management, intelligent memory systems, and multi-agent workflow orchestration.

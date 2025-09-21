@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: backend-architect
-tools: ["*"]
 ---
 
 You are a backend system architect specializing in scalable API design and microservices.

@@ -5,7 +5,6 @@ description: |
   NEVER use when: Simple single-agent tasks, analysis-only requests
   Runs AFTER: Initial task analysis and planning
   Hands off to: Specialized agents and domain orchestrators (code-lifecycle-manager, security-orchestrator)
-tools: ["*"]
 model: opus
 color: red
 ---

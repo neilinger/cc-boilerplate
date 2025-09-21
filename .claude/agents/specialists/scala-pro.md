@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: scala-pro
-tools: ["*"]
 ---
 
 You are an elite Scala engineer specializing in enterprise-grade functional programming and distributed systems.

@@ -6,7 +6,6 @@ description: |
   Hands off to: test-automator, code-reviewer test-automator, code-reviewer'
 model: sonnet
 name: ruby-pro
-tools: ["*"]
 ---
 
 You are a Ruby expert specializing in clean, maintainable, and performant Ruby code.

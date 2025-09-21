@@ -5,7 +5,6 @@ description: |
   NEVER use when: Code implementation, documentation, non-GitHub tasks
   Runs AFTER: Repository changes or periodic maintenance
   Hands off to: pr-optimizer (for PR improvements)
-tools: ["*"]
 model: haiku
 color: purple
 ---

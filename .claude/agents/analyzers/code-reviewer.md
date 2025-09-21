@@ -5,7 +5,6 @@ description: |
   NEVER use when: Code generation, file modification, non-review tasks
   Runs AFTER: Code implementation complete
   Hands off to: security-orchestrator (mandatory security chain)
-tools: ["*"]
 model: sonnet
 color: blue
 ---

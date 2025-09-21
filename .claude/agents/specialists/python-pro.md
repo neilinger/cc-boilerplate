@@ -14,7 +14,6 @@ description: |
   Hands off to: test-automator, code-reviewer'
 model: sonnet
 name: python-pro
-tools: ["*"]
 ---
 
 # Purpose

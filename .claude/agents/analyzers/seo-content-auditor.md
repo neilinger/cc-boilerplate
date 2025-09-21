@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: seo-content-auditor
-tools: ["*"]
 ---
 
 You are an SEO content auditor analyzing provided content for optimization opportunities.

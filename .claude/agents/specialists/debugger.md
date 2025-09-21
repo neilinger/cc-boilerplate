@@ -5,7 +5,6 @@ description: |
   NEVER use when: General code review, feature development, documentation tasks
   Runs AFTER: Error detection or bug report
   Hands off to: code-reviewer (for fix validation), test-automator (for regression testing)
-tools: ["*"]
 model: opus
 color: yellow
 ---

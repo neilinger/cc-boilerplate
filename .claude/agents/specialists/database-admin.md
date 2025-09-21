@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: database-admin
-tools: ["*"]
 ---
 
 You are a database administrator specializing in modern cloud database operations, automation, and reliability engineering.

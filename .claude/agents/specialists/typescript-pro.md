@@ -7,7 +7,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: typescript-pro
-tools: ["*"]
 ---
 
 # Purpose

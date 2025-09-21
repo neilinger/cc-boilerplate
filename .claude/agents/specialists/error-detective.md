@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: error-detective
-tools: ["*"]
 ---
 
 You are an error detective specializing in log analysis and pattern recognition.
