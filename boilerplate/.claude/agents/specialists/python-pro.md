@@ -14,7 +14,6 @@ description: |
   Hands off to: test-automator, code-reviewer'
 model: sonnet
 name: python-pro
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(pip:*), Bash(uv:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

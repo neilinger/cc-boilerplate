@@ -12,8 +12,8 @@ This directory contains Architecture Decision Records for the cc-boilerplate pro
 | [ADR-004](adr-004-documentation-standards.md) | Documentation Standards and Organization | Accepted | 2025-01-09 |
 | [ADR-005](adr-005-adr-prp-separation.md) | ADR vs PRP Separation of Concerns | Accepted | 2025-01-09 |
 | [ADR-006](adr-006-issue-management-process.md) | Issue Management Process | Accepted | 2025-09-07 |
-| [ADR-007](adr-007-agent-system-architecture.md) | Hierarchical Multi-Agent System Architecture | Proposed | 2025-01-17 |
-| [ADR-008](adr-008-cognitive-load-model-allocation.md) | Cognitive Load-Based Model Allocation Strategy | Proposed | 2025-01-17 |
+| [ADR-007](adr-007-agent-system-architecture.md) | Hierarchical Multi-Agent System Architecture | Accepted | 2025-01-17 |
+| [ADR-008](adr-008-cognitive-load-model-allocation.md) | Cognitive Load-Based Model Allocation Strategy | Accepted | 2025-01-17 |
 
 ## What are ADRs?
 

@@ -7,7 +7,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: kubernetes-architect
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(kubectl:*), Bash(helm:*), Bash(aws:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

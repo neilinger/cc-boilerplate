@@ -58,29 +58,12 @@ Adopt a **three-level issue classification system** integrated with the existing
 - Individual `feature/*` branches for isolation
 - Easier to defer, modify, or rollback if not needed
 
-### Issue Grouping Guidelines (KISS)
+### Process Guidelines
 
-**Group issues in one branch when:**
+**Group issues when**: Same files/severity, <500 lines, ship together logically
+**Separate issues when**: Different severity levels, unrelated functionality, >500 lines
 
-- They affect same files/modules (e.g., all setup-related)
-- Same severity level (all blocking or all important)
-- Combined changes < 500 lines
-- Ship together logically
-
-**Separate issues when:**
-
-- Different severity levels (blocking vs enhancement)
-- Unrelated functionality areas
-- Risk of one change blocking another
-- Combined changes > 500 lines
-
-### Process Workflow
-
-1. **Label new issues** with severity (blocking/important/enhancement)
-2. **Apply YAGNI test** to enhancements - close if not needed now
-3. **Create appropriate branch** following strategy above
-4. **Reference GitHub issues** in commits and PRs
-5. **Use GitHub native features** - no heavy external tooling
+**Workflow**: Label with severity → Apply YAGNI test → Create branch → Reference issues → Use GitHub native features
 
 ## Consequences
 

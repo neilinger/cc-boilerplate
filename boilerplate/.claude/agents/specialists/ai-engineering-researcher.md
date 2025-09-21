@@ -5,7 +5,6 @@ description: |
   NEVER use when: General technical research, code implementation, non-AI topics
   Runs AFTER: Initial AI research requirements
   Hands off to: technical-researcher (for deeper analysis), workflow-orchestrator (for implementation)
-tools: Read, WebSearch, WebFetch, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: blue
 ---

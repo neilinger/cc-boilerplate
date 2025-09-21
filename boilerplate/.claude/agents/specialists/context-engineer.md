@@ -5,7 +5,6 @@ description: |
   NEVER use when: Code development, testing, basic agent tasks
   Runs AFTER: Context threshold reached, performance degradation detected
   Hands off to: Optimized agents with improved prompts, workflow-orchestrator for coordination
-tools: Read, Write, Edit, MultiEdit, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: opus
 color: purple
 ---

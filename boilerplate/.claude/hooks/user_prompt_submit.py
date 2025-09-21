@@ -176,6 +176,10 @@ def main():
         # Add context information (optional)
         # You can print additional context that will be added to the prompt
         # Example: print(f"Current time: {datetime.now()}")
+
+        # CEO Role Reminder - inject behavioral nudge (skip for commands)
+        if not prompt.startswith('/'):
+            print("\n🚨 CEO RULE: Delegate everything → workflow-orchestrator\n")
         
         # Success - prompt will be processed
         sys.exit(0)

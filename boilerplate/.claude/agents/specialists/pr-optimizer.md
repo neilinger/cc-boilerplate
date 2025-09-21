@@ -5,7 +5,6 @@ description: |
   NEVER use when: General development tasks, code review, non-GitHub operations
   Runs AFTER: Code implementation complete, ready for PR creation
   Hands off to: the-librarian (for context), github-checker (for maintenance)
-tools: Bash(gh pr:*), Bash(gh issue:*), Bash(gh label:*), Read, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: green
 ---

@@ -7,7 +7,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: aws-expert
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(aws:*), Bash(terraform:*), Bash(cdk:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose
