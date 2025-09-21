@@ -74,7 +74,7 @@ Research findings for implementing LLM behavioral regression testing to validate
 **Format**:
 ```json
 {
-  "timestamp": "2025-01-21T10:30:00Z",
+  "timestamp": "2025-09-21T10:30:00Z",
   "conversation_id": "uuid",
   "user_request": "text",
   "ai_response": "text",
