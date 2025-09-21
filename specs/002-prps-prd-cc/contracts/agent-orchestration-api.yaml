@@ -1,0 +1,515 @@
+openapi: 3.0.3
+info:
+  title: CC-Boilerplate Agent Orchestration API
+  description: API contract for hierarchical agent discovery, coordination, and execution
+  version: 1.0.0
+  contact:
+    name: CC-Boilerplate Strategic Framework
+    url: https://github.com/user/cc-boilerplate
+
+servers:
+  - url: file://localhost
+    description: File-based agent coordination (zero external dependencies)
+
+paths:
+  /agents/discover:
+    post:
+      summary: Dynamic agent discovery and selection
+      description: Discovers and ranks available agents based on task requirements (FR-001)
+      operationId: discoverAgents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentDiscoveryRequest'
+      responses:
+        '200':
+          description: Ranked list of suitable agents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentDiscoveryResponse'
+        '400':
+          description: Invalid task requirements
+        '500':
+          description: Agent discovery system failure
+
+  /workflows/orchestrate:
+    post:
+      summary: Coordinate multi-step workflow execution
+      description: Orchestrates complex workflows through specialized agents (FR-001)
+      operationId: orchestrateWorkflow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowOrchestrationRequest'
+      responses:
+        '202':
+          description: Workflow accepted for execution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowExecution'
+        '400':
+          description: Invalid workflow specification
+        '409':
+          description: Workflow conflicts with security constraints
+
+  /security/validate:
+    post:
+      summary: Mandatory security validation chain
+      description: Validates operations through security-orchestrator chain (FR-004)
+      operationId: validateSecurity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecurityValidationRequest'
+      responses:
+        '200':
+          description: Security validation passed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityValidationResult'
+        '403':
+          description: Security validation failed - operation blocked
+        '500':
+          description: Security validation system failure
+
+  /prp/discover:
+    post:
+      summary: PRP discovery workflow
+      description: Transform ideas into comprehensive requirements documents (FR-002)
+      operationId: discoverPRP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PRPDiscoveryRequest'
+      responses:
+        '200':
+          description: PRP discovery completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PRPDocument'
+        '400':
+          description: Insufficient input for PRP generation
+        '422':
+          description: Ambiguous requirements need clarification
+
+  /behavioral/test:
+    post:
+      summary: Behavioral regression testing
+      description: Validate AI behavioral consistency against baseline (FR-021)
+      operationId: testBehavioralRegression
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BehavioralTestRequest'
+      responses:
+        '200':
+          description: Behavioral test completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BehavioralTestResult'
+        '400':
+          description: Invalid behavioral test scenario
+        '422':
+          description: Behavioral regression detected
+
+components:
+  schemas:
+    AgentDiscoveryRequest:
+      type: object
+      required:
+        - task_description
+        - complexity_level
+      properties:
+        task_description:
+          type: string
+          description: Natural language description of task requirements
+          example: "Create a REST API with authentication and database integration"
+        complexity_level:
+          type: string
+          enum: [simple, standard, complex]
+          description: Cognitive load classification
+        domain_requirements:
+          type: array
+          items:
+            type: string
+          description: Specific domain expertise required
+          example: ["security", "database", "api-design"]
+        time_constraints:
+          type: string
+          format: duration
+          description: Maximum acceptable execution time
+        security_clearance_required:
+          type: string
+          enum: [public, restricted, confidential, secret]
+          default: public
+
+    AgentDiscoveryResponse:
+      type: object
+      required:
+        - agents
+        - orchestration_plan
+      properties:
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/RankedAgent'
+        orchestration_plan:
+          $ref: '#/components/schemas/OrchestrationPlan'
+        estimated_duration:
+          type: string
+          format: duration
+        confidence_score:
+          type: number
+          minimum: 0
+          maximum: 1
+
+    RankedAgent:
+      type: object
+      required:
+        - agent_id
+        - competency_score
+        - cognitive_load_tier
+      properties:
+        agent_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        competency_score:
+          type: number
+          minimum: 0
+          maximum: 1
+        cognitive_load_tier:
+          type: string
+          enum: [haiku, sonnet, opus]
+        specializations:
+          type: array
+          items:
+            type: string
+        estimated_execution_time:
+          type: string
+          format: duration
+
+    WorkflowOrchestrationRequest:
+      type: object
+      required:
+        - workflow_id
+        - steps
+      properties:
+        workflow_id:
+          type: string
+          format: uuid
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowStep'
+        parallel_execution_allowed:
+          type: boolean
+          default: true
+        security_context:
+          $ref: '#/components/schemas/SecurityContext'
+
+    WorkflowStep:
+      type: object
+      required:
+        - step_id
+        - agent_id
+        - action
+      properties:
+        step_id:
+          type: string
+        agent_id:
+          type: string
+          format: uuid
+        action:
+          type: string
+        dependencies:
+          type: array
+          items:
+            type: string
+          description: Step IDs that must complete before this step
+        timeout:
+          type: string
+          format: duration
+        retry_policy:
+          $ref: '#/components/schemas/RetryPolicy'
+
+    SecurityValidationRequest:
+      type: object
+      required:
+        - operation_type
+        - context
+      properties:
+        operation_type:
+          type: string
+          enum: [code_modification, file_access, system_command, agent_creation]
+        context:
+          type: object
+          description: Operation-specific context for validation
+        requester_id:
+          type: string
+        security_clearance:
+          type: string
+          enum: [public, restricted, confidential, secret]
+
+    SecurityValidationResult:
+      type: object
+      required:
+        - validation_status
+        - validation_chain
+      properties:
+        validation_status:
+          type: string
+          enum: [approved, denied, escalated]
+        validation_chain:
+          type: array
+          items:
+            type: string
+          description: Agents in the security validation chain
+        risk_assessment:
+          $ref: '#/components/schemas/RiskAssessment'
+        required_mitigations:
+          type: array
+          items:
+            type: string
+
+    PRPDiscoveryRequest:
+      type: object
+      required:
+        - idea_description
+      properties:
+        idea_description:
+          type: string
+          description: Initial rough idea or existing codebase description
+        project_type:
+          type: string
+          enum: [greenfield, brownfield, migration]
+        target_timeline:
+          type: string
+          format: duration
+        stakeholders:
+          type: array
+          items:
+            type: string
+
+    PRPDocument:
+      type: object
+      required:
+        - requirements
+        - user_stories
+        - technical_constraints
+      properties:
+        requirements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Requirement'
+        user_stories:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserStory'
+        technical_constraints:
+          type: array
+          items:
+            type: string
+        success_criteria:
+          type: array
+          items:
+            type: string
+        timeline_estimate:
+          type: string
+          format: duration
+
+    BehavioralTestRequest:
+      type: object
+      required:
+        - test_scenario
+        - baseline_behavior
+      properties:
+        test_scenario:
+          type: string
+          description: Conversation or decision scenario to test
+        baseline_behavior:
+          $ref: '#/components/schemas/BehavioralBaseline'
+        evaluation_criteria:
+          type: array
+          items:
+            type: string
+          description: Specific behavioral aspects to evaluate
+
+    BehavioralTestResult:
+      type: object
+      required:
+        - consistency_score
+        - deviations
+      properties:
+        consistency_score:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Overall behavioral consistency (target >0.95)
+        deviations:
+          type: array
+          items:
+            $ref: '#/components/schemas/BehavioralDeviation'
+        recommendations:
+          type: array
+          items:
+            type: string
+
+    BehavioralBaseline:
+      type: object
+      required:
+        - delegation_rate
+        - contrarian_discipline_compliance
+      properties:
+        delegation_rate:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Expected rate of task delegation vs direct execution
+        contrarian_discipline_compliance:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Rate of applying 5-step contrarian discipline
+        decision_altitude_accuracy:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Accuracy in classifying decisions as TACTICAL/OPERATIONAL/STRATEGIC
+
+    BehavioralDeviation:
+      type: object
+      required:
+        - metric
+        - expected_value
+        - actual_value
+        - severity
+      properties:
+        metric:
+          type: string
+          enum: [delegation_rate, contrarian_discipline, decision_altitude, ceo_role_adherence]
+        expected_value:
+          type: number
+        actual_value:
+          type: number
+        severity:
+          type: string
+          enum: [low, medium, high, critical]
+        description:
+          type: string
+
+    # Supporting schemas
+    OrchestrationPlan:
+      type: object
+      properties:
+        execution_order:
+          type: array
+          items:
+            type: string
+        parallel_groups:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        checkpoints:
+          type: array
+          items:
+            type: string
+
+    SecurityContext:
+      type: object
+      properties:
+        clearance_level:
+          type: string
+          enum: [public, restricted, confidential, secret]
+        audit_required:
+          type: boolean
+        approval_chain:
+          type: array
+          items:
+            type: string
+
+    RetryPolicy:
+      type: object
+      properties:
+        max_attempts:
+          type: integer
+          minimum: 1
+          maximum: 10
+          default: 3
+        backoff_strategy:
+          type: string
+          enum: [linear, exponential, fixed]
+          default: exponential
+
+    RiskAssessment:
+      type: object
+      properties:
+        risk_level:
+          type: string
+          enum: [low, medium, high, critical]
+        risk_factors:
+          type: array
+          items:
+            type: string
+        mitigation_required:
+          type: boolean
+
+    Requirement:
+      type: object
+      required:
+        - id
+        - description
+        - priority
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        priority:
+          type: string
+          enum: [low, medium, high, critical]
+        testable:
+          type: boolean
+          default: true
+
+    UserStory:
+      type: object
+      required:
+        - id
+        - as_a
+        - i_want
+        - so_that
+      properties:
+        id:
+          type: string
+        as_a:
+          type: string
+          description: User role
+        i_want:
+          type: string
+          description: Desired functionality
+        so_that:
+          type: string
+          description: Business value
+        acceptance_criteria:
+          type: array
+          items:
+            type: string
