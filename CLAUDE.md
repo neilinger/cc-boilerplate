@@ -87,4 +87,4 @@ PRP: HOW implementation (features, migrations, step-by-step plans)
 
 ## Compliance
 
-Run `.claude/hooks/check-agents.sh` for architecture validation.
+Run `scripts/agent-validation/check-agents.sh` for architecture validation.

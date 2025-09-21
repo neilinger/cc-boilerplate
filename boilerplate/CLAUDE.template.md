@@ -124,7 +124,7 @@ Is this a simple task?
 
 **Compliance validation available**:
 
-- Run `./.claude/hooks/check-agents.sh` to validate architecture compliance
+- Run `./scripts/agent-validation/check-agents.sh` to validate architecture compliance
 - Agents follow ADR-007 (Hierarchical Multi-Agent Architecture)
 - Tool allocation follows ADR-008 (Cognitive Load Model Allocation)
 - Description format: ALWAYS/NEVER/RUNS AFTER/HANDS OFF TO patterns
@@ -343,7 +343,7 @@ def **init**(self, strategy=None): ...
 - **Local first for speed, GitHub for comprehensiveness**
 - **Show exact commands to copy-paste**
 - **Mention benefits: security validation, KISS/YAGNI compliance, ADR adherence, agent architecture compliance**
-- **Include agent compliance check**: Run `./.claude/hooks/check-agents.sh` before major reviews
+- **Include agent compliance check**: Run `./scripts/agent-validation/check-agents.sh` before major reviews
 - **Respect user choice - some prefer local, some prefer GitHub delegation**
 
 This ensures comprehensive validation options are always available without adding complexity to the workflow.
@@ -358,4 +358,4 @@ This ensures comprehensive validation options are always available without addin
 - Follow cognitive load model allocation
 - Maintain architecture compliance with validation tools
 
-For agent system details, see ADR-007 and run `./.claude/hooks/check-agents.sh --verbose` for compliance status.
+For agent system details, see ADR-007 and run `./scripts/agent-validation/check-agents.sh --verbose` for compliance status.

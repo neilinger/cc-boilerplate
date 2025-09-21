@@ -188,10 +188,10 @@ Validate agent architecture compliance:
 
 ```bash
 # Quick compliance check
-./.claude/hooks/check-agents.sh
+./scripts/agent-validation/check-agents.sh
 
 # Verbose compliance analysis
-./.claude/hooks/check-agents.sh --verbose
+./scripts/agent-validation/check-agents.sh --verbose
 ```
 
 The compliance checker ensures:

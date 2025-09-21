@@ -510,7 +510,7 @@ Hands off to: {hands_off}"""
         if not dry_run and self.fixes_applied:
             report.append("🎯 Next Steps:")
             report.append("-" * 12)
-            report.append("  • Run compliance checker: ./.claude/hooks/check-agents.sh")
+            report.append("  • Run compliance checker: ./scripts/agent-validation/check-agents.sh")
             report.append("  • Validate all agents work correctly")
             report.append("  • Commit changes if satisfied")
 

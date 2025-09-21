@@ -708,7 +708,7 @@ This progression matches cognitive processing patterns.
 ### The Compliance Check
 
 ```bash
-.claude/hooks/check-agents.sh
+scripts/agent-validation/check-agents.sh
 ```
 
 This validation ensures:

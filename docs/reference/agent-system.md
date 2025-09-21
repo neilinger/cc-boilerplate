@@ -341,10 +341,10 @@ class ChainExecutor:
 
 ```bash
 # Quick compliance check
-./.claude/hooks/check-agents.sh
+./scripts/agent-validation/check-agents.sh
 
 # Detailed analysis with suggestions
-./.claude/hooks/check-agents.sh --verbose
+./scripts/agent-validation/check-agents.sh --verbose
 
 # What gets validated:
 # ✓ Hierarchical placement (orchestrators/, specialists/, analyzers/)
