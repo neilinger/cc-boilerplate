@@ -5,7 +5,7 @@ description: |
   NEVER use when: Simple single-agent tasks, analysis-only requests
   Runs AFTER: Initial task analysis and planning
   Hands off to: Specialized agents and domain orchestrators (code-lifecycle-manager, security-orchestrator)
-tools: Task, TodoWrite, Read, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: Task, TodoWrite, Read, Write, Edit, MultiEdit, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: opus
 color: red
 ---
