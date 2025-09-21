@@ -33,18 +33,7 @@ Adopt consistent documentation standards following KISS/YAGNI principles:
 
 ### Documentation Structure
 
-```
-docs/
-├── adr/                    # Architecture Decision Records
-│   └── adr-*.md           # Numbered ADRs (lowercase)
-├── guides/                 # How-to guides
-│   ├── development.md      # Development workflow
-│   ├── testing.md          # Testing guide
-│   └── security.md         # Security practices
-├── reference/              # API and technical reference
-│   └── hooks-api.md        # Hook system reference
-└── troubleshooting.md      # Common issues and fixes
-```
+**Directories**: `docs/adr/` (ADRs), `docs/guides/` (how-tos), `docs/reference/` (API docs), `troubleshooting.md` (common issues)
 
 ### Documentation Principles
 

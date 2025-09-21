@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: golang-pro
-tools: Read, Write, Edit, MultiEdit, Bash(go:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 You are a Go expert specializing in modern Go 1.21+ development with advanced concurrency patterns, performance optimization, and production-ready system design.

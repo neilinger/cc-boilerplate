@@ -91,6 +91,7 @@ ${BOLD}Options:${RESET}
 ${BOLD}What gets synced:${RESET}
   .claude/              → boilerplate/.claude/
   docs/adr/             → boilerplate/docs/adr/
+  docs/architecture/    → boilerplate/docs/architecture/
   PRPs/                 → boilerplate/PRPs/
   setup.sh              → boilerplate/setup.sh
   .env.sample           → boilerplate/.env.sample
@@ -118,6 +119,7 @@ check_prerequisites() {
     # Check source directories exist
     [[ -d ".claude" ]] || abort "Source directory .claude/ not found"
     [[ -d "docs/adr" ]] || abort "Source directory docs/adr/ not found"
+    [[ -d "docs/architecture" ]] || abort "Source directory docs/architecture/ not found"
     [[ -d "PRPs" ]] || abort "Source directory PRPs/ not found"
 
     # Create boilerplate directory if it doesn't exist
@@ -160,6 +162,11 @@ show_stats() {
     echo "  Boilerplate: $(ls boilerplate/docs/adr/*.md 2>/dev/null | wc -l | tr -d ' ') files"
 
     echo ""
+    echo "${BLUE}Architecture Docs:${RESET}"
+    echo "  Development (docs/architecture/): $(ls docs/architecture/*.md 2>/dev/null | wc -l | tr -d ' ') files"
+    echo "  Boilerplate: $(ls boilerplate/docs/architecture/*.md 2>/dev/null | wc -l | tr -d ' ') files"
+
+    echo ""
     echo "${BLUE}PRPs:${RESET}"
     echo "  Development (PRPs/): $(ls PRPs/*.md 2>/dev/null | wc -l | tr -d ' ') files"
     echo "  Boilerplate: Structure only (README, templates, code_reviews)"
@@ -179,8 +186,8 @@ show_stats() {
 
     echo ""
     echo "${BLUE}Total MD Files:${RESET}"
-    echo "  Development: $(find .claude docs/adr PRPs -name "*.md" 2>/dev/null | wc -l | tr -d ' ') files"
-    echo "  Boilerplate: $(find boilerplate/.claude boilerplate/docs/adr boilerplate/PRPs -name "*.md" 2>/dev/null | wc -l | tr -d ' ') files + template"
+    echo "  Development: $(find .claude docs/adr docs/architecture PRPs -name "*.md" 2>/dev/null | wc -l | tr -d ' ') files"
+    echo "  Boilerplate: $(find boilerplate/.claude boilerplate/docs/adr boilerplate/docs/architecture boilerplate/PRPs -name "*.md" 2>/dev/null | wc -l | tr -d ' ') files + template"
     echo ""
 }
 
@@ -383,6 +390,9 @@ perform_sync() {
     # Sync docs/adr/ directory
     sync_directory "docs/adr" "boilerplate/docs/adr" "Architecture Decision Records"
 
+    # Sync docs/architecture/ directory
+    sync_directory "docs/architecture" "boilerplate/docs/architecture" "Architecture Documentation"
+
     # Sync PRPs/ structure only (not actual PRP files)
     sync_prps_structure
 
@@ -417,7 +427,7 @@ validate_sync() {
     local errors=0
 
     # Check critical directories exist
-    for dir in ".claude/agents/specialists" ".claude/agents/analyzers" ".claude/agents/orchestrators" "docs/adr" "PRPs"; do
+    for dir in ".claude/agents/specialists" ".claude/agents/analyzers" ".claude/agents/orchestrators" "docs/adr" "docs/architecture" "PRPs"; do
         if [[ ! -d "boilerplate/$dir" ]]; then
             warn "Missing directory: boilerplate/$dir"
             ((errors++))

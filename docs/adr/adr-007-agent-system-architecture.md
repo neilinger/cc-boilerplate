@@ -1,6 +1,6 @@
 # ADR-007: Hierarchical Multi-Agent System Architecture
 
-**Status**: Proposed
+**Status**: Accepted
 **Date**: 2025-01-17
 **Deciders**: neil, Claude Code analysis
 
@@ -54,33 +54,7 @@ We will implement a **Hierarchical Multi-Agent System Architecture** with autono
 4. **Autonomous Selection**: Context-aware scoring system enabling Claude to select appropriate agents
 5. **Hook-Based Validation**: Soft hooks preventing drift and ensuring principle compliance
 
-**Agent Hierarchy Structure**:
-
-```text
-Primary Orchestrators (Opus)
-├── workflow-orchestrator (complex multi-step coordination)
-├── code-lifecycle-manager (development workflow management)
-└── security-orchestrator (security chain coordination)
-
-Specialized Agents (Sonnet/Haiku)
-├── Code Quality Domain
-│   ├── code-reviewer (analysis only, no editing)
-│   ├── security-scanner (vulnerability detection)
-│   ├── test-automator (test creation and validation)
-│   └── debugger (error root cause analysis)
-├── Research Domain
-│   ├── technical-researcher (external research)
-│   ├── codebase-researcher (internal analysis)
-│   └── the-librarian (RAG knowledge retrieval)
-├── Documentation Domain
-│   ├── smart-doc-generator (README, API docs)
-│   ├── adr-creator (architecture decisions)
-│   └── prp-creator (implementation planning)
-└── GitHub Integration
-    ├── pr-optimizer (PR creation/optimization)
-    ├── dependency-manager (package updates)
-    └── github-checker (maintenance tasks)
-```
+**Agent Hierarchy Structure**: Three-tier system with Primary Orchestrators (Opus) coordinating Specialized Agents (Sonnet/Haiku) across Code Quality, Research, Documentation, and GitHub Integration domains. See PRP-004 for detailed hierarchy and agent specifications.
 
 **Key Architectural Principles**:
 
@@ -94,28 +68,23 @@ Specialized Agents (Sonnet/Haiku)
 
 ### Positive Consequences
 
-- **50% reduction in agent selection confusion** through clear boundaries and descriptions
-- **Zero security vulnerabilities missed** via mandatory security-scanner integration
-- **30% improvement in task completion accuracy** through specialized expertise
-- **Scalable architecture** supporting addition of new agents without redesign
-- **Principle compliance enforcement** via hook-based validation
-- **Reduced cognitive load** through appropriate model allocation (haiku→sonnet→opus)
-- **Audit trail capability** tracking all agent actions and tool usage
-- **Error isolation** preventing cascade failures across agent boundaries
+- 50% reduction in agent selection confusion through clear boundaries
+- Zero security vulnerabilities via mandatory security-scanner integration
+- 30% improvement in task completion accuracy through specialization
+- Scalable architecture supporting new agents without redesign
+- Principle compliance enforcement via hook-based validation
+- Audit trail and error isolation capabilities
 
 ### Negative Consequences
 
-- **Implementation complexity** requiring significant upfront design work
-- **Learning curve** for understanding new orchestration patterns
-- **Potential over-orchestration** for simple tasks requiring only single agents
-- **Dependency management** between orchestrated agent chains
-- **Maintenance overhead** for keeping agent descriptions and boundaries current
+- Implementation complexity requiring upfront design work
+- Learning curve for orchestration patterns
+- Potential over-orchestration for simple tasks
+- Maintenance overhead for agent boundaries
 
 ### Neutral Consequences
 
-- **Trade-off between autonomy and control**: Less manual routing, more automated selection
-- **Model cost optimization vs consistency**: Different models for different cognitive loads
-- **Security vs flexibility**: Restricted tools improve security but may limit creative solutions
+- Trade-off: autonomy vs control, cost optimization vs consistency, security vs flexibility
 
 ## Alternatives Considered
 
@@ -147,24 +116,7 @@ Specialized Agents (Sonnet/Haiku)
 
 **Implementation handled via**: PRP-004 (Agent System Redesign)
 
-**Success Criteria**:
-
-- All 10 existing agents refactored with clear boundaries and tool restrictions
-- 7 new critical agents implemented (debugger, security-scanner, pr-optimizer, etc.)
-- Hook system operational with soft validation warnings
-- Agent selection accuracy >95% for common workflows
-- Zero capability overlap between agent domains
-- Tool allocation follows least privilege principle
-- Orchestration chains successfully enforce quality/security requirements
-
-**Implementation Order**:
-
-1. Create agent standardization framework
-2. Implement hook system for drift prevention
-3. Refactor existing agents with clear boundaries
-4. Create missing critical agents
-5. Update CLAUDE.md with autonomous selection rules
-6. Validate orchestration chains and tool restrictions
+**Success Criteria**: All agents refactored with clear boundaries, hook system operational, >95% selection accuracy, zero capability overlap, tool least privilege enforced.
 
 ## References
 

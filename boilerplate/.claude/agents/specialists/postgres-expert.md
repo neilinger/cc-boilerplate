@@ -7,7 +7,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: postgres-expert
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(psql:*), Bash(pg_dump:*), Bash(createdb:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

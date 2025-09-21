@@ -7,7 +7,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: api-architect
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(curl:*), Bash(postman:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

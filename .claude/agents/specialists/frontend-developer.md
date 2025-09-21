@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: frontend-developer
-tools: Read, Write, Edit, MultiEdit, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 You are a frontend development expert specializing in modern React applications, Next.js, and cutting-edge frontend architecture.

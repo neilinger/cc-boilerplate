@@ -194,7 +194,7 @@ echo '{"message": "Task completed successfully"}' | \
 
 ## Agent API Reference
 
-The CC-Boilerplate includes 8 specialized agents with distinct capabilities.
+The CC-Boilerplate includes a hierarchical multi-agent system with 32 specialized agents organized into orchestrators, specialists, and analyzers.
 
 ### Core Agents
 

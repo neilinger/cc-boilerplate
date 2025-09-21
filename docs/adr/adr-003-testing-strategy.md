@@ -36,61 +36,12 @@ Implement a **priority-based testing strategy** with four distinct test categori
 
 ### Test Priority Categories
 
-#### 🔴 High Priority (Security Critical - Always Run)
-
-**Purpose**: Prevent security vulnerabilities and system failures
-**Execution**: All branches, all contexts, CI/CD mandatory
-**Timeout**: <30 seconds total
-
-**Tests**:
-
-- `test_safety_hooks.py` - Dangerous command detection (rm -rf protection)
-- `test_hook_integration.py` - Hook pipeline execution and error handling
-- `test_prp_edge_cases.py` - PRP system security validation
-
-**Success Criteria**: 100% pass rate required for any deployment
-
-#### 🟡 Medium Priority (Feature Reliability - Release Testing)
-
-**Purpose**: Validate feature functionality and user experience
-**Execution**: Release branches, main branch, PR to main
-**Timeout**: <90 seconds total
-
-**Tests**:
-
-- `test_tts_providers.py` - TTS provider fallback and error handling
-- Integration tests for status line generation
-- Performance benchmarking
-
-**Success Criteria**: 95% pass rate, failures documented but not blocking
-
-#### 🟢 Low Priority (Extended Validation - Release Only)
-
-**Purpose**: Comprehensive system validation and edge case coverage
-**Execution**: Release branches only, manual testing
-**Timeout**: <180 seconds total
-
-**Tests**:
-
-- External dependency validation (git, gh commands)
-- Configuration testing across environments
-- Load testing and performance validation
-
-**Success Criteria**: Best effort, failures inform improvement backlog
-
-#### 🔵 Manual Priority (Human Validation)
-
-**Purpose**: User experience and integration validation
-**Execution**: Before major releases, manual only
-**Timeline**: As needed
-
-**Tests**:
-
-- End-to-end workflow testing
-- Documentation accuracy validation
-- User acceptance scenarios
-
-**Success Criteria**: Manual sign-off by project maintainer
+| Priority | Purpose | Execution | Timeout | Tests | Success Criteria |
+|----------|---------|-----------|---------|-------|------------------|
+| 🔴 High | Security critical | All branches, CI/CD mandatory | <30s | Safety hooks, hook integration, PRP security | 100% pass rate |
+| 🟡 Medium | Feature reliability | Release+, main, PR to main | <90s | TTS providers, integration, performance | 95% pass rate |
+| 🟢 Low | Extended validation | Release only, manual | <180s | External deps, config, load testing | Best effort |
+| 🔵 Manual | UX validation | Major releases, manual | As needed | E2E workflows, docs, acceptance | Manual sign-off |
 
 ## Consequences
 
@@ -145,51 +96,17 @@ Implement a **priority-based testing strategy** with four distinct test categori
 
 ## Implementation Notes
 
-### Test Execution Commands
+### Implementation Details
 
-For current test execution commands and updated procedures, see [Testing Guide](../guides/testing.md#how-to-run-different-test-suites).
+**Test Execution**: See [Testing Guide](../guides/testing.md#how-to-run-different-test-suites) for current commands.
 
-### CI/CD Integration
+**CI/CD Integration**: Feature branches (High only), Release branches (High + Medium), Main (All automated + manual), PR to main (Extended validation).
 
-- **Feature branches**: High priority tests only
-- **Release branches**: High + Medium priority tests
-- **Main branch**: All automated tests + manual validation
-- **PR to main**: Extended validation including security scanning
+**Test Organization**: `tests/` directory with priority-based subdirectories: `high_priority/`, `medium_priority/`, `low_priority/`, plus `run_all_tests.py` orchestrator.
 
-### Test Organization Structure
+**Failure Response**: High priority blocks merges, Medium priority allows merge with approval, Low priority logs for improvement.
 
-```
-tests/
-├── high_priority/          # Security critical
-│   ├── test_safety_hooks.py
-│   ├── test_hook_integration.py
-│   └── test_prp_edge_cases.py
-├── medium_priority/        # Feature reliability
-│   └── test_tts_providers.py
-├── low_priority/          # Extended validation
-│   └── [future tests]
-└── run_all_tests.py       # Orchestrator
-```
-
-### Performance Requirements
-
-- **High Priority**: Must complete in <30 seconds total
-- **Medium Priority**: Must complete in <90 seconds total
-- **Low Priority**: Must complete in <180 seconds total
-- **Timeout Handling**: Tests that exceed timeout are automatically failed
-
-### Failure Response Protocol
-
-1. **High Priority Failures**: Block all merges, immediate investigation required
-2. **Medium Priority Failures**: Document issue, create tracking ticket, allow merge with approval
-3. **Low Priority Failures**: Log for future improvement, does not block development
-
-### Coverage Targets by Priority
-
-- **High Priority**: 95% line coverage minimum
-- **Medium Priority**: 80% line coverage target
-- **Low Priority**: 60% line coverage acceptable
-- **Overall System**: 75% coverage target across all priorities
+**Coverage Targets**: High (95%), Medium (80%), Low (60%), Overall system (75%).
 
 ## References
 

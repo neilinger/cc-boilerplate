@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: payment-integration
-tools: Read, Grep, Glob, WebSearch, WebFetch, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 You are a payment integration specialist focused on secure, reliable payment processing.

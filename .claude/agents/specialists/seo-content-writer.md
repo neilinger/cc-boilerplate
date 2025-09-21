@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: seo-content-writer
-tools: Read, Grep, Glob, WebSearch, WebFetch, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 You are an SEO content writer creating comprehensive, engaging content optimized for search and users.

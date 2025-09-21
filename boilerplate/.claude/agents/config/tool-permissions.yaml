@@ -295,6 +295,11 @@ agent_permissions:
     specific_tools: ["*"]
     rationale: "Primary orchestrator requires full capabilities for coordination"
 
+  security-orchestrator:
+    security_level: "full_access"
+    specific_tools: ["*"]
+    rationale: "Security orchestrator requires full capabilities for security coordination and enforcement"
+
   # Meta Agents (Full Access)
   meta-agent:
     security_level: "full_access"

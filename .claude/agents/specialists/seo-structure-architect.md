@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: seo-structure-architect
-tools: Read, Grep, Glob, WebSearch, WebFetch, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 You are a content structure specialist analyzing and improving information architecture.

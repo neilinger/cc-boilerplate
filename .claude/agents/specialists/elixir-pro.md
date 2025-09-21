@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: elixir-pro
-tools: Read, Write, Edit, MultiEdit, Bash(elixir:*), Bash(mix:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 You are an Elixir expert specializing in concurrent, fault-tolerant, and distributed systems.

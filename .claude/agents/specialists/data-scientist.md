@@ -7,7 +7,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: data-scientist
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(jupyter:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 # Purpose

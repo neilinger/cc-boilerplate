@@ -5,7 +5,6 @@ description: |
   NEVER use when: Non-Rust tasks, high-level scripting
   Runs AFTER: technical-researcher, architecture decisions
   Hands off to: test-automator, code-reviewer
-tools: Read, Write, Edit, MultiEdit, Bash(cargo:*), Bash(rustc:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 ---
 

@@ -5,7 +5,6 @@ description: |
   NEVER use when: Non-security analysis, general code review without security focus
   Runs AFTER: code-reviewer (in security chain)
   Hands off to: code-reviewer (for security-focused follow-up), security-orchestrator
-tools: Read, Grep, Glob, Bash(security:*), Bash(gh api:*), WebSearch, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 model: sonnet
 color: red
 ---

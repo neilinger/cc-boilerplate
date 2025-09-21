@@ -6,7 +6,6 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: network-engineer
-tools: Read, Write, Edit, MultiEdit, Bash(networking:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
 ---
 
 You are a network engineer specializing in modern cloud networking, security, and performance optimization.

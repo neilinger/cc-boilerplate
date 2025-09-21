@@ -1,6 +1,6 @@
 # ADR-008: Cognitive Load-Based Model Allocation Strategy
 
-**Status**: Proposed
+**Status**: Accepted
 **Date**: 2025-01-17
 **Deciders**: neil, Claude Code analysis
 
@@ -50,88 +50,39 @@ We will implement a **Cognitive Load-Based Model Allocation Strategy** that assi
 
 **Model Allocation Matrix**:
 
-### Opus (High Cognitive Load)
-
-#### Complex reasoning, synthesis, creation, judgment
-
-- **meta-agent**: Creating new agents requires deep understanding of patterns and requirements
-- **technical-researcher**: Synthesizing multiple complex sources with critical evaluation
-- **context-engineer**: Optimizing prompts requires nuanced understanding of AI behavior
-- **debugger**: Root cause analysis requires complex logical reasoning chains
-- **adr-creator**: Architectural decisions need deep thought and consequence analysis
-- **workflow-orchestrator**: Complex multi-step coordination requiring strategic planning
-
-### Sonnet (Medium Cognitive Load)
-
-#### Analysis, pattern matching, structured execution
-
-- **code-reviewer**: Pattern recognition in code, style analysis, best practice application
-- **security-scanner**: Vulnerability pattern matching with context awareness
-- **test-automator**: Test generation from patterns with coverage analysis
-- **prp-creator**: Structured planning with dependency analysis
-- **the-librarian**: Knowledge retrieval and synthesis from structured sources
-- **codebase-researcher**: Internal pattern analysis with relationship mapping
-- **smart-doc-generator**: Content generation following templates and patterns
-- **code-lifecycle-manager**: Standard workflow management with decision trees
-
-### Haiku (Low Cognitive Load)
-
-#### Simple tasks, formatting, checks, template operations
-
-- **pr-optimizer**: Template filling, label assignment, formatting
-- **github-checker**: Simple status checks, API calls, list processing
-- **dependency-manager**: Version comparisons, update notifications
-- **work-completion-summary**: Brief summaries, TTS integration
-- **security-orchestrator**: Simple chain triggering and status management
+| Model | Cognitive Load | Agent Types | Examples |
+|-------|----------------|-------------|----------|
+| Opus | High | Complex reasoning, synthesis, judgment | meta-agent, technical-researcher, debugger, adr-creator, workflow-orchestrator |
+| Sonnet | Medium | Analysis, pattern matching, structured execution | code-reviewer, security-scanner, test-automator, prp-creator, smart-doc-generator |
+| Haiku | Low | Simple tasks, formatting, checks, templates | pr-optimizer, github-checker, dependency-manager, work-completion-summary |
 
 **Allocation Rules**:
 
-1. **Task Complexity Assessment**:
-   - **Opus**: Requires synthesis of multiple complex concepts, creative problem-solving, or critical judgment
-   - **Sonnet**: Requires pattern recognition, structured analysis, or domain expertise application
-   - **Haiku**: Requires simple processing, formatting, or straightforward template operations
-
-2. **Verification Role Priority**:
-   - **Standard-setting agents** (meta-agent, adr-creator): Use Opus for maximum judgment capability
-   - **Standard-enforcing agents** (reviewers, analyzers): Use Sonnet for consistent pattern application
-   - **Standard-executing agents** (formatters, checkers): Use Haiku for efficiency
-
-3. **Drift Prevention Optimization**:
-   - **Principle validators**: Use Opus for nuanced KISS/YAGNI assessment
-   - **Pattern enforcers**: Use Sonnet for consistent rule application
-   - **Status reporters**: Use Haiku for simple compliance checking
-
-4. **Dynamic Upgrading Scenarios**:
-   - **Confidence thresholds**: If Sonnet agent confidence <80%, escalate to Opus for complex decisions
-   - **Context pressure**: Under high context compression, prefer higher-capability models
-   - **Error recovery**: Failed tasks automatically retry with next-tier model
+1. **Complexity**: Opus for synthesis/judgment, Sonnet for analysis/patterns, Haiku for simple processing
+2. **Role Priority**: Standard-setting (Opus), standard-enforcing (Sonnet), standard-executing (Haiku)
+3. **Drift Prevention**: Principle validators (Opus), pattern enforcers (Sonnet), status reporters (Haiku)
+4. **Dynamic Upgrading**: <80% confidence or context pressure escalates to next-tier model
 
 ## Consequences
 
 ### Positive Consequences
 
-- **20-30% performance improvement** through cognitive load matching vs random allocation
-- **Predictable performance characteristics** per agent type and task complexity
-- **Better drift prevention** via appropriate reasoning capability for verification tasks
-- **Resource optimization** using fastest adequate model rather than always maximum
-- **Consistent quality standards** through standard-setting vs standard-enforcing hierarchy
-- **Scalable allocation rules** for adding new agents without case-by-case decisions
-- **Error resilience** through dynamic upgrading mechanisms
-- **Clear debugging path** when performance issues arise (check model-task alignment)
+- 20-30% performance improvement through cognitive load matching
+- Predictable performance characteristics per agent type
+- Better drift prevention via appropriate reasoning capability
+- Resource optimization using fastest adequate model
+- Scalable allocation rules for new agents
+- Error resilience through dynamic upgrading
 
 ### Negative Consequences
 
-- **Implementation complexity** requiring careful task analysis for each agent
-- **Potential over-optimization** spending time on allocation vs agent functionality
-- **Dynamic upgrading complexity** managing confidence thresholds and escalation rules
-- **Maintenance overhead** reviewing allocations as agent responsibilities evolve
-- **Edge case handling** for tasks that don't fit clearly into cognitive load categories
+- Implementation complexity requiring task analysis per agent
+- Maintenance overhead reviewing allocations as responsibilities evolve
+- Edge case handling for unclear cognitive load categories
 
 ### Neutral Consequences
 
-- **Trade-off between speed and capability**: Fast agents may miss nuanced issues
-- **Consistency vs adaptability**: Fixed allocations vs dynamic adjustment
-- **Resource utilization patterns**: More Haiku usage, selective Opus deployment
+- Trade-off: speed vs capability, consistency vs adaptability, resource patterns
 
 ## Alternatives Considered
 
@@ -163,21 +114,7 @@ We will implement a **Cognitive Load-Based Model Allocation Strategy** that assi
 
 **Implementation handled via**: PRP-004 (Agent System Redesign), Section 3.2: Model Allocation Implementation
 
-**Success Criteria**:
-
-- All agents assigned models according to cognitive load matrix
-- Performance improvement measurable in task completion accuracy
-- Drift prevention enhanced through appropriate verification model selection
-- Allocation rules documented and followed for new agent creation
-- Dynamic upgrading functional for confidence threshold scenarios
-- No performance regressions from over-optimization
-
-**Validation Metrics**:
-
-- **Task completion accuracy**: >95% for all cognitive load categories
-- **Principle adherence**: <10% drift after 10+ operations
-- **Performance consistency**: Predictable latency per model tier
-- **Resource efficiency**: Optimal model usage without capability sacrifice
+**Success Criteria**: All agents assigned per cognitive load matrix, >95% task completion accuracy, <10% principle drift, dynamic upgrading functional.
 
 ## References
 

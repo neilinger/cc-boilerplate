@@ -361,7 +361,7 @@ For detailed test categories and execution strategy, see [Testing Guide](testing
 1. **Agent System Awareness**: Understand when to use orchestration vs specialists vs manual work
 2. **Read ADRs**: Review [docs/adr/](../adr/) for architectural decisions
 3. **Check CLAUDE.md**: Follow KISS/YAGNI principles and agent selection protocol
-4. **Validate agent compliance**: Run `./.claude/hooks/check-agents.sh` to ensure system health
+4. **Validate agent compliance**: Run `./scripts/agent-validation/check-agents.sh` to ensure system health
 5. **Review test coverage**: Understand what needs testing
 6. **Synchronization setup**: If using boilerplate sync, understand [Synchronization Guide](../SYNCHRONIZATION.md)
 
@@ -377,7 +377,7 @@ For detailed test categories and execution strategy, see [Testing Guide](testing
 
 ### Before Release
 
-1. **Agent validation**: Run `./.claude/hooks/check-agents.sh --verbose` for comprehensive compliance
+1. **Agent validation**: Run `./scripts/agent-validation/check-agents.sh --verbose` for comprehensive compliance
 2. **Full test run**: Execute `python tests/run_all_tests.py`
 3. **Security validation**: Ensure security chain has validated all changes
 4. **Documentation sync**: Use `smart-doc-generator` for updates if needed
@@ -469,10 +469,10 @@ cc-boilerplate/
 
 ```bash
 # Quick compliance check
-./.claude/hooks/check-agents.sh
+./scripts/agent-validation/check-agents.sh
 
 # Detailed analysis with suggestions
-./.claude/hooks/check-agents.sh --verbose
+./scripts/agent-validation/check-agents.sh --verbose
 
 # What gets validated:
 # ✓ Hierarchical agent placement (27 agents organized properly)
@@ -563,7 +563,7 @@ scripts/update-boilerplate.sh  # Pulls latest boilerplate improvements
 scripts/build-config.sh        # Rebuilds merged configurations
 
 # Validate agent system integrity after sync
-./.claude/hooks/check-agents.sh
+./scripts/agent-validation/check-agents.sh
 
 # Test that customizations are preserved
 git diff CLAUDE.md             # Should show your domain-specific content
@@ -663,7 +663,7 @@ Update badges by editing the README.md links after repository setup.
 
 1. **Agent System Reference**: [docs/reference/agent-system.md](../reference/agent-system.md) for complete agent documentation
 2. **Agent Selection**: Use the decision tree above or consult [CLAUDE.md](../../CLAUDE.md) for selection protocol
-3. **Compliance Validation**: Run `./.claude/hooks/check-agents.sh --verbose` for system health
+3. **Compliance Validation**: Run `./scripts/agent-validation/check-agents.sh --verbose` for system health
 4. **Phase 1 Analysis**: [docs/phase1-agent-system-evolution.md](../phase1-agent-system-evolution.md) for system evolution details
 
 ### Traditional Resources
