@@ -1,262 +1,127 @@
-# Quickstart Guide: CC-Boilerplate Strategic Accelerator Framework
+# Quickstart: CC-Boilerplate Strategic Accelerator Framework
 
-**Time to Productivity**: <30 minutes
-**Time to MVP**: <6 hours
+## Overview
+Get productive with CC-Boilerplate in under 30 minutes. This guide covers the core workflows that enable 6-hour idea-to-MVP delivery.
 
-## Prerequisites
+## Quick Setup
 
-- Unix-like system (macOS or Linux)
-- Claude Code installed and configured
-- GitHub CLI (`gh`) authenticated
-- Git configured with proper credentials
+### Prerequisites
+- Python 3.11+
+- Git configured
+- Claude Code CLI installed
+- Linear workspace (optional)
 
-## 30-Minute Onboarding Path
-
-### Step 1: Clone and Initialize (5 minutes)
-
+### Installation
 ```bash
-# Clone the CC-Boilerplate repository
-git clone https://github.com/your-org/cc-boilerplate.git my-project
-cd my-project
-
-# Initialize boilerplate for your project
-./scripts/init-boilerplate.sh
-
-# Verify agent system
-./.claude/hooks/check-agents.sh --verbose
+git clone <cc-boilerplate-repo>
+cd cc-boilerplate
+./setup.sh
 ```
 
-**Expected Output**:
-- ✅ 100+ agents available
-- ✅ Security chains configured
-- ✅ Validation hooks installed
+## Core Workflows
 
-### Step 2: Test Agent Discovery (5 minutes)
+### 1. Brown-field Project Recovery
+**Scenario**: Inherited messy codebase, need to establish order and productivity
 
 ```bash
-# Test workflow orchestrator discovery
-claude "I need to write comprehensive tests for my authentication system"
+# Initialize framework
+./scripts/recover-project.sh
 
-# Observe: workflow-orchestrator automatically selects test-automator
-# Observe: Security chain validates operations
-# Observe: Non-blocking quality gates in action
+# Generate missing specifications
+claude /prd-discovery --brownfield
+
+# Establish security boundaries
+claude security-audit --fix
+
+# Validate recovery
+./scripts/validate-recovery.sh
 ```
 
-### Step 3: Try PRP Discovery Workflow (10 minutes)
+### 2. Day 1 Consultant Productivity
+**Scenario**: New consulting engagement, need immediate productive development
 
 ```bash
-# Create a PRP from a rough idea
-claude "I want to build a real-time dashboard for monitoring API performance"
+# Setup consultant environment
+./scripts/consultant-setup.sh
 
-# System will:
-# 1. Launch PRP discovery workflow
-# 2. Research existing solutions
-# 3. Generate comprehensive requirements
-# 4. Create PRP document in PRPs/ directory
+# Discover project context
+claude /discover-context
+
+# Generate initial PRP
+claude /prd --consulting-mode
+
+# Begin feature development
+claude /plan && claude /tasks
 ```
 
-### Step 4: Transform PRP to Implementation (5 minutes)
+### 3. Portfolio Tool Rapid Prototyping
+**Scenario**: Internal tool idea needs rapid validation and deployment
 
 ```bash
-# Transform PRP to specification
-claude "/specify @PRPs/your-prp-name.md"
+# Transform idea to specification
+claude /prd-discovery --idea="your tool concept"
 
-# Then create implementation plan
-claude "/plan"
+# Generate implementation plan
+claude /plan
 
-# Generate task list
-claude "/tasks"
+# Execute MVP development
+claude /tasks --execute --target=mvp
+
+# Deploy to AWS
+./scripts/deploy-mvp.sh
 ```
 
-### Step 5: Verify Security and Recovery (5 minutes)
+### 4. Git Workflow Course Correction
+**Scenario**: Mixed commits, broken workflow, need clean state without losing work
 
 ```bash
-# Test dangerous pattern prevention
-claude "delete all files in root directory"
-# Observe: Command blocked by security chain
+# Analyze current state
+./scripts/analyze-git-state.sh
 
-# Create recovery checkpoint
-claude "Create a recovery checkpoint before I start major refactoring"
+# Smart commit splitting
+claude git-recovery --split-commits
 
-# Test smart commit splitting
-claude "I've made changes to multiple features, help me create logical commits"
+# Repair branch workflow
+claude git-workflow --repair
+
+# Validate clean state
+git log --oneline -10
 ```
 
-## Common Workflows
-
-### Turnaround Specialist: Rescue Brown-Field Project
+### 5. Behavioral Testing Validation
+**Scenario**: Validate AI assistant behavioral consistency and CEO role adherence
 
 ```bash
-# 1. Analyze existing codebase
-claude "Analyze this project and identify technical debt and missing documentation"
+# Run behavioral test suite
+./scripts/behavioral-tests.sh
 
-# 2. Generate missing specifications
-claude "Backfill PRPs for the existing authentication and payment systems"
+# Validate CEO role adherence
+claude behavioral-audit --role=ceo
 
-# 3. Establish security boundaries
-claude "Set up mandatory security chains for all code modifications"
+# Check delegation patterns
+claude delegation-analysis
 
-# 4. Create recovery checkpoint
-claude "Create checkpoint before beginning turnaround"
-
-# 5. Deliver MVP within 6 hours
-claude "Focus on core user journey and deliver working MVP"
+# Generate regression report
+claude behavioral-report
 ```
 
-### AI-First Consultant: Day 1 Productivity
+## Success Validation
 
-```bash
-# 1. Initialize for client project
-./scripts/init-boilerplate.sh --client "ClientName"
+### Checkpoints
+- [ ] Agent orchestration responding correctly
+- [ ] Security validation chains active
+- [ ] PRP discovery workflow functional
+- [ ] Linear integration (if configured)
+- [ ] Behavioral tests passing >95%
 
-# 2. Capture requirements via PRP
-claude "Interview me about the client's needs for their inventory management system"
-
-# 3. Generate implementation plan
-claude "/specify @PRPs/client-inventory.md"
-claude "/plan"
-claude "/tasks"
-
-# 4. Start implementation with agents
-claude "Implement task #1 from the task list"
-```
-
-### Portfolio Builder: Linear Integration
-
-```bash
-# 1. Configure Linear integration
-export LINEAR_API_KEY="your-key"
-claude "Set up Linear integration for my team"
-
-# 2. Sync existing issues
-claude "Sync all issues from Linear and calculate AI competency scores"
-
-# 3. Enable AI task assignment
-claude "Assign Linear issues to AI agents based on competency scores"
-
-# 4. Monitor progress
-claude "Show me the status of AI-assigned tasks"
-```
-
-### Developer: Mid-Journey Course Correction
-
-```bash
-# 1. Detect messy state
-git status  # Mixed changes across features
-
-# 2. Use smart commit splitting
-claude "Help me split these changes into logical commits"
-
-# 3. Repair branch workflow
-claude "I'm on the wrong branch, help me fix my git workflow without losing work"
-
-# 4. Restore from checkpoint if needed
-claude "List available recovery checkpoints"
-claude "Restore from checkpoint <id>"
-```
-
-## Validation Checklist
-
-After 30 minutes, you should be able to:
-
-- [ ] **Agent Discovery**: Workflow-orchestrator selects appropriate specialists
-- [ ] **Security Validation**: Dangerous commands are blocked
-- [ ] **PRP Generation**: Transform ideas into comprehensive requirements
-- [ ] **Specification Flow**: PRP → Spec → Plan → Tasks workflow works
-- [ ] **Recovery Operations**: Create checkpoints and restore state
-- [ ] **Quality Gates**: Non-blocking validation maintains velocity
-
-## Performance Benchmarks
-
-Measure your setup success:
-
-| Metric | Target | Your Result |
-|--------|--------|-------------|
-| Agent selection time | <2 seconds | ___ |
-| PRP generation | <30 minutes | ___ |
-| Security validation | 0 bypasses | ___ |
-| Checkpoint creation | <5 seconds | ___ |
-| Task assignment accuracy | >80% | ___ |
-
-## Advanced Features
-
-### Custom Agent Development
-
-```bash
-# Create new specialist agent
-claude "Create a new agent specialized in GraphQL API optimization"
-
-# Agent will be created in .claude/agents/specialists/
-# Automatic validation against ADR-007/008
-# Tool permissions assigned based on role
-```
-
-### Competency Learning
-
-```bash
-# View AI competency scores
-claude "Show competency scores for all agents"
-
-# Update scores based on outcome
-claude "Update competency score for test-automator based on successful task"
-
-# Override automatic assignment
-claude "Manually assign this task despite low competency score"
-```
-
-### Integration Ecosystem
-
-```bash
-# MCP Servers
-claude "List all available MCP servers and their capabilities"
-
-# Spec-kit transformation
-claude "Show me the complete PRP → MVP pipeline"
-
-# GitHub integration
-claude "Create PR with comprehensive review request"
-```
-
-## Troubleshooting
-
-### Agent Not Found
-```bash
-# Use workflow-orchestrator for discovery
-claude "workflow-orchestrator: find best agent for database optimization"
-```
-
-### Security Chain Blocking Valid Operation
-```bash
-# Request temporary bypass with audit
-claude "Request security bypass for specific operation with justification"
-```
-
-### Sync Conflicts with Linear
-```bash
-# Resolve conflicts with latest-wins strategy
-claude "Resolve Linear sync conflicts using timestamp comparison"
-```
-
-### Recovery Checkpoint Full
-```bash
-# Clean old checkpoints
-claude "Remove recovery checkpoints older than 7 days"
-```
+### Troubleshooting
+- **Agent not responding**: Check tool permissions in `.claude/agents/config/`
+- **Security blocks**: Review security-orchestrator logs
+- **Slow performance**: Verify cognitive load model allocation
+- **Integration failures**: Validate API endpoints and credentials
 
 ## Next Steps
-
-1. **Run pilot project**: Test <6 hour MVP delivery
-2. **Customize agents**: Add domain-specific specialists
-3. **Integrate Linear**: Enable AI-human task allocation
-4. **Measure metrics**: Track productivity improvements
-5. **Contribute**: Share custom agents with community
-
-## Support
-
-- **Documentation**: `docs/` directory
-- **Agent Help**: `claude "Show help for [agent-name]"`
-- **Architecture**: Review ADR-007 and ADR-008
-- **Validation**: Run `./.claude/hooks/check-agents.sh`
-
----
-*You're now ready to deliver 10x impact with CC-Boilerplate!*
+- Explore advanced agent customization
+- Configure Linear workspace integration
+- Set up continuous behavioral testing
+- Review architectural decision records (ADRs)
