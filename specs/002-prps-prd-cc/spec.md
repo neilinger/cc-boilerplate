@@ -70,6 +70,7 @@ As a turnaround specialist or AI-first consultant, I need a comprehensive develo
 3. **Given** a rough idea for an internal portfolio tool, **When** the portfolio builder uses PRP discovery, **Then** the system transforms the idea into comprehensive requirements, generates specifications, and enables rapid AWS deployment with Linear integration
 4. **Given** a messy git workflow with mixed implementations, **When** the developer uses mid-journey course correction, **Then** the system intelligently splits commits, repairs branch workflow, and restores clean state without losing work
 5. **Given** a complex multi-step task requiring coordination, **When** the workflow-orchestrator is invoked, **Then** it dynamically discovers and coordinates specialist agents, maintains security chains, and delivers coordinated results
+6. **[PRIORITY TEST]** **Given** CLAUDE.md is modified with new behavioral directives, **When** regression tests execute, **Then** the system validates behavioral consistency, detects degradations, and reports role adherence metrics with >95% detection accuracy
 
 ### Edge Cases
 
@@ -78,6 +79,9 @@ As a turnaround specialist or AI-first consultant, I need a comprehensive develo
 - What happens when Linear integration fails during AI-human task allocation?
 - How does system handle conflicting requirements discovered during PRP reverse-engineering?
 - What happens when cognitive load model suggests different agent than workflow requirements?
+- [PRIORITY] What happens when behavioral tests show degradation in CEO role adherence?
+- How does system handle conflicting behavioral directives in CLAUDE.md?
+- What is the rollback mechanism when behavioral regression is detected?
 
 ## Requirements _(mandatory)_
 
@@ -103,6 +107,11 @@ As a turnaround specialist or AI-first consultant, I need a comprehensive develo
 - **FR-018**: System MUST provide competency learning feedback loop improving AI task allocation over time
 - **FR-019**: System MUST enable custom agent development and certification for specialized domains
 - **FR-020**: System MUST maintain architectural compliance with validation tools and continuous checking
+- **FR-021**: [PRIORITY] System MUST provide LLM behavioral regression testing validating CLAUDE.md effectiveness
+- **FR-022**: [PRIORITY] System MUST measure CEO role adherence through conversation analysis
+- **FR-023**: [PRIORITY] System MUST track delegation patterns and contrarian discipline compliance
+- **FR-024**: [PRIORITY] System MUST use LLM-as-Judge methodology for behavioral consistency evaluation
+- **FR-025**: [PRIORITY] System MUST extract test scenarios from conversation logs for continuous validation
 
 ### Key Entities _(include if feature involves data)_
 
@@ -114,6 +123,9 @@ As a turnaround specialist or AI-first consultant, I need a comprehensive develo
 - **Linear Issue**: Task management entity with AI/human assignment and competency tracking
 - **Spec**: Technical specification derived from PRD for implementation planning
 - **Quality Gate**: Non-blocking validation checkpoint ensuring standards compliance
+- **Behavioral Test**: [PRIORITY] Validation scenario measuring AI adherence to CEO role, delegation patterns, and contrarian discipline
+- **Regression Report**: Analysis of behavioral changes between CLAUDE.md versions
+- **Behavioral Baseline**: Reference metrics for expected AI behavior patterns
 
 ---
 

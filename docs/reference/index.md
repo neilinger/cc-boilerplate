@@ -21,18 +21,24 @@ Blocks dangerous commands. For complete security patterns and testing details, s
 
 Quick test: `echo '{"tool_name": "Bash", "tool_input": {"command": "rm -rf /"}}' | uv run .claude/hooks/pre_tool_use.py`
 
-## Hierarchical Agent System (32 Total)
+## Hierarchical Agent System (103 Total)
 
 **Orchestrators (2)**:
 - **workflow-orchestrator** - Complex multi-step coordination
 - **security-orchestrator** - Mandatory security validation chains
 
-**Specialists (27)**: Domain expertise including python-pro, typescript-pro, react-expert, nextjs-expert, aws-expert, docker-expert, postgres-expert, api-architect, performance-optimizer, and 18 more
+**Specialists (93)**: Comprehensive domain expertise including python-pro, typescript-pro, react-expert, nextjs-expert, aws-expert, docker-expert, postgres-expert, api-architect, performance-optimizer, and 84 more specialized agents
 
-**Analyzers (3)**:
+**Analyzers (7)**:
 - **code-reviewer** - Security and quality analysis
 - **test-coverage-analyzer** - Coverage analysis
 - **work-completion-summary** - Audio summaries
+- **ui-visual-validator** - UI validation
+- **seo-cannibalization-detector** - SEO analysis
+- **security-auditor** - Security auditing
+- **seo-content-auditor** - Content auditing
+
+**Meta-agent (1)**: Agent generation and management
 
 For complete agent documentation, see [Agent System Reference](agent-system.md).
 

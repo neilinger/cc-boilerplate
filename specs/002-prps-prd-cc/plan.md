@@ -1,8 +1,8 @@
-# Implementation Plan: CC-Boilerplate Strategic Accelerator Framework
 
-**Branch**: `002-prps-prd-cc` | **Date**: 2025-01-20 | **Spec**: [spec.md](./spec.md)
-**Input**: Feature specification from `/specs/002-prps-prd-cc/spec.md`
-**Constitutional Version**: v1.2.0 (TDD, Enhanced KISS/YAGNI, Security-First)
+# Implementation Plan: [FEATURE]
+
+**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
+**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
 
 ## Execution Flow (/plan command scope)
 ```
@@ -11,14 +11,14 @@
 2. Fill Technical Context (scan for NEEDS CLARIFICATION)
    → Detect Project Type from context (web=frontend+backend, mobile=app+api)
    → Set Structure Decision based on project type
-3. Fill the Constitution Check section based on Constitutional v1.2.0
+3. Fill the Constitution Check section based on the content of the constitution document.
 4. Evaluate Constitution Check section below
    → If violations exist: Document in Complexity Tracking
    → If no justification possible: ERROR "Simplify approach first"
    → Update Progress Tracking: Initial Constitution Check
-5. Execute Phase 0 → research.md (via agent coordination)
+5. Execute Phase 0 → research.md
    → If NEEDS CLARIFICATION remain: ERROR "Resolve unknowns"
-6. Execute Phase 1 → contracts, data-model.md, quickstart.md, CLAUDE.md update
+6. Execute Phase 1 → contracts, data-model.md, quickstart.md, agent-specific template file (e.g., `CLAUDE.md` for Claude Code, `.github/copilot-instructions.md` for GitHub Copilot, `GEMINI.md` for Gemini CLI, `QWEN.md` for Qwen Code or `AGENTS.md` for opencode).
 7. Re-evaluate Constitution Check section
    → If new violations: Refactor design, return to Phase 1
    → Update Progress Tracking: Post-Design Constitution Check
@@ -31,56 +31,29 @@
 - Phase 3-4: Implementation execution (manual or via tools)
 
 ## Summary
-Build a comprehensive AI-first turnaround framework with constitutional-compliant hierarchical agent orchestration, enabling <6h MVP delivery through 100+ TDD-validated specialists, PRP discovery workflows, Linear integration for AI-human symbiosis, and mid-journey course correction capabilities with enterprise-grade security-first architecture.
+[Extract from feature spec: primary requirement + technical approach from research]
 
 ## Technical Context
-**Language/Version**: Bash/Shell scripting (agent system), TypeScript/Node.js (spec-kit integration), Python 3.11+ (test frameworks)
-**Primary Dependencies**: Claude CLI, GitHub CLI (gh), MCP servers (serena, elevenlabs, ref, firecrawl), spec-kit (uvx), pytest (TDD validation)
-**Storage**: File-based (.claude/agents/*, specs/*, PRPs/*, docs/adr/*) following constitutional data simplicity
-**Testing**: TDD-first with pytest for agent logic, Bash test framework for orchestration, constitutional compliance validation
-**Target Platform**: Unix-like systems (macOS, Linux) with Claude Code installed
-**Project Type**: single - Developer tooling/framework with constitutional compliance
-**Performance Goals**: <2s agent selection, <30min onboarding, <6h MVP delivery, 100% constitutional compliance
-**Constraints**: Must maintain backwards compatibility with existing boilerplate projects, constitutional adherence mandatory
-**Scale/Scope**: 100+ specialized agents, supporting 50+ concurrent projects, zero constitutional violations
+**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
+**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
+**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
+**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
+**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
+**Project Type**: [single/web/mobile - determines source structure]  
+**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
+**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
+**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
 
-## Constitution Check v1.2.0
+## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-### I. KISS/YAGNI Supremacy ✓
-- **One function = one job**: Each agent has single, clear responsibility ✓
-- **Simple data structures**: File-based storage with JSON/YAML configs ✓
-- **Clear naming**: Agent names describe function (test-automator, security-scanner) ✓
-- **No premature abstraction**: Building only what's needed for current requirements ✓
-- **95% certainty rule**: All features justified by specific FR requirements ✓
-
-### II. Security-First Architecture ✓
-- **Mandatory security chain**: All code changes through code-reviewer → security-orchestrator ✓
-- **Tool least privilege**: Analyzers read-only, specialists domain-restricted ✓
-- **Protection systems**: 30+ dangerous patterns blocked with real-time validation ✓
-
-### III. Hierarchical Agent Orchestration (ADR-007) ✓
-- **Dynamic agent discovery**: workflow-orchestrator for complex tasks ✓
-- **Cognitive load optimization**: Haiku/Sonnet/Opus allocation by complexity ✓
-- **Agent boundaries**: No capability overlap, clear handoff patterns ✓
-- **Constitutional compliance**: Continuous validation via check-agents.sh ✓
-
-### IV. Validation-Driven Development ✓
-- **95% certainty rule**: All decisions validated with sequential thinking ✓
-- **PRP structure**: Clear scope definition preventing scope creep ✓
-- **Sequential thinking**: Every step challenged against KISS/YAGNI ✓
-
-### V. Test-Driven Development (TDD) ✓
-- **Tests before implementation**: All agent logic TDD-validated ✓
-- **Red-Green-Refactor**: Constitutional compliance tests first ✓
-- **Coverage requirements**: Critical paths tested, gaps identified ✓
-- **TDD enforcement**: Tasks ordered tests-first by constitutional requirement ✓
+[Gates determined based on constitution file]
 
 ## Project Structure
 
 ### Documentation (this feature)
 ```
-specs/002-prps-prd-cc/
+specs/[###-feature]/
 ├── plan.md              # This file (/plan command output)
 ├── research.md          # Phase 0 output (/plan command)
 ├── data-model.md        # Phase 1 output (/plan command)
@@ -91,167 +64,148 @@ specs/002-prps-prd-cc/
 
 ### Source Code (repository root)
 ```
-# Single project structure (constitutional compliance)
-.claude/
-├── agents/              # Hierarchical agent system
-│   ├── orchestrators/   # Opus models (workflow-orchestrator, meta-agent)
-│   ├── specialists/     # Sonnet models (domain experts)
-│   ├── analyzers/       # Read-only agents (code-reviewer, test-coverage)
-│   └── utilities/       # Haiku models (simple tasks)
-├── security/            # Security chain configuration
-├── workflows/           # Predefined orchestration patterns
-└── compliance/          # Constitutional validation tools
-
+# Option 1: Single project (DEFAULT)
 src/
-├── agents/              # Agent implementation logic
-├── orchestration/       # Workflow coordination
-├── security/            # Security validation chains
-└── testing/             # TDD validation framework
+├── models/
+├── services/
+├── cli/
+└── lib/
 
 tests/
-├── constitutional/      # Constitution compliance tests
-├── agent/              # Individual agent tests
-├── integration/        # Multi-agent workflow tests
-└── security/           # Security chain validation tests
+├── contract/
+├── integration/
+└── unit/
+
+# Option 2: Web application (when "frontend" + "backend" detected)
+backend/
+├── src/
+│   ├── models/
+│   ├── services/
+│   └── api/
+└── tests/
+
+frontend/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   └── services/
+└── tests/
+
+# Option 3: Mobile + API (when "iOS/Android" detected)
+api/
+└── [same as backend above]
+
+ios/ or android/
+└── [platform-specific structure]
 ```
 
-**Structure Decision**: Single project optimized for constitutional compliance and agent orchestration
+**Structure Decision**: [DEFAULT to Option 1 unless Technical Context indicates web/mobile app]
 
-## Phase 0: Constitutional Research & Validation
+## Phase 0: Outline & Research
+1. **Extract unknowns from Technical Context** above:
+   - For each NEEDS CLARIFICATION → research task
+   - For each dependency → best practices task
+   - For each integration → patterns task
 
-### Agent-Coordinated Research (via workflow-orchestrator)
-1. **Constitutional Compliance Analysis** (technical-researcher):
-   - Validate TDD integration with hierarchical agent architecture
-   - Research multi-agent TDD patterns and validation strategies
-   - Analyze security-first development for agent systems
+2. **Generate and dispatch research agents**:
+   ```
+   For each unknown in Technical Context:
+     Task: "Research {unknown} for {feature context}"
+   For each technology choice:
+     Task: "Find best practices for {tech} in {domain}"
+   ```
 
-2. **IP and Competitive Analysis** (the-librarian):
-   - AI-first turnaround consulting methodology positioning
-   - Multi-agent framework differentiation strategies
-   - Constitutional AI integration patterns
+3. **Consolidate findings** in `research.md` using format:
+   - Decision: [what was chosen]
+   - Rationale: [why chosen]
+   - Alternatives considered: [what else evaluated]
 
-3. **Architecture Validation** (adr-creator):
-   - ADR-009: TDD Integration with Hierarchical Agent Architecture
-   - Constitutional compliance architecture decisions
-   - Security boundary validation patterns
+**Output**: research.md with all NEEDS CLARIFICATION resolved
 
-4. **Security Pattern Research** (security-orchestrator):
-   - Agent permission boundary enforcement
-   - Constitutional security chain validation
-   - Risk mitigation for multi-agent systems
+## Phase 1: Design & Contracts
+*Prerequisites: research.md complete*
 
-**Output**: research.md with constitutional compliance validation and agent coordination patterns
+1. **Extract entities from feature spec** → `data-model.md`:
+   - Entity name, fields, relationships
+   - Validation rules from requirements
+   - State transitions if applicable
 
-## Phase 1: Constitutional Design & Architecture
+2. **Generate API contracts** from functional requirements:
+   - For each user action → endpoint
+   - Use standard REST/GraphQL patterns
+   - Output OpenAPI/GraphQL schema to `/contracts/`
 
-### TDD-First Architecture Design
-1. **Constitutional Test Suite** (test-automator):
-   - Agent orchestration compliance tests
-   - Security chain validation tests
-   - KISS/YAGNI complexity metric tests
-   - TDD enforcement validation tests
+3. **Generate contract tests** from contracts:
+   - One test file per endpoint
+   - Assert request/response schemas
+   - Tests must fail (no implementation yet)
 
-2. **Agent System Data Model** (Following Constitutional v1.2.0):
-   - Hierarchical agent entity structure
-   - Security chain workflow entities
-   - Constitutional compliance tracking
-   - TDD validation metadata
+4. **Extract test scenarios** from user stories:
+   - Each story → integration test scenario
+   - Quickstart test = story validation steps
 
-3. **Security-First API Contracts**:
-   - Agent discovery and orchestration APIs
-   - Security validation chain APIs
-   - Constitutional compliance monitoring APIs
-   - TDD enforcement tracking APIs
+5. **Update agent file incrementally** (O(1) operation):
+   - Run `.specify/scripts/bash/update-agent-context.sh claude` for your AI assistant
+   - If exists: Add only NEW tech from current plan
+   - Preserve manual additions between markers
+   - Update recent changes (keep last 3)
+   - Keep under 150 lines for token efficiency
+   - Output to repository root
 
-4. **Constitutional Quickstart Guide**:
-   - TDD-first agent development workflow
-   - Security chain integration process
-   - Constitutional compliance validation steps
+**Output**: data-model.md, /contracts/*, failing tests, quickstart.md, agent-specific file
 
-5. **CLAUDE.md Update** (constitutional compliance):
-   - Integration with Constitutional v1.2.0 principles
-   - Agent orchestration guidance updates
-   - TDD workflow documentation
-
-**Output**: data-model.md, contracts/*, quickstart.md, updated CLAUDE.md, constitutional test suite
-
-## Phase 2: Task Planning Approach (Constitutional TDD)
+## Phase 2: Task Planning Approach
 *This section describes what the /tasks command will do - DO NOT execute during /plan*
 
-**Task Generation Strategy (TDD-First)**:
-- Load constitutional compliance requirements as primary constraint
-- Generate TDD validation tasks before implementation tasks
-- Each agent → constitutional compliance test → implementation test → agent logic
-- Security chain → validation tests → chain implementation → integration tests
-- Orchestration → workflow tests → coordination logic → end-to-end validation
+**Task Generation Strategy**:
+- Load `.specify/templates/tasks-template.md` as base
+- Generate tasks from Phase 1 design docs (contracts, data model, quickstart)
+- Each contract → contract test task [P]
+- Each entity → model creation task [P] 
+- Each user story → integration test task
+- Implementation tasks to make tests pass
 
-**Constitutional Ordering Strategy**:
-- TDD order: Constitutional tests → Implementation tests → Logic (mandatory)
-- Security first: Security validation before any implementation
-- Agent boundaries: Clear separation validated before integration
-- Complexity validation: KISS/YAGNI metrics before feature completion
+**Ordering Strategy**:
+- TDD order: Tests before implementation 
+- Dependency order: Models before services before UI
+- Mark [P] for parallel execution (independent files)
 
-**Estimated Output**: 40-50 numbered, TDD-ordered tasks with constitutional validation gates
+**Estimated Output**: 25-30 numbered, ordered tasks in tasks.md
+
+**IMPORTANT**: This phase is executed by the /tasks command, NOT by /plan
 
 ## Phase 3+: Future Implementation
 *These phases are beyond the scope of the /plan command*
 
-**Phase 3**: Constitutional task execution (/tasks command creates tasks.md)
-**Phase 4**: TDD implementation (execute tasks.md following constitutional principles)
-**Phase 5**: Constitutional validation (run tests, execute quickstart.md, compliance validation)
-
-## Agent Coordination Matrix
-
-### Phase 0 Agents (Orchestrated)
-- **workflow-orchestrator**: Coordinate all phase 0 research activities
-- **technical-researcher**: Multi-agent TDD patterns and constitutional compliance
-- **the-librarian**: IP analysis and competitive positioning
-- **adr-creator**: ADR-009 creation for constitutional architecture
-- **security-orchestrator**: Security pattern research and validation
-
-### Phase 1 Agents (Coordinated)
-- **test-automator**: Constitutional compliance test suite creation
-- **smart-doc-generator**: Documentation updates for constitutional compliance
-- **api-architect**: Security-first API contract design
-- **code-reviewer**: Design review for constitutional adherence
-- **security-orchestrator**: Final security validation
+**Phase 3**: Task execution (/tasks command creates tasks.md)  
+**Phase 4**: Implementation (execute tasks.md following constitutional principles)  
+**Phase 5**: Validation (run tests, execute quickstart.md, performance validation)
 
 ## Complexity Tracking
-*Constitutional v1.2.0 compliance - No violations detected*
+*Fill ONLY if Constitution Check has violations that must be justified*
 
-All design decisions align with Constitutional v1.2.0 principles:
-- **KISS/YAGNI**: Simple file-based storage, no premature abstraction, clear naming
-- **Security-First**: Mandatory validation chains, tool least privilege, protection systems
-- **Agent Orchestration**: Dynamic discovery, cognitive load optimization, clear boundaries
-- **Validation-Driven**: 95% certainty rule, PRP structure, sequential thinking validation
-- **TDD**: Tests-first approach, Red-Green-Refactor cycle, coverage requirements
+| Violation | Why Needed | Simpler Alternative Rejected Because |
+|-----------|------------|-------------------------------------|
+| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
+| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+
 
 ## Progress Tracking
 *This checklist is updated during execution flow*
 
 **Phase Status**:
-- [x] Phase 0: Constitutional research with agent coordination
-- [x] Phase 1: TDD-first design with constitutional compliance
-- [x] Phase 2: Constitutional task planning (description only)
+- [ ] Phase 0: Research complete (/plan command)
+- [ ] Phase 1: Design complete (/plan command)
+- [ ] Phase 2: Task planning complete (/plan command - describe approach only)
 - [ ] Phase 3: Tasks generated (/tasks command)
 - [ ] Phase 4: Implementation complete
-- [ ] Phase 5: Constitutional validation passed
+- [ ] Phase 5: Validation passed
 
 **Gate Status**:
-- [x] Initial Constitution Check v1.2.0: PASS
-- [x] Post-Design Constitution Check v1.2.0: PASS
-- [x] Agent coordination completed
-- [x] Constitutional compliance validated
-- [x] TDD integration confirmed
-- [x] All NEEDS CLARIFICATION resolved
-- [x] Constitutional compliance research complete
-
-**Constitutional Compliance Tracking**:
-- [x] TDD principle integration validated
-- [x] Security-first architecture confirmed
-- [x] Agent orchestration compliance verified
-- [x] KISS/YAGNI adherence validated
-- [x] Validation-driven development confirmed
+- [ ] Initial Constitution Check: PASS
+- [ ] Post-Design Constitution Check: PASS
+- [ ] All NEEDS CLARIFICATION resolved
+- [ ] Complexity deviations documented
 
 ---
-*Based on Constitution v1.2.0 - Enhanced with TDD, Security-First, and Agent Orchestration*
+*Based on Constitution v2.1.1 - See `/memory/constitution.md`*
