@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info:
+  title: CC-Boilerplate Agent Management API
+  version: 1.0.0
+  description: API for managing and executing agents in the CC-Boilerplate framework
+
+paths:
+  /agents:
+    get:
+      summary: List all available agents
+      operationId: listAgents
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+            enum: [orchestrator, specialist, analyzer, utility]
+        - name: domain
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of agents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Agent'
+
+  /agents/{agentName}:
+    get:
+      summary: Get agent details
+      operationId: getAgent
+      parameters:
+        - name: agentName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Agent details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '404':
+          description: Agent not found
+
+  /agents/discover:
+    post:
+      summary: Discover best agent for task
+      operationId: discoverAgent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                task:
+                  type: string
+                  description: Task description
+                context:
+                  type: object
+                  description: Task context
+              required:
+                - task
+      responses:
+        '200':
+          description: Recommended agent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agent:
+                    $ref: '#/components/schemas/Agent'
+                  confidence:
+                    type: number
+                    minimum: 0
+                    maximum: 1
+
+  /agents/{agentName}/execute:
+    post:
+      summary: Execute agent task
+      operationId: executeAgent
+      parameters:
+        - name: agentName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                context:
+                  type: object
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Execution result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                  metadata:
+                    type: object
+        '403':
+          description: Security validation failed
+        '500':
+          description: Execution error
+
+components:
+  schemas:
+    Agent:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          enum: [orchestrator, specialist, analyzer, utility]
+        model:
+          type: string
+          enum: [haiku, sonnet, opus]
+        tools:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              permissions:
+                type: array
+                items:
+                  type: string
+                  enum: [read, write, execute]
+        capabilities:
+          type: array
+          items:
+            type: object
+            properties:
+              domain:
+                type: string
+              tags:
+                type: array
+                items:
+                  type: string
+      required:
+        - name
+        - category
+        - model

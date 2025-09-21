@@ -6,6 +6,7 @@
 
 - **Current Roadmap**: Always in main README.md (source of truth)
 - **Feature Planning**: Create new PRP files here
+- **Strategic Planning**: See comprehensive PRD in `PRPs/prd-cc-boilerplate-strategic-accelerator.md`
 - **NO separate planning docs** - they just create confusion
 
 ## What is a PRP?
@@ -101,6 +102,7 @@ The true power of PRP is in the ability to chain tasks together to build, self-v
 - Success metrics definition
 
 **Template**: `PRPs/templates/prp_planning.md`
+**Example**: See `PRPs/prd-cc-boilerplate-strategic-accelerator.md` for comprehensive PRD structure
 
 #### 2. `/specify` - Business Requirements Formalization
 **Input**: PRD from step 1 (or raw description)

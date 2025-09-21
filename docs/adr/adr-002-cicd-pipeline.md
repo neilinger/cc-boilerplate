@@ -32,79 +32,14 @@ Constraints:
 
 Implement a **branch-specific CI/CD pipeline** with different test strategies based on branch type:
 
-### Feature Branches (`feature/**`)
+### Branch-Specific Testing Strategy
 
-**Purpose**: Fast feedback for development
-**Strategy**: Security-critical tests only (~2-3 minutes)
-
-```yaml
-on:
-  push:
-    branches: ['feature/**']
-```
-
-**Tests**:
-
-- Safety hooks (dangerous command detection) - CRITICAL
-- Basic PRP edge case validation - CRITICAL
-- Hook integration smoke tests - ESSENTIAL
-
-### Release Branches (`release/**`)
-
-**Purpose**: Comprehensive validation before production
-**Strategy**: Full test suite (~5-7 minutes)
-
-```yaml
-on:
-  push:
-    branches: ['release/**']
-  pull_request:
-    branches: ['release/**']
-```
-
-**Tests**:
-
-- Complete security test suite
-- Full hook integration testing
-- TTS provider testing (allow failures)
-- Coverage reporting
-- Release preparation validation
-
-### Main Branch
-
-**Purpose**: Final validation and deployment
-**Strategy**: Full validation + deployment tasks (~3-5 minutes)
-
-```yaml
-on:
-  push:
-    branches: [main]
-```
-
-**Tasks**:
-
-- Full test suite validation
-- Automated semantic version tagging
-- Release artifact creation
-- Badge status updates
-
-### Pull Requests to Main
-
-**Purpose**: Final gate before production
-**Strategy**: Enhanced validation (~7-10 minutes)
-
-```yaml
-on:
-  pull_request:
-    branches: [main]
-```
-
-**Tests**:
-
-- Everything from release branch validation
-- Additional security scanning
-- Dependency vulnerability checks
-- Release notes validation
+| Branch Type | Purpose | Strategy | Duration | Tests |
+|-------------|---------|----------|----------|-------|
+| `feature/**` | Fast feedback | Security-critical only | 2-3 min | Safety hooks, PRP validation, hook integration |
+| `release/**` | Pre-production validation | Full test suite | 5-7 min | Complete security, full hooks, TTS (allow failures), coverage |
+| `main` | Final validation + deployment | Full + deployment | 3-5 min | Full validation, version tagging, artifacts, badges |
+| PR → `main` | Production gate | Enhanced validation | 7-10 min | Release validation + security scanning + dependency checks |
 
 ## Consequences
 
@@ -159,50 +94,15 @@ on:
 
 ## Implementation Notes
 
-### Workflow Structure
+### Implementation Details
 
-```yaml
-name: CC-Boilerplate CI/CD
-on:
-  push:
-    branches: ['feature/**', 'release/**', 'main']
-  pull_request:
-    branches: ['main', 'release/**']
+**Workflow Structure**: Single GitHub Actions workflow with conditional jobs based on branch patterns. Security tests run on all branches, comprehensive tests on release/main, deployment tasks on main only.
 
-jobs:
-  security-tests:
-    if: contains(github.ref, 'feature/')
-    # Fast security-critical tests only
+**Resource Optimization**: UV dependency caching, parallel execution where possible, conditional job execution, timeout management.
 
-  comprehensive-tests:
-    if: contains(github.ref, 'release/') || github.ref == 'refs/heads/main'
-    # Full test suite
+**Test Categories**: Security Critical (always), Integration (release+), Features (release only), Extended (PR to main).
 
-  production-deployment:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    # Tagging and release tasks
-```
-
-### Resource Optimization
-
-- **Caching**: UV dependencies cached across runs
-- **Parallel Jobs**: Security and feature tests run in parallel where possible
-- **Conditional Execution**: Jobs only run when relevant
-- **Timeout Management**: Reasonable timeouts to prevent hanging builds
-
-### Test Categories
-
-- **Security Critical** (Always run): Safety hooks, dangerous command detection
-- **Integration** (Release+): Hook pipeline, PRP validation
-- **Features** (Release only): TTS providers, status lines
-- **Extended** (PR to main): Security scanning, dependency checks
-
-### Badge Integration
-
-- Main badge shows main branch status
-- Security badge shows latest security test status
-- Coverage badge from latest release branch run
-- Custom badges for hook count and other metrics
+**Badge Integration**: Branch-specific status badges for main, security, coverage, and custom metrics.
 
 ## References
 

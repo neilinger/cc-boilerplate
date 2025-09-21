@@ -76,24 +76,11 @@ Establish clear separation of concerns between ADRs and PRPs:
 - **Comprehensive**: Include all implementation context
 - **Delivery-focused**: Emphasis on concrete outcomes
 
-### Cross-referencing Standards
+### Standards & Conventions
 
-- **ADR → PRP**: "Implementation handled via prp-XXX"
-- **PRP → ADR**: "Based on architectural decision adr-XXX"
-- **Clear Handoff**: ADR establishes decision, PRP executes it
+**Cross-referencing**: ADR → PRP ("Implementation handled via prp-XXX"), PRP → ADR ("Based on architectural decision adr-XXX")
 
-### Naming Conventions
-
-**ADRs**: `adr-XXX-decision-title.md`
-
-- XXX is a 3-digit sequence number (001, 002, 003...)
-- decision-title describes the architectural decision
-
-**PRPs**: `prp-XXX-feature-name.md`
-
-- XXX is a 3-digit sequence number (001, 002, 003...)
-- feature-name is a kebab-case description of the feature goal
-- Examples: `prp-001-documentation-migration.md`, `prp-002-github-maintenance-check.md`
+**Naming**: ADRs use `adr-XXX-decision-title.md`, PRPs use `prp-XXX-feature-name.md` (3-digit sequence numbers)
 
 ## Consequences
 
@@ -146,15 +133,8 @@ Establish clear separation of concerns between ADRs and PRPs:
 
 ### Cross-referencing Pattern
 
-```markdown
-# In ADR
-## Implementation
-This decision will be implemented via prp-XXX (link when created).
-
-# In PRP
-## Context
-This PRP implements the architectural decision documented in adr-XXX.
-```
+**In ADR**: "Implementation handled via prp-XXX (link when created)"
+**In PRP**: "This PRP implements architectural decision adr-XXX"
 
 ## Alternatives Considered
 

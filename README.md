@@ -1,13 +1,13 @@
 # CC-Boilerplate
 
-[![CI/CD Status](https://github.com/USERNAME/cc-boilerplate/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/USERNAME/cc-boilerplate/actions/workflows/ci-cd.yml)
-[![Security Tests](https://img.shields.io/badge/security-passing-brightgreen)](https://github.com/USERNAME/cc-boilerplate/actions)
-[![Test Coverage](https://img.shields.io/badge/coverage-60%25-yellow)](https://github.com/USERNAME/cc-boilerplate/actions)
+[![CI/CD Status](https://github.com/neilinger/cc-boilerplate/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/neilinger/cc-boilerplate/actions/workflows/ci-cd.yml)
+[![Security Tests](https://img.shields.io/badge/security-passing-brightgreen)](https://github.com/neilinger/cc-boilerplate/actions)
+[![Test Coverage](https://img.shields.io/badge/coverage-60%25-yellow)](https://github.com/neilinger/cc-boilerplate/actions)
 [![Hooks](https://img.shields.io/badge/hooks-8-blue)](#-all-8-claude-code-hooks)
 [![Agents](https://img.shields.io/badge/agents-32-purple)](#-hierarchical-agent-system)
 [![Commands](https://img.shields.io/badge/commands-7-cyan)](#-claude-commands-7-total)
 [![Output Styles](https://img.shields.io/badge/styles-9-orange)](#-9-output-styles)
-[![Release](https://img.shields.io/github/v/release/USERNAME/cc-boilerplate?include_prereleases)](https://github.com/USERNAME/cc-boilerplate/releases)
+[![Release](https://img.shields.io/github/v/release/neilinger/cc-boilerplate?include_prereleases)](https://github.com/neilinger/cc-boilerplate/releases)
 
 Claude Code boilerplate with essential hooks, agents, and security features.
 

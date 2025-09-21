@@ -21,26 +21,30 @@ Blocks dangerous commands. For complete security patterns and testing details, s
 
 Quick test: `echo '{"tool_name": "Bash", "tool_input": {"command": "rm -rf /"}}' | uv run .claude/hooks/pre_tool_use.py`
 
-## Agents (10 Total)
+## Hierarchical Agent System (32 Total)
 
-**meta-agent** - Generate new specialized agents
-**smart-doc-generator** - Comprehensive documentation generation
-**engineer-code-reviewer** - Security and quality code reviews
-**test-automator** - Automated test suite creation
-**test-coverage-analyzer** - Test coverage analysis and gap identification
-**work-completion-summary** - Audio summaries for long operations
-**llm-ai-agents-and-eng-research** - AI/ML research and analysis
-**technical.researcher** - Deep technical research and documentation
-**github-checker** - GitHub repository analysis and validation
-**adr-creator** - Architectural Decision Record generation
+**Orchestrators (2)**:
+- **workflow-orchestrator** - Complex multi-step coordination
+- **security-orchestrator** - Mandatory security validation chains
 
-## Commands (5 Total)
+**Specialists (27)**: Domain expertise including python-pro, typescript-pro, react-expert, nextjs-expert, aws-expert, docker-expert, postgres-expert, api-architect, performance-optimizer, and 18 more
+
+**Analyzers (3)**:
+- **code-reviewer** - Security and quality analysis
+- **test-coverage-analyzer** - Coverage analysis
+- **work-completion-summary** - Audio summaries
+
+For complete agent documentation, see [Agent System Reference](agent-system.md).
+
+## Commands (7 Total)
 
 **cook** - Run multiple agent tasks in parallel for rapid development
 **prime** - Load project context for new agent sessions
 **prime_tts** - Initialize Text-to-Speech system
 **question** - Structured questioning for requirements gathering
 **update_status_line** - Update dynamic terminal status displays
+**git-ops:smart-commit** - Context-aware commit creation with Release Flow support
+**git-ops:start-release-journey** - Guide engineers through proper Release Flow process
 
 ## Serena MCP Integration
 
