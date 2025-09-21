@@ -137,21 +137,19 @@ ios/ or android/
    - Validation rules from requirements
    - State transitions if applicable
 
-2. **Generate API contracts** from functional requirements:
-   - For each user action → endpoint
-   - Use standard REST/GraphQL patterns
-   - Output OpenAPI/GraphQL schema to `/contracts/`
+2. **Design Python-based behavioral testing framework**:
+   - Leverage existing `.claude/hooks/` Python infrastructure
+   - Use `uv run --script` pattern for cross-platform execution
+   - External CLI testing via subprocess (black-box validation)
+   - No API contracts needed - direct Claude Code CLI invocation
 
-3. **Generate contract tests** from contracts:
-   - One test file per endpoint
-   - Assert request/response schemas
-   - Tests must fail (no implementation yet)
+3. **Generate behavioral test specifications**:
+   - CEO delegation pattern tests
+   - Contrarian discipline validation
+   - Security routing compliance
+   - Framework implementation deferred to Phase 3
 
-4. **Extract test scenarios** from user stories:
-   - Each story → integration test scenario
-   - Quickstart test = story validation steps
-
-5. **Update agent file incrementally** (O(1) operation):
+4. **Update agent file incrementally** (O(1) operation):
    - Run `.specify/scripts/bash/update-agent-context.sh claude` for your AI assistant
    - If exists: Add only NEW tech from current plan
    - Preserve manual additions between markers
@@ -159,7 +157,7 @@ ios/ or android/
    - Keep under 150 lines for token efficiency
    - Output to repository root
 
-**Output**: data-model.md, /contracts/*, failing tests, quickstart.md, agent-specific file
+**Output**: data-model.md, behavioral test specifications, quickstart.md, agent-specific file
 
 ## Phase 2: Task Planning Approach
 *This section describes what the /tasks command will do - DO NOT execute during /plan*
@@ -167,30 +165,30 @@ ios/ or android/
 **Task Generation Strategy**:
 - Load `.specify/templates/tasks-template.md` as base
 - Generate tasks from behavioral testing requirements (FR-021-025)
-- Each behavioral test category → test implementation task [P]
-- Each API endpoint → contract test task [P]
+- Each behavioral test category → Python test implementation task [P]
+- Each CLI testing scenario → subprocess invocation task [P]
 - Each data entity → model creation task [P]
-- Conversation log analysis → background processing task
-- LLM-as-Judge integration → evaluation service task
-- Regression analysis → reporting task
+- Conversation log analysis → Python processing task
+- LLM-as-Judge integration → Python evaluation service task
+- Regression analysis → Python reporting task
 - pytest integration → test suite enhancement task
 
 **Specific Task Categories**:
-1. **Behavioral Testing Infrastructure**: Core testing framework setup
-2. **LLM Judge Integration**: External LLM evaluation service setup
-3. **Conversation Log Processing**: Real-time analysis pipeline
-4. **Baseline Management**: Behavioral baseline creation and maintenance
-5. **Regression Detection**: Automated regression analysis
-6. **API Implementation**: REST API for behavioral testing
-7. **Integration Tests**: End-to-end behavioral validation
-8. **Documentation**: Behavioral testing guide and examples
+1. **Python Testing Infrastructure**: Core behavioral testing framework using existing hooks patterns
+2. **CLI Testing Module**: Claude Code subprocess invocation and response parsing
+3. **Conversation Log Processing**: Python-based real-time analysis pipeline
+4. **Baseline Management**: Behavioral baseline creation and maintenance via Python
+5. **Regression Detection**: Automated regression analysis using pytest
+6. **Behavioral Assertions**: Python assertion library for CEO compliance
+7. **Integration Tests**: End-to-end behavioral validation via external CLI testing
+8. **Documentation**: Python behavioral testing guide and examples
 
 **Ordering Strategy**:
-- Infrastructure first: Testing framework foundation
+- Infrastructure first: Python testing framework foundation
 - TDD order: Behavioral tests before implementation
-- Dependency order: Models → Services → API → Integration
+- Dependency order: Models → CLI Testing → Behavioral Analysis → Integration
 - Mark [P] for parallel execution (independent components)
-- Critical path: Conversation logging → Analysis → Regression detection
+- Critical path: CLI Testing → Conversation logging → Analysis → Regression detection
 
 **Estimated Output**: 25-30 numbered, ordered tasks focusing on behavioral testing framework
 

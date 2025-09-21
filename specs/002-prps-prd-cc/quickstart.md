@@ -88,22 +88,24 @@ claude git-workflow --repair
 git log --oneline -10
 ```
 
-### 5. Behavioral Testing Validation
-**Scenario**: Validate AI assistant behavioral consistency and CEO role adherence
+### 5. Python-Based Behavioral Testing
+**Scenario**: Validate AI assistant behavioral consistency using external CLI testing
 
 ```bash
-# Run behavioral test suite
-./scripts/behavioral-tests.sh
+# Run Python behavioral test suite (implementation in Phase 3)
+python tests/behavioral/run_behavioral_tests.py
 
-# Validate CEO role adherence
-claude behavioral-audit --role=ceo
+# Test CEO delegation patterns via CLI
+python tests/behavioral/test_ceo_delegation.py
 
-# Check delegation patterns
-claude delegation-analysis
+# Validate contrarian discipline application
+python tests/behavioral/test_contrarian_discipline.py
 
-# Generate regression report
-claude behavioral-report
+# Generate behavioral regression report
+python tests/behavioral/generate_regression_report.py
 ```
+
+**Note**: Behavioral testing framework implementation is planned for Phase 3. This section will be updated with actual usage examples once the Python testing infrastructure is built.
 
 ## Success Validation
 

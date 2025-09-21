@@ -353,7 +353,7 @@ maintenance -> active (update completion)
 
 ### BehavioralTest
 
-Validation scenario measuring AI adherence to CEO role, delegation patterns, and contrarian discipline.
+Python-based validation scenario using subprocess to test Claude CLI behavioral patterns.
 
 **Fields:**
 - `test_id`: string (UUID, required, unique)
@@ -361,9 +361,10 @@ Validation scenario measuring AI adherence to CEO role, delegation patterns, and
 - `description`: text (required, 50-1000 chars)
 - `test_category`: string (required, enum: ceo_role|delegation|contrarian_discipline|agent_usage|decision_making)
 - `scenario_prompt`: text (required, 100-5000 chars)
+- `python_test_file`: string (required, relative path to test file)
 - `expected_behaviors`: list[ExpectedBehavior] (required, non-empty)
-- `evaluation_criteria`: list[EvaluationCriterion] (required, non-empty)
-- `llm_judge_config`: LLMJudgeConfig (required)
+- `cli_invocation_pattern`: string (required, subprocess command template)
+- `response_parser_config`: dict (required, output parsing configuration)
 - `baseline_score`: float (optional, 0.0-1.0)
 - `detection_accuracy_target`: float (required, 0.95-1.0)
 - `test_frequency`: string (required, enum: continuous|daily|weekly|on_change)
@@ -378,9 +379,10 @@ Validation scenario measuring AI adherence to CEO role, delegation patterns, and
 - One-to-many with `RegressionReport`
 
 **Validation Rules:**
-- Scenario prompt must be realistic and testable
-- Expected behaviors must be measurable
-- Evaluation criteria must be objective
+- Scenario prompt must be realistic and testable via CLI
+- Python test file must exist and be executable
+- CLI invocation pattern must be valid subprocess format
+- Expected behaviors must be measurable from CLI output
 - Detection accuracy target must be achievable
 - Regression threshold must be sensitive enough
 
