@@ -1,32 +1,46 @@
-# Code Style and Conventions
+# CC-Boilerplate Code Style and Conventions
 
-## Core Principles (from CLAUDE.md)
+## Architectural Principles
+- **KISS (Keep It Simple, Stupid)** - Avoid over-engineering
+- **YAGNI (You Aren't Gonna Need It)** - Don't build unnecessary features
+- **Security-first** - All code modifications must pass security chains
+- **Zero dependencies** - Python standard library only
 
-- **KISS (Keep It Simple, Stupid)**: Use the easiest way that works. Fewer parts. Short words. Short functions.
-- **YAGNI (You Aren't Gonna Need It)**: Don't build extra stuff "just in case." Build it only when someone actually needs it now.
+## Code Organization
+- **File-based storage** - Everything in git repository
+- **Cross-platform compatibility** - Works on macOS, Linux, Windows
+- **Standard library only** - No external dependencies in pyproject.toml
+- **UV single-file scripts** - Self-contained executable scripts
 
-## Design Rules
+## Agent System Conventions
+- **Hierarchical delegation** - Always use workflow-orchestrator for complex tasks
+- **Cognitive load optimization** - Model allocation based on task complexity
+- **Security chain compliance** - code-reviewer → security-orchestrator → security-scanner
+- **Role-based permissions** - Agent-specific tool access boundaries
 
-- One function = one job. Keep it short and clear.
-- Prefer simple data (numbers, strings, lists, dicts) over fancy patterns.
-- Name things so a child can guess what they do.
-- Names should explain "what" not "how" (getUserById not fetchUserFromDatabase).
-- Avoid clever tricks. Clear beats clever.
-- No general frameworks, layers, or abstractions until they're truly needed.
+## File Structure Conventions
+```
+.claude/
+├── agents/         # Hierarchical agent system (100+ agents)
+├── commands/       # Claude commands (7 total)
+├── hooks/          # All 8 Claude Code hooks
+├── output-styles/  # 9 workflow-optimized formats
+└── settings.json   # Permissions and configuration
 
-## Python Conventions
+specs/              # PRP specifications
+PRPs/              # Product Requirements Process templates
+scripts/           # Validation and sync utilities
+tests/             # Security-focused testing
+```
 
-- Uses UV script headers with embedded dependencies
-- Type hints not consistently used but should be added
-- Error handling with graceful degradation (silent failures for non-critical operations)
-- JSON for data persistence and logging
-- Pathlib for file operations
-- Subprocess for external tool execution
+## Documentation Standards
+- **ADR** (Architecture Decision Records) - WHY decisions
+- **PRP** (Product Requirements Process) - HOW implementation
+- **No proactive documentation** - Only create docs when explicitly requested
+- **Security documentation** - Mandatory for all security-sensitive features
 
-## File Organization
-
-- `.claude/hooks/` - Hook implementations as UV single-file scripts
-- `.claude/agents/` - Sub-agent configurations (YAML frontmatter + markdown)
-- `.claude/output-styles/` - Response formatting configurations
-- `.claude/status_lines/` - Terminal status displays
-- `logs/` - JSON logs of all hook executions
+## Quality Standards
+- **Behavioral consistency** - LLM-as-Judge validation
+- **CEO role adherence** - Delegation patterns and contrarian discipline
+- **Non-blocking quality gates** - Validate without stopping velocity
+- **95% detection accuracy** - For behavioral regression testing

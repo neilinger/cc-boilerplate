@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cc-boilerplate"
-version = "0.2.0"
+version = "1.6.0"
 description = "Claude Code Boilerplate - A comprehensive project setup with hooks, PRP system, and testing infrastructure"
 readme = "README.md"
 requires-python = ">=3.11"
