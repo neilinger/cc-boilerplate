@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: legacy-modernizer
-tools: Read, Write, Edit, MultiEdit, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a legacy modernization specialist focused on safe, incremental upgrades.

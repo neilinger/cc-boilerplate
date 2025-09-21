@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: mermaid-expert
-tools: Read, Grep, Glob, WebSearch, WebFetch, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a Mermaid diagram expert specializing in clear, professional visualizations.

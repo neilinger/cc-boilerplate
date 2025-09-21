@@ -7,7 +7,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: docker-expert
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(docker:*), Bash(kubectl:*), Bash(podman:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 # Purpose

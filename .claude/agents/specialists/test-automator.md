@@ -5,7 +5,7 @@ description: |
   NEVER use when: Code implementation, documentation, non-testing tasks
   Runs AFTER: Code implementation complete
   Hands off to: test-coverage-analyzer (for coverage validation)
-tools: Read, Write, Edit, MultiEdit, Bash(test:*), Bash(npm:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 model: sonnet
 color: yellow
 ---

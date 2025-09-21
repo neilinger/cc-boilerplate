@@ -7,7 +7,7 @@ description: |
   Hands off to: monitoring-specialist, terminal monitoring-specialist, terminal'
 model: opus
 name: deployment-engineer
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(git:*), Bash(docker:*), Bash(kubectl:*), Bash(aws:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 # Purpose

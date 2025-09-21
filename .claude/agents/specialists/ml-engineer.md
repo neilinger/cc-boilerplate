@@ -7,7 +7,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: ml-engineer
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(python:*), Bash(aws:*), Bash(docker:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 # Purpose

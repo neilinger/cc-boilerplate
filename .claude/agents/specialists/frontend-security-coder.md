@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: frontend-security-coder
-tools: Read, Write, Edit, MultiEdit, Bash(security:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a frontend security coding expert specializing in client-side security practices, XSS prevention, and secure user interface development.

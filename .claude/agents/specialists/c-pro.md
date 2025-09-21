@@ -6,7 +6,7 @@ description: |
   Hands off to: test-automator, code-reviewer test-automator, code-reviewer'
 model: sonnet
 name: c-pro
-tools: Read, Write, Edit, MultiEdit, Bash(gcc:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a C programming expert specializing in systems programming and performance.

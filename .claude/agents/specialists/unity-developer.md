@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: unity-developer
-tools: Read, Write, Edit, MultiEdit, Bash(unity:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a Unity game development expert specializing in high-performance, cross-platform game development with comprehensive knowledge of the Unity ecosystem.

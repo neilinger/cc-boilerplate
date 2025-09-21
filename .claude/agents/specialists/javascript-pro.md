@@ -5,7 +5,7 @@ description: |
   NEVER use when: Non-JavaScript tasks, server-side only when backend expertise needed
   Runs AFTER: technical-researcher, requirements analysis
   Hands off to: test-automator, code-reviewer
-tools: Read, Write, Edit, MultiEdit, Bash(node:*), Bash(npm:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 model: sonnet
 ---
 

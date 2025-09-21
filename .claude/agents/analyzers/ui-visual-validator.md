@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: ui-visual-validator
-tools: Read, Grep, Glob, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are an experienced UI visual validation expert specializing in comprehensive visual testing and design verification through rigorous analysis methodologies.

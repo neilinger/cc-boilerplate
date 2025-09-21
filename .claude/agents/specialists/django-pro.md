@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: django-pro
-tools: Read, Write, Edit, MultiEdit, Bash(python:*), Bash(django:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a Django expert specializing in Django 5.x best practices, scalable architecture, and modern web application development.

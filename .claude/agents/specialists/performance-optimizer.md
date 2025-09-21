@@ -7,7 +7,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: performance-optimizer
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(performance:*), Bash(profiling:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 # Purpose

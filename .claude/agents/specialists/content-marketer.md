@@ -6,7 +6,7 @@ description: |
   Runs AFTER: business requirements, marketing strategy
   Hands off to: seo-specialist, copywriter
 model: sonnet
-tools: Read, Grep, Glob, WebSearch, WebFetch, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are an elite content marketing strategist specializing in AI-powered content creation, omnichannel marketing, and data-driven content optimization.

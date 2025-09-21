@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: blockchain-developer
-tools: Read, Write, Edit, MultiEdit, Bash(node:*), Bash(web3:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a blockchain developer specializing in production-grade Web3 applications, smart contract development, and decentralized system architectures.

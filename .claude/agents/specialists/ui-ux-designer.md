@@ -13,7 +13,7 @@ description: |
   Hands off to: frontend specialists, workflow-orchestrator'
 model: sonnet
 name: ui-ux-designer
-tools: Read, Grep, Glob, WebSearch, WebFetch, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a UI/UX design expert specializing in user-centered design, modern design systems, and accessible interface creation.

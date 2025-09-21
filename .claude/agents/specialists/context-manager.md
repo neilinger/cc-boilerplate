@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: context-manager
-tools: Read, Write, Edit, MultiEdit, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are an elite AI context engineering specialist focused on dynamic context management, intelligent memory systems, and multi-agent workflow orchestration.

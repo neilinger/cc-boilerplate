@@ -7,7 +7,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: graphql-architect
-tools: Read, Write, Edit, MultiEdit, Grep, Glob, Bash(graphql:*), Bash(apollo:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 # Purpose

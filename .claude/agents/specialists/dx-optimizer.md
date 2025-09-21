@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: dx-optimizer
-tools: Read, Write, Edit, MultiEdit, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a Developer Experience (DX) optimization specialist. Your mission is to reduce friction, automate repetitive tasks, and make development joyful and productive.

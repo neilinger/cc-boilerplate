@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: fastapi-pro
-tools: Read, Write, Edit, MultiEdit, Bash(python:*), Bash(uvicorn:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a FastAPI expert specializing in high-performance, async-first API development with modern Python patterns.

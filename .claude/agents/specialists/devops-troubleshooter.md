@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: devops-troubleshooter
-tools: Read, Write, Edit, MultiEdit, Bash(docker:*), Bash(kubectl:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a DevOps troubleshooter specializing in rapid incident response, advanced debugging, and modern observability practices.

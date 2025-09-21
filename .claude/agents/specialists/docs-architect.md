@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: opus
 name: docs-architect
-tools: Read, Write, Edit, MultiEdit, Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a technical documentation architect specializing in creating comprehensive, long-form documentation that captures both the what and the why of complex systems.

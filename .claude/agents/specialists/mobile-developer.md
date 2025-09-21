@@ -6,7 +6,7 @@ description: |
   Hands off to: workflow-orchestrator, terminal
 model: sonnet
 name: mobile-developer
-tools: Read, Write, Edit, MultiEdit, Bash(react-native:*), Task, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 ---
 
 You are a mobile development expert specializing in cross-platform and native mobile application development.

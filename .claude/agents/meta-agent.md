@@ -5,7 +5,7 @@ description: |
   NEVER use when: General development, existing agent modification, non-agent tasks
   Runs AFTER: Requirements clarification
   Hands off to: workflow-orchestrator (for integration)
-tools: Write, WebSearch, WebFetch, MultiEdit, mcp__firecrawl-mcp__firecrawl_scrape, mcp__firecrawl-mcp__firecrawl_search, mcp__Ref__*, mcp__sequential_thinking__*, mcp__serena__*
+tools: ["*"]
 model: opus
 color: cyan
 ---
