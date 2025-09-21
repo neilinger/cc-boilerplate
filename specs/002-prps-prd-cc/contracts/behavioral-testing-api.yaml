@@ -1,0 +1,493 @@
+openapi: 3.0.3
+info:
+  title: Behavioral Testing API
+  version: 1.0.0
+  description: API for LLM behavioral regression testing and CEO role validation
+  contact:
+    name: CC-Boilerplate Framework
+    email: neil@scholten.io
+
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Local development server
+
+paths:
+  /behavioral-tests:
+    get:
+      summary: List all behavioral tests
+      operationId: listBehavioralTests
+      tags:
+        - Behavioral Tests
+      parameters:
+        - name: category
+          in: query
+          description: Filter by test category
+          schema:
+            type: string
+            enum: [ceo_role, delegation, contrarian_discipline, agent_usage, decision_making]
+        - name: active
+          in: query
+          description: Filter by active status
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: List of behavioral tests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BehavioralTest'
+
+    post:
+      summary: Create new behavioral test
+      operationId: createBehavioralTest
+      tags:
+        - Behavioral Tests
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBehavioralTestRequest'
+      responses:
+        '201':
+          description: Behavioral test created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BehavioralTest'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /behavioral-tests/{testId}/execute:
+    post:
+      summary: Execute behavioral test
+      operationId: executeBehavioralTest
+      tags:
+        - Behavioral Tests
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecuteTestRequest'
+      responses:
+        '200':
+          description: Test execution result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestExecutionResult'
+        '404':
+          description: Test not found
+
+  /behavioral-baseline:
+    get:
+      summary: Get current behavioral baseline
+      operationId: getBehavioralBaseline
+      tags:
+        - Baseline Management
+      responses:
+        '200':
+          description: Current behavioral baseline
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BehavioralBaseline'
+
+    post:
+      summary: Create new behavioral baseline
+      operationId: createBehavioralBaseline
+      tags:
+        - Baseline Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBaselineRequest'
+      responses:
+        '201':
+          description: Baseline created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BehavioralBaseline'
+
+  /regression-analysis:
+    post:
+      summary: Perform regression analysis
+      operationId: performRegressionAnalysis
+      tags:
+        - Regression Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegressionAnalysisRequest'
+      responses:
+        '200':
+          description: Regression analysis report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegressionReport'
+
+  /conversation-logs:
+    post:
+      summary: Submit conversation log for analysis
+      operationId: submitConversationLog
+      tags:
+        - Conversation Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationLog'
+      responses:
+        '201':
+          description: Log submitted successfully
+        '400':
+          description: Invalid log format
+
+  /delegation-metrics:
+    get:
+      summary: Get delegation pattern metrics
+      operationId: getDelegationMetrics
+      tags:
+        - Metrics
+      parameters:
+        - name: timeframe
+          in: query
+          description: Analysis timeframe
+          schema:
+            type: string
+            enum: [hour, day, week, month]
+            default: day
+      responses:
+        '200':
+          description: Delegation metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DelegationMetrics'
+
+components:
+  schemas:
+    BehavioralTest:
+      type: object
+      required: [test_id, name, test_category, scenario_prompt, expected_behaviors]
+      properties:
+        test_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 5
+          maxLength: 100
+        description:
+          type: string
+          minLength: 50
+          maxLength: 1000
+        test_category:
+          type: string
+          enum: [ceo_role, delegation, contrarian_discipline, agent_usage, decision_making]
+        scenario_prompt:
+          type: string
+          minLength: 100
+          maxLength: 5000
+        expected_behaviors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpectedBehavior'
+        evaluation_criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluationCriterion'
+        detection_accuracy_target:
+          type: number
+          minimum: 0.95
+          maximum: 1.0
+        active:
+          type: boolean
+          default: true
+
+    ExpectedBehavior:
+      type: object
+      required: [behavior_name, description, measurement_method, success_criteria, weight]
+      properties:
+        behavior_name:
+          type: string
+        description:
+          type: string
+        measurement_method:
+          type: string
+        success_criteria:
+          type: string
+        weight:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+
+    EvaluationCriterion:
+      type: object
+      required: [criterion_name, description, evaluation_method]
+      properties:
+        criterion_name:
+          type: string
+        description:
+          type: string
+        evaluation_method:
+          type: string
+        threshold:
+          type: number
+
+    BehavioralBaseline:
+      type: object
+      required: [baseline_id, name, claude_md_version, baseline_metrics, sample_size]
+      properties:
+        baseline_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        claude_md_version:
+          type: string
+        baseline_metrics:
+          type: object
+          additionalProperties:
+            type: number
+        sample_size:
+          type: integer
+          minimum: 10
+        confidence_interval:
+          type: number
+          minimum: 0.90
+          maximum: 0.99
+        statistical_significance:
+          type: boolean
+
+    RegressionReport:
+      type: object
+      required: [report_id, claude_md_version_from, claude_md_version_to, overall_regression_score, recommendation]
+      properties:
+        report_id:
+          type: string
+          format: uuid
+        claude_md_version_from:
+          type: string
+        claude_md_version_to:
+          type: string
+        analysis_timestamp:
+          type: string
+          format: date-time
+        overall_regression_score:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+        behavioral_changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BehavioralChange'
+        recommendation:
+          type: string
+          enum: [accept, review, reject, investigate]
+        risk_level:
+          type: string
+          enum: [low, medium, high, critical]
+
+    BehavioralChange:
+      type: object
+      required: [change_type, description, impact_score, confidence]
+      properties:
+        change_type:
+          type: string
+          enum: [improvement, degradation, new_capability, removed_capability]
+        description:
+          type: string
+        impact_score:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+        affected_tests:
+          type: array
+          items:
+            type: string
+        confidence:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+
+    ConversationLog:
+      type: object
+      required: [timestamp, conversation_id, user_request, ai_response]
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        conversation_id:
+          type: string
+        user_request:
+          type: string
+        ai_response:
+          type: string
+        agents_invoked:
+          type: array
+          items:
+            type: string
+        contrarian_discipline_applied:
+          type: boolean
+        decision_classification:
+          type: string
+          enum: [TACTICAL, OPERATIONAL, STRATEGIC]
+        implementation_attempted:
+          type: boolean
+
+    DelegationMetrics:
+      type: object
+      required: [timeframe, total_requests, delegation_rate, agent_utilization]
+      properties:
+        timeframe:
+          type: string
+        total_requests:
+          type: integer
+        delegation_rate:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+        direct_implementation_attempts:
+          type: integer
+        agent_utilization:
+          type: object
+          additionalProperties:
+            type: integer
+        contrarian_discipline_compliance:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+
+    CreateBehavioralTestRequest:
+      type: object
+      required: [name, test_category, scenario_prompt, expected_behaviors]
+      properties:
+        name:
+          type: string
+          minLength: 5
+          maxLength: 100
+        description:
+          type: string
+          minLength: 50
+          maxLength: 1000
+        test_category:
+          type: string
+          enum: [ceo_role, delegation, contrarian_discipline, agent_usage, decision_making]
+        scenario_prompt:
+          type: string
+          minLength: 100
+          maxLength: 5000
+        expected_behaviors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpectedBehavior'
+        evaluation_criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluationCriterion'
+
+    ExecuteTestRequest:
+      type: object
+      properties:
+        context:
+          type: object
+          description: Optional context for test execution
+        sample_size:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+
+    TestExecutionResult:
+      type: object
+      required: [execution_id, test_id, score, passed, details]
+      properties:
+        execution_id:
+          type: string
+          format: uuid
+        test_id:
+          type: string
+          format: uuid
+        score:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+        passed:
+          type: boolean
+        details:
+          type: object
+        execution_time_ms:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+
+    CreateBaselineRequest:
+      type: object
+      required: [name, claude_md_version, measurement_period_days]
+      properties:
+        name:
+          type: string
+        claude_md_version:
+          type: string
+        measurement_period_days:
+          type: integer
+          minimum: 1
+          maximum: 30
+        confidence_interval:
+          type: number
+          minimum: 0.90
+          maximum: 0.99
+          default: 0.95
+
+    RegressionAnalysisRequest:
+      type: object
+      required: [version_from, version_to]
+      properties:
+        version_from:
+          type: string
+        version_to:
+          type: string
+        test_categories:
+          type: array
+          items:
+            type: string
+        significance_threshold:
+          type: number
+          minimum: 0.01
+          maximum: 0.10
+          default: 0.05
+
+    ErrorResponse:
+      type: object
+      required: [error, message]
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
