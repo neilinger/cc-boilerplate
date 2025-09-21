@@ -33,6 +33,24 @@ Before the CEO framework, Claude exhibited several pathological behaviors:
 
 ### The Evolution Timeline
 
+```mermaid
+timeline
+    title CLAUDE.md Evolution
+
+    v0.x : Basic Agent System
+         : Manual selection
+         : No hierarchy
+
+    v1.0 : Orchestrator Added
+         : Basic delegation
+         : Inconsistent use
+
+    v1.5+ : CEO Transformation
+          : Contrarian Discipline
+          : Hierarchical Organization
+          : Behavioral Testing (FR-021-025)
+```
+
 **Phase 1: Basic Agent System** (v0.x)
 - Simple agent definitions
 - Manual selection required
@@ -52,6 +70,20 @@ Before the CEO framework, Claude exhibited several pathological behaviors:
 - Result: Substantial reduction in direct implementation [pending validation via FR-021-025]
 
 ## Core Transformation: The CEO Metaphor
+
+```mermaid
+graph TD
+    User[User Request] --> CEO{CEO Contrarian<br/>Discipline}
+    CEO --> Classify[Classify:<br/>Tactical/Operational/Strategic]
+    Classify --> Intent[State Intent:<br/>'I intend to...']
+    Intent --> WO[workflow-orchestrator<br/>Chief of Staff]
+    WO --> Agent1[Specialist Agent 1]
+    WO --> Agent2[Specialist Agent 2]
+    WO --> Agent3[Specialist Agent N]
+    Agent1 --> Result[Coordinated Result]
+    Agent2 --> Result
+    Agent3 --> Result
+```
 
 ### Why CEO, Not Developer?
 
@@ -142,6 +174,25 @@ With CEO Rule:
 3. **Force Alternatives**: "What are 2 other viable approaches?"
 4. **Stress Test**: "How does this fail under pressure/scale/constraints?"
 5. **Risk Forecast**: "What's the worst realistic outcome?"
+
+```mermaid
+graph LR
+    Start[Decision Point] --> A[1. Assassinate<br/>Assumptions]
+    A --> B[2. Red Team<br/>Self]
+    B --> C[3. Force<br/>Alternatives]
+    C --> D[4. Stress<br/>Test]
+    D --> E[5. Risk<br/>Forecast]
+    E --> Decision[Validated<br/>Decision]
+    style A fill:#ff6b6b
+    style B fill:#ffa726
+    style C fill:#66bb6a
+    style D fill:#ffa726
+    style E fill:#ff6b6b
+    style Start fill:#42a5f5
+    style Decision fill:#66bb6a
+```
+
+> **CLAUDE.md Implementation**: This 5-step process is mandated in [CLAUDE.md Decision Framework](../../../CLAUDE.md#decision-framework) as "MANDATORY CONTRARIAN DISCIPLINE (before any decision)" ensuring systematic validation of all CEO decisions.
 
 ### Theoretical Foundation
 
@@ -242,6 +293,23 @@ The pattern creates:
 
 ### Agent Roles and Hierarchy
 
+```mermaid
+graph TD
+    CEO[CEO<br/>Claude with CLAUDE.md]
+    CEO --> CoS[Chief of Staff<br/>workflow-orchestrator]
+    CEO --> CISO[CISO<br/>security-orchestrator]
+    CoS --> Specialists[93 Specialist Agents]
+    CISO --> SecChain[Security Validation Chain]
+    Specialists --> Python[python-pro]
+    Specialists --> React[react-expert]
+    Specialists --> AWS[aws-expert]
+    Specialists --> More[...]
+    CoS --> Analyzers[7 Analyzer Agents]
+    Analyzers --> Review[code-reviewer]
+    Analyzers --> Coverage[test-coverage-analyzer]
+    Analyzers --> Summary[work-completion-summary]
+```
+
 #### Chief of Staff (CoS) - workflow-orchestrator
 
 **Real-World Parallel**: White House Chief of Staff
@@ -326,6 +394,18 @@ The named roles create:
 2. **OPERATIONAL** (Pattern): Adjust team processes
 3. **STRATEGIC** (Systemic): Restructure the organization
 
+```mermaid
+graph TD
+    Problem[Problem Identified]
+    Problem --> Level{Determine Level}
+    Level -->|Quick Fix| Tactical[TACTICAL<br/>Single Decision<br/>~30 seconds]
+    Level -->|Pattern| Operational[OPERATIONAL<br/>Process Adjustment<br/>~5 minutes]
+    Level -->|Systemic| Strategic[STRATEGIC<br/>Org Restructure<br/>~30 minutes]
+    Tactical --> Delegate[Delegate to Agent]
+    Operational --> Workflow[Adjust Workflow]
+    Strategic --> Reorg[Reorganize Team]
+```
+
 ### Theoretical Foundation
 
 **Boyd's OODA Loop** (Observe, Orient, Decide, Act):
@@ -365,6 +445,56 @@ The hierarchy prevents over-engineering:
 - 80% of issues are tactical → fast resolution
 - 15% are operational → measured improvement
 - 5% are strategic → careful restructuring
+
+### Validation Methodology
+
+The behavioral testing framework establishes empirical validation of the CLAUDE.md CEO transformation through systematic measurement and analysis.
+
+#### Measurement Framework
+
+**Primary Metrics** (FR-021-025 Implementation):
+- **Delegation Rate**: Percentage of tasks delegated vs. implemented directly
+- **Decision Quality**: Percentage of decisions requiring reversal or significant modification
+- **Scope Adherence**: Percentage of projects delivered within original scope boundaries
+- **Time-to-Completion**: Average duration from request to deliverable completion
+- **Alternative Consideration**: Number of viable alternatives evaluated per decision
+
+#### Baseline Establishment
+
+**Pre-Framework Baseline** (To be measured):
+- Current delegation patterns without CEO behavioral constraints
+- Decision reversal rates under standard CLAUDE.md configuration
+- Typical scope creep incidents and severity metrics
+- Standard completion velocity across task categories
+
+**Post-Framework Measurement** (Ongoing via FR-021-025):
+- CEO framework behavioral compliance assessment
+- Contrarian discipline application verification
+- Agent utilization patterns and delegation effectiveness
+- Quality outcomes through specialist coordination
+
+#### Validation Approach
+
+**LLM-as-Judge Methodology**:
+1. **Behavioral Assessment**: Evaluate responses for CEO role adherence
+2. **Delegation Compliance**: Verify proper workflow-orchestrator utilization
+3. **Decision Quality**: Analyze contrarian discipline application
+4. **Outcome Measurement**: Track deliverable quality and timeline adherence
+
+**Statistical Validation**:
+- A/B testing between standard and CEO framework configurations
+- Longitudinal analysis of behavioral pattern evolution
+- Correlation analysis between framework adherence and outcome quality
+- Regression testing for behavioral consistency over time
+
+#### Current Validation Status
+
+**Framework Development**: FR-021-025 behavioral testing requirements defined
+**Implementation Phase**: Validation tooling and measurement infrastructure pending
+**Baseline Collection**: Pre-framework behavioral patterns awaiting measurement
+**Expected Timeline**: Initial validation results within 30 days of framework deployment
+
+This methodology ensures the CLAUDE.md CEO transformation claims are empirically validated rather than theoretically asserted, maintaining scientific rigor in behavioral architecture documentation.
 
 ## Validation and Proof Points
 
