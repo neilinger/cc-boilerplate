@@ -1,0 +1,879 @@
+openapi: 3.0.3
+info:
+  title: CC-Boilerplate Agent Orchestration API
+  description: |
+    Core API for managing and orchestrating 100+ specialized agents in the CC-Boilerplate Strategic Accelerator Framework.
+    Handles agent discovery, capability matching, execution coordination, and competency scoring.
+  version: 1.0.0
+  contact:
+    name: CC-Boilerplate Framework
+    email: neil@scholten.io
+
+servers:
+  - url: https://api.cc-boilerplate.dev/v1
+    description: Production API
+  - url: https://staging-api.cc-boilerplate.dev/v1
+    description: Staging API
+
+paths:
+  /agents:
+    get:
+      summary: List all available agents
+      description: Retrieve agents with optional filtering by capabilities, category, and status
+      parameters:
+        - name: capabilities
+          in: query
+          description: Filter by required capabilities (comma-separated)
+          schema:
+            type: string
+            example: "code_generation,testing,documentation"
+        - name: category
+          in: query
+          description: Filter by agent category
+          schema:
+            type: string
+            enum: [backend, frontend, devops, security, data, mobile, ai_ml, testing, documentation]
+        - name: cognitive_load_tier
+          in: query
+          description: Filter by cognitive complexity tier
+          schema:
+            type: string
+            enum: [haiku, sonnet, opus]
+        - name: status
+          in: query
+          description: Filter by agent status
+          schema:
+            type: string
+            enum: [active, inactive, maintenance, deprecated]
+            default: active
+        - name: min_competency
+          in: query
+          description: Minimum competency score for task type
+          schema:
+            type: number
+            format: float
+            minimum: 0.0
+            maximum: 1.0
+      responses:
+        '200':
+          description: List of agents matching criteria
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Agent'
+                  total_count:
+                    type: integer
+                  filtered_count:
+                    type: integer
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    post:
+      summary: Register new agent
+      description: Add a new specialized agent to the orchestration system
+      security:
+        - AgentAuth: [agent.create]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentCreate'
+      responses:
+        '201':
+          description: Agent successfully registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: Agent with same name already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ConflictError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /agents/{agent_id}:
+    get:
+      summary: Get agent details
+      description: Retrieve detailed information about a specific agent
+      parameters:
+        - name: agent_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Agent details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    put:
+      summary: Update agent configuration
+      description: Update agent capabilities, status, or configuration
+      security:
+        - AgentAuth: [agent.update]
+      parameters:
+        - name: agent_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentUpdate'
+      responses:
+        '200':
+          description: Agent successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    delete:
+      summary: Deactivate agent
+      description: Mark agent as deprecated (soft delete)
+      security:
+        - AgentAuth: [agent.delete]
+      parameters:
+        - name: agent_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Agent successfully deactivated
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /agents/{agent_id}/execute:
+    post:
+      summary: Execute agent task
+      description: Trigger agent execution for a specific task with context
+      security:
+        - AgentAuth: [agent.execute]
+      parameters:
+        - name: agent_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentExecutionRequest'
+      responses:
+        '202':
+          description: Execution started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentExecution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          description: Agent unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ServiceUnavailable'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /agents/{agent_id}/competency:
+    get:
+      summary: Get agent competency scores
+      description: Retrieve competency scores for different task types
+      parameters:
+        - name: agent_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: task_type
+          in: query
+          description: Filter by specific task type
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Agent competency scores
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agent_id:
+                    type: string
+                    format: uuid
+                  competency_scores:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CompetencyScore'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    post:
+      summary: Update competency score
+      description: Record new competency measurement for agent
+      security:
+        - AgentAuth: [competency.update]
+      parameters:
+        - name: agent_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetencyUpdate'
+      responses:
+        '201':
+          description: Competency score recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetencyScore'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /agent-discovery:
+    post:
+      summary: Discover optimal agent for task
+      description: Find the best agent match based on task requirements and current availability
+      security:
+        - AgentAuth: [agent.discover]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentDiscoveryRequest'
+      responses:
+        '200':
+          description: Agent recommendations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recommendations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AgentRecommendation'
+                  selection_criteria:
+                    type: object
+                    description: Criteria used for agent selection
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          description: No suitable agents found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "No agents found matching criteria"
+                  suggestions:
+                    type: array
+                    items:
+                      type: string
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /executions:
+    get:
+      summary: List agent executions
+      description: Retrieve execution history with filtering options
+      parameters:
+        - name: agent_id
+          in: query
+          description: Filter by agent ID
+          schema:
+            type: string
+            format: uuid
+        - name: status
+          in: query
+          description: Filter by execution status
+          schema:
+            type: string
+            enum: [pending, running, completed, failed, timeout]
+        - name: from_date
+          in: query
+          description: Start date for execution range
+          schema:
+            type: string
+            format: date-time
+        - name: to_date
+          in: query
+          description: End date for execution range
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          description: Maximum number of results
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 100
+      responses:
+        '200':
+          description: List of executions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  executions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AgentExecution'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /executions/{execution_id}:
+    get:
+      summary: Get execution details
+      description: Retrieve detailed information about a specific execution
+      parameters:
+        - name: execution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Execution details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentExecution'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+  securitySchemes:
+    AgentAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token with agent permissions
+
+  schemas:
+    Agent:
+      type: object
+      required:
+        - agent_id
+        - name
+        - role
+        - category
+        - capabilities
+        - tool_permissions
+        - cognitive_load_tier
+        - status
+        - security_clearance
+        - created_at
+        - updated_at
+      properties:
+        agent_id:
+          type: string
+          format: uuid
+          description: Unique identifier for the agent
+        name:
+          type: string
+          minLength: 3
+          maxLength: 50
+          pattern: '^[a-zA-Z0-9_-]+$'
+          description: Agent name (alphanumeric, dash, underscore only)
+        role:
+          type: string
+          enum: [specialist, orchestrator, analyzer]
+          description: Agent's primary role in the system
+        category:
+          type: string
+          description: Domain-specific classification
+          enum: [backend, frontend, devops, security, data, mobile, ai_ml, testing, documentation]
+        capabilities:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: List of agent capabilities
+        tool_permissions:
+          type: object
+          additionalProperties:
+            type: string
+            enum: [none, read, write, execute, admin]
+          description: Tool access permissions mapping
+        cognitive_load_tier:
+          type: string
+          enum: [haiku, sonnet, opus]
+          description: Cognitive complexity tier
+        competency_scores:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CompetencyScore'
+          description: Task type to competency score mapping
+        status:
+          type: string
+          enum: [active, inactive, maintenance, deprecated]
+          description: Current agent status
+        certification_level:
+          type: string
+          enum: [basic, advanced, expert, custom]
+          description: Agent certification level
+        security_clearance:
+          type: string
+          enum: [public, restricted, confidential, secret]
+          description: Security clearance level
+        created_at:
+          type: string
+          format: date-time
+          description: Agent creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
+
+    AgentCreate:
+      type: object
+      required:
+        - name
+        - role
+        - category
+        - capabilities
+        - tool_permissions
+        - cognitive_load_tier
+        - security_clearance
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 50
+          pattern: '^[a-zA-Z0-9_-]+$'
+        role:
+          type: string
+          enum: [specialist, orchestrator, analyzer]
+        category:
+          type: string
+          enum: [backend, frontend, devops, security, data, mobile, ai_ml, testing, documentation]
+        capabilities:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        tool_permissions:
+          type: object
+          additionalProperties:
+            type: string
+            enum: [none, read, write, execute, admin]
+        cognitive_load_tier:
+          type: string
+          enum: [haiku, sonnet, opus]
+        security_clearance:
+          type: string
+          enum: [public, restricted, confidential, secret]
+        certification_level:
+          type: string
+          enum: [basic, advanced, expert, custom]
+          default: basic
+
+    AgentUpdate:
+      type: object
+      properties:
+        capabilities:
+          type: array
+          items:
+            type: string
+        tool_permissions:
+          type: object
+          additionalProperties:
+            type: string
+            enum: [none, read, write, execute, admin]
+        status:
+          type: string
+          enum: [active, inactive, maintenance, deprecated]
+        certification_level:
+          type: string
+          enum: [basic, advanced, expert, custom]
+        security_clearance:
+          type: string
+          enum: [public, restricted, confidential, secret]
+
+    CompetencyScore:
+      type: object
+      required:
+        - score_id
+        - agent_id
+        - task_type
+        - confidence_score
+        - calculation_method
+        - sample_size
+        - last_updated
+        - validity_period_days
+      properties:
+        score_id:
+          type: string
+          format: uuid
+        agent_id:
+          type: string
+          format: uuid
+        task_type:
+          type: string
+          description: Standardized task classification
+        confidence_score:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          description: Confidence level for task execution
+        evidence_data:
+          type: object
+          description: Supporting metrics and data
+        calculation_method:
+          type: string
+          enum: [heuristic, ml_model, benchmark, manual]
+        sample_size:
+          type: integer
+          minimum: 1
+          description: Number of observations used
+        last_updated:
+          type: string
+          format: date-time
+        validity_period_days:
+          type: integer
+          minimum: 1
+          maximum: 365
+        feedback_integration:
+          type: boolean
+          default: true
+
+    CompetencyUpdate:
+      type: object
+      required:
+        - task_type
+        - confidence_score
+        - calculation_method
+        - sample_size
+        - evidence_data
+      properties:
+        task_type:
+          type: string
+        confidence_score:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+        calculation_method:
+          type: string
+          enum: [heuristic, ml_model, benchmark, manual]
+        sample_size:
+          type: integer
+          minimum: 1
+        evidence_data:
+          type: object
+        validity_period_days:
+          type: integer
+          minimum: 1
+          maximum: 365
+          default: 30
+
+    AgentExecutionRequest:
+      type: object
+      required:
+        - task_description
+        - task_type
+        - context
+      properties:
+        task_description:
+          type: string
+          minLength: 10
+          maxLength: 5000
+          description: Detailed task description
+        task_type:
+          type: string
+          description: Type of task to execute
+        context:
+          type: object
+          description: Execution context and parameters
+        priority:
+          type: string
+          enum: [low, medium, high, urgent]
+          default: medium
+        timeout_minutes:
+          type: integer
+          minimum: 1
+          maximum: 480
+          default: 60
+        callback_url:
+          type: string
+          format: uri
+          description: Webhook for execution status updates
+
+    AgentExecution:
+      type: object
+      required:
+        - execution_id
+        - agent_id
+        - task_description
+        - task_type
+        - status
+        - created_at
+      properties:
+        execution_id:
+          type: string
+          format: uuid
+        agent_id:
+          type: string
+          format: uuid
+        task_description:
+          type: string
+        task_type:
+          type: string
+        context:
+          type: object
+        status:
+          type: string
+          enum: [pending, running, completed, failed, timeout]
+        priority:
+          type: string
+          enum: [low, medium, high, urgent]
+        result:
+          type: object
+          description: Execution result (available when completed)
+        error_message:
+          type: string
+          description: Error details (available when failed)
+        performance_metrics:
+          type: object
+          description: Execution performance data
+        created_at:
+          type: string
+          format: date-time
+        started_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+
+    AgentDiscoveryRequest:
+      type: object
+      required:
+        - task_type
+        - required_capabilities
+      properties:
+        task_type:
+          type: string
+          description: Type of task requiring agent
+        required_capabilities:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: Capabilities required for the task
+        preferred_cognitive_tier:
+          type: string
+          enum: [haiku, sonnet, opus]
+          description: Preferred cognitive complexity
+        minimum_competency:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          default: 0.7
+        exclude_agents:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Agent IDs to exclude from selection
+        context:
+          type: object
+          description: Additional context for agent selection
+
+    AgentRecommendation:
+      type: object
+      required:
+        - agent_id
+        - match_score
+        - competency_score
+        - availability_status
+      properties:
+        agent_id:
+          type: string
+          format: uuid
+        agent_name:
+          type: string
+        match_score:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          description: How well agent matches requirements
+        competency_score:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          description: Agent's competency for this task type
+        availability_status:
+          type: string
+          enum: [available, busy, maintenance, unavailable]
+        estimated_completion_time:
+          type: integer
+          description: Estimated completion time in minutes
+        reasoning:
+          type: string
+          description: Explanation for the recommendation
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          minimum: 1
+        per_page:
+          type: integer
+          minimum: 1
+          maximum: 1000
+        total_pages:
+          type: integer
+        total_count:
+          type: integer
+        has_next:
+          type: boolean
+        has_prev:
+          type: boolean
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Invalid request parameters"
+              details:
+                type: array
+                items:
+                  type: string
+              validation_errors:
+                type: object
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Agent not found"
+              resource_id:
+                type: string
+
+    ConflictError:
+      description: Resource conflict
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Agent with this name already exists"
+              conflicting_resource:
+                type: string
+
+    ServiceUnavailable:
+      description: Service temporarily unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Agent is currently busy or in maintenance"
+              retry_after:
+                type: integer
+                description: Suggested retry delay in seconds
+
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Internal server error"
+              request_id:
+                type: string
+                format: uuid

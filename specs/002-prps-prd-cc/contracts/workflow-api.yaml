@@ -1,0 +1,1205 @@
+openapi: 3.0.3
+info:
+  title: CC-Boilerplate Workflow Orchestration API
+  description: |
+    Workflow coordination and orchestration API for the CC-Boilerplate Strategic Accelerator Framework.
+    Manages complex multi-agent workflows, quality gates, and execution coordination.
+  version: 1.0.0
+  contact:
+    name: CC-Boilerplate Framework
+    email: neil@scholten.io
+
+servers:
+  - url: https://api.cc-boilerplate.dev/v1
+    description: Production API
+  - url: https://staging-api.cc-boilerplate.dev/v1
+    description: Staging API
+
+paths:
+  /workflows:
+    get:
+      summary: List workflows
+      description: Retrieve workflows with optional filtering by type and status
+      parameters:
+        - name: workflow_type
+          in: query
+          description: Filter by workflow type
+          schema:
+            type: string
+            enum: [discovery, implementation, validation, recovery, security]
+        - name: status
+          in: query
+          description: Filter by workflow status
+          schema:
+            type: string
+            enum: [pending, running, completed, failed, timeout, halted]
+        - name: created_by
+          in: query
+          description: Filter by creator agent ID
+          schema:
+            type: string
+            format: uuid
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: List of workflows
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workflows:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Workflow'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    post:
+      summary: Create workflow
+      description: Create a new multi-agent workflow with defined steps and quality gates
+      security:
+        - WorkflowAuth: [workflow.create]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowCreate'
+      responses:
+        '201':
+          description: Workflow successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: Workflow dependency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ConflictError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /workflows/{workflow_id}:
+    get:
+      summary: Get workflow details
+      description: Retrieve detailed workflow information including steps and execution status
+      parameters:
+        - name: workflow_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Workflow details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    put:
+      summary: Update workflow
+      description: Update workflow configuration (only allowed for pending workflows)
+      security:
+        - WorkflowAuth: [workflow.update]
+      parameters:
+        - name: workflow_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowUpdate'
+      responses:
+        '200':
+          description: Workflow successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Cannot update running workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ConflictError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    delete:
+      summary: Cancel workflow
+      description: Cancel a pending or running workflow
+      security:
+        - WorkflowAuth: [workflow.cancel]
+      parameters:
+        - name: workflow_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: force
+          in: query
+          description: Force cancellation of running workflow
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '204':
+          description: Workflow successfully cancelled
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Cannot cancel completed workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ConflictError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /workflows/{workflow_id}/execute:
+    post:
+      summary: Execute workflow
+      description: Start workflow execution with provided context
+      security:
+        - WorkflowAuth: [workflow.execute]
+      parameters:
+        - name: workflow_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowExecutionRequest'
+      responses:
+        '202':
+          description: Workflow execution started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowExecution'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Workflow already running
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ConflictError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /workflows/{workflow_id}/steps:
+    get:
+      summary: Get workflow steps
+      description: Retrieve all steps in the workflow with execution status
+      parameters:
+        - name: workflow_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Workflow steps
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  steps:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkflowStep'
+                  execution_graph:
+                    type: object
+                    description: Step dependency graph
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /workflows/{workflow_id}/pause:
+    post:
+      summary: Pause workflow execution
+      description: Temporarily halt workflow execution (can be resumed)
+      security:
+        - WorkflowAuth: [workflow.control]
+      parameters:
+        - name: workflow_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: Reason for pausing
+      responses:
+        '200':
+          description: Workflow paused
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "halted"
+                  paused_at:
+                    type: string
+                    format: date-time
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Workflow not in pausable state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ConflictError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /workflows/{workflow_id}/resume:
+    post:
+      summary: Resume workflow execution
+      description: Resume a paused workflow from where it left off
+      security:
+        - WorkflowAuth: [workflow.control]
+      parameters:
+        - name: workflow_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Workflow resumed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "running"
+                  resumed_at:
+                    type: string
+                    format: date-time
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Workflow not in paused state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ConflictError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /quality-gates:
+    get:
+      summary: List quality gates
+      description: Retrieve quality gates with filtering options
+      parameters:
+        - name: gate_type
+          in: query
+          description: Filter by gate type
+          schema:
+            type: string
+            enum: [code_quality, security, performance, compliance, documentation]
+        - name: blocking_level
+          in: query
+          description: Filter by blocking level
+          schema:
+            type: string
+            enum: [non_blocking, warning, error, critical]
+      responses:
+        '200':
+          description: List of quality gates
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  quality_gates:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/QualityGate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    post:
+      summary: Create quality gate
+      description: Define a new quality gate for workflow validation
+      security:
+        - WorkflowAuth: [quality_gate.create]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QualityGateCreate'
+      responses:
+        '201':
+          description: Quality gate created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QualityGate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /quality-gates/{gate_id}/execute:
+    post:
+      summary: Execute quality gate
+      description: Run quality gate validation against provided context
+      security:
+        - WorkflowAuth: [quality_gate.execute]
+      parameters:
+        - name: gate_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QualityGateExecutionRequest'
+      responses:
+        '200':
+          description: Quality gate execution completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QualityGateResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /workflow-templates:
+    get:
+      summary: List workflow templates
+      description: Retrieve predefined workflow templates for common patterns
+      parameters:
+        - name: category
+          in: query
+          description: Filter by template category
+          schema:
+            type: string
+            enum: [discovery, recovery, deployment, validation, integration]
+      responses:
+        '200':
+          description: List of workflow templates
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  templates:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkflowTemplate'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    post:
+      summary: Create workflow from template
+      description: Instantiate a new workflow from a predefined template
+      security:
+        - WorkflowAuth: [workflow.create]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowFromTemplate'
+      responses:
+        '201':
+          description: Workflow created from template
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          description: Template not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+  securitySchemes:
+    WorkflowAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token with workflow permissions
+
+  schemas:
+    Workflow:
+      type: object
+      required:
+        - workflow_id
+        - name
+        - description
+        - workflow_type
+        - trigger_conditions
+        - steps
+        - timeout_minutes
+        - status
+        - created_at
+        - created_by
+      properties:
+        workflow_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 3
+          maxLength: 100
+        description:
+          type: string
+          minLength: 20
+          maxLength: 1000
+        workflow_type:
+          type: string
+          enum: [discovery, implementation, validation, recovery, security]
+        trigger_conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TriggerCondition'
+          minItems: 1
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowStep'
+          minItems: 1
+        security_chain_required:
+          type: boolean
+          default: false
+        parallel_execution_allowed:
+          type: boolean
+          default: false
+        timeout_minutes:
+          type: integer
+          minimum: 5
+          maximum: 480
+        retry_strategy:
+          $ref: '#/components/schemas/RetryStrategy'
+        quality_gates:
+          type: array
+          items:
+            type: string
+            format: uuid
+        status:
+          type: string
+          enum: [pending, running, completed, failed, timeout, halted]
+        execution_context:
+          type: object
+          description: Runtime execution data
+        created_at:
+          type: string
+          format: date-time
+        started_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+
+    WorkflowDetail:
+      allOf:
+        - $ref: '#/components/schemas/Workflow'
+        - type: object
+          properties:
+            step_executions:
+              type: array
+              items:
+                $ref: '#/components/schemas/StepExecution'
+            quality_gate_results:
+              type: array
+              items:
+                $ref: '#/components/schemas/QualityGateResult'
+            execution_metrics:
+              $ref: '#/components/schemas/ExecutionMetrics'
+
+    WorkflowCreate:
+      type: object
+      required:
+        - name
+        - description
+        - workflow_type
+        - trigger_conditions
+        - steps
+        - timeout_minutes
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 100
+        description:
+          type: string
+          minLength: 20
+          maxLength: 1000
+        workflow_type:
+          type: string
+          enum: [discovery, implementation, validation, recovery, security]
+        trigger_conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TriggerCondition'
+          minItems: 1
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowStepCreate'
+          minItems: 1
+        security_chain_required:
+          type: boolean
+          default: false
+        parallel_execution_allowed:
+          type: boolean
+          default: false
+        timeout_minutes:
+          type: integer
+          minimum: 5
+          maximum: 480
+        retry_strategy:
+          $ref: '#/components/schemas/RetryStrategy'
+        quality_gates:
+          type: array
+          items:
+            type: string
+            format: uuid
+
+    WorkflowUpdate:
+      type: object
+      properties:
+        description:
+          type: string
+          minLength: 20
+          maxLength: 1000
+        timeout_minutes:
+          type: integer
+          minimum: 5
+          maximum: 480
+        retry_strategy:
+          $ref: '#/components/schemas/RetryStrategy'
+        quality_gates:
+          type: array
+          items:
+            type: string
+            format: uuid
+
+    WorkflowStep:
+      type: object
+      required:
+        - step_id
+        - agent_id
+        - order
+        - required
+        - timeout_minutes
+      properties:
+        step_id:
+          type: string
+          format: uuid
+        agent_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          description: Human-readable step name
+        order:
+          type: integer
+          minimum: 0
+          description: Execution order (0-based)
+        required:
+          type: boolean
+          description: Whether step failure fails entire workflow
+        timeout_minutes:
+          type: integer
+          minimum: 1
+          maximum: 240
+        condition:
+          type: string
+          description: Optional condition for step execution
+        inputs:
+          type: object
+          description: Input parameters for the step
+        outputs:
+          type: object
+          description: Expected output structure
+        dependencies:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Step IDs this step depends on
+
+    WorkflowStepCreate:
+      type: object
+      required:
+        - agent_id
+        - order
+        - required
+        - timeout_minutes
+      properties:
+        agent_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        order:
+          type: integer
+          minimum: 0
+        required:
+          type: boolean
+        timeout_minutes:
+          type: integer
+          minimum: 1
+          maximum: 240
+        condition:
+          type: string
+        inputs:
+          type: object
+        outputs:
+          type: object
+        dependencies:
+          type: array
+          items:
+            type: string
+            format: uuid
+
+    StepExecution:
+      type: object
+      properties:
+        step_id:
+          type: string
+          format: uuid
+        execution_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [pending, running, completed, failed, skipped]
+        result:
+          type: object
+        error_message:
+          type: string
+        started_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        duration_ms:
+          type: integer
+
+    TriggerCondition:
+      type: object
+      required:
+        - condition_type
+        - condition_value
+      properties:
+        condition_type:
+          type: string
+          enum: [event, schedule, threshold, manual]
+        condition_value:
+          type: string
+          description: Condition-specific value or expression
+        parameters:
+          type: object
+          description: Additional condition parameters
+
+    RetryStrategy:
+      type: object
+      required:
+        - max_attempts
+        - backoff_strategy
+      properties:
+        max_attempts:
+          type: integer
+          minimum: 1
+          maximum: 5
+        backoff_strategy:
+          type: string
+          enum: [none, linear, exponential, custom]
+        initial_delay_ms:
+          type: integer
+          minimum: 100
+          default: 1000
+        max_delay_ms:
+          type: integer
+          minimum: 1000
+          default: 30000
+        backoff_multiplier:
+          type: number
+          format: float
+          minimum: 1.0
+          default: 2.0
+
+    WorkflowExecutionRequest:
+      type: object
+      required:
+        - execution_context
+      properties:
+        execution_context:
+          type: object
+          description: Context and parameters for workflow execution
+        priority:
+          type: string
+          enum: [low, medium, high, urgent]
+          default: medium
+        callback_url:
+          type: string
+          format: uri
+          description: Webhook for execution status updates
+
+    WorkflowExecution:
+      type: object
+      properties:
+        execution_id:
+          type: string
+          format: uuid
+        workflow_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [pending, running, completed, failed, timeout, halted]
+        execution_context:
+          type: object
+        started_at:
+          type: string
+          format: date-time
+        estimated_completion:
+          type: string
+          format: date-time
+
+    QualityGate:
+      type: object
+      required:
+        - gate_id
+        - name
+        - description
+        - gate_type
+        - trigger_conditions
+        - validation_rules
+        - blocking_level
+        - success_threshold
+        - execution_timeout_seconds
+        - created_at
+      properties:
+        gate_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 5
+          maxLength: 50
+        description:
+          type: string
+          minLength: 20
+          maxLength: 500
+        gate_type:
+          type: string
+          enum: [code_quality, security, performance, compliance, documentation]
+        trigger_conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TriggerCondition'
+          minItems: 1
+        validation_rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationRule'
+          minItems: 1
+        blocking_level:
+          type: string
+          enum: [non_blocking, warning, error, critical]
+        auto_fix_available:
+          type: boolean
+          default: false
+        fix_agent_id:
+          type: string
+          format: uuid
+        success_threshold:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+        execution_timeout_seconds:
+          type: integer
+          minimum: 1
+          maximum: 3600
+        retry_count:
+          type: integer
+          minimum: 0
+          maximum: 5
+        metrics_collection:
+          type: boolean
+          default: true
+        created_at:
+          type: string
+          format: date-time
+        last_executed:
+          type: string
+          format: date-time
+
+    QualityGateCreate:
+      type: object
+      required:
+        - name
+        - description
+        - gate_type
+        - trigger_conditions
+        - validation_rules
+        - blocking_level
+        - success_threshold
+        - execution_timeout_seconds
+      properties:
+        name:
+          type: string
+          minLength: 5
+          maxLength: 50
+        description:
+          type: string
+          minLength: 20
+          maxLength: 500
+        gate_type:
+          type: string
+          enum: [code_quality, security, performance, compliance, documentation]
+        trigger_conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TriggerCondition'
+          minItems: 1
+        validation_rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationRule'
+          minItems: 1
+        blocking_level:
+          type: string
+          enum: [non_blocking, warning, error, critical]
+        auto_fix_available:
+          type: boolean
+          default: false
+        fix_agent_id:
+          type: string
+          format: uuid
+        success_threshold:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+        execution_timeout_seconds:
+          type: integer
+          minimum: 1
+          maximum: 3600
+        retry_count:
+          type: integer
+          minimum: 0
+          maximum: 5
+          default: 1
+
+    ValidationRule:
+      type: object
+      required:
+        - rule_name
+        - rule_type
+        - criteria
+      properties:
+        rule_name:
+          type: string
+        rule_type:
+          type: string
+          enum: [static_check, dynamic_test, external_service, manual_review]
+        criteria:
+          type: string
+          description: Rule criteria or expression
+        weight:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          default: 1.0
+        required:
+          type: boolean
+          default: true
+
+    QualityGateExecutionRequest:
+      type: object
+      required:
+        - context
+      properties:
+        context:
+          type: object
+          description: Context for quality gate validation
+        override_timeout:
+          type: integer
+          minimum: 1
+          maximum: 3600
+          description: Override default timeout for this execution
+
+    QualityGateResult:
+      type: object
+      properties:
+        execution_id:
+          type: string
+          format: uuid
+        gate_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [passed, failed, warning, error]
+        score:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+        rule_results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationRuleResult'
+        recommendations:
+          type: array
+          items:
+            type: string
+        executed_at:
+          type: string
+          format: date-time
+        duration_ms:
+          type: integer
+
+    ValidationRuleResult:
+      type: object
+      properties:
+        rule_name:
+          type: string
+        status:
+          type: string
+          enum: [passed, failed, warning, error, skipped]
+        score:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+        message:
+          type: string
+        details:
+          type: object
+
+    WorkflowTemplate:
+      type: object
+      properties:
+        template_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          enum: [discovery, recovery, deployment, validation, integration]
+        template_version:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateParameter'
+        workflow_definition:
+          type: object
+          description: Parameterized workflow definition
+
+    TemplateParameter:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum: [string, integer, boolean, array, object]
+        required:
+          type: boolean
+        default_value:
+          description: Default parameter value
+        description:
+          type: string
+
+    WorkflowFromTemplate:
+      type: object
+      required:
+        - template_id
+        - parameters
+      properties:
+        template_id:
+          type: string
+          format: uuid
+        parameters:
+          type: object
+          description: Parameter values for template instantiation
+        name_override:
+          type: string
+          description: Override default workflow name
+
+    ExecutionMetrics:
+      type: object
+      properties:
+        total_duration_ms:
+          type: integer
+        steps_completed:
+          type: integer
+        steps_failed:
+          type: integer
+        steps_skipped:
+          type: integer
+        quality_gates_passed:
+          type: integer
+        quality_gates_failed:
+          type: integer
+        agents_involved:
+          type: integer
+        retry_count:
+          type: integer
+        resource_usage:
+          type: object
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        per_page:
+          type: integer
+        total_pages:
+          type: integer
+        total_count:
+          type: integer
+        has_next:
+          type: boolean
+        has_prev:
+          type: boolean
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Invalid request parameters"
+              details:
+                type: array
+                items:
+                  type: string
+              validation_errors:
+                type: object
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Workflow not found"
+              resource_id:
+                type: string
+
+    ConflictError:
+      description: Resource conflict
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Workflow is already running"
+              current_state:
+                type: string
+
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Internal server error"
+              request_id:
+                type: string
+                format: uuid
