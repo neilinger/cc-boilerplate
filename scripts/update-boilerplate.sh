@@ -206,8 +206,15 @@ create_backup() {
     info "Creating backup at $BACKUP_DIR..."
     mkdir -p "$BACKUP_DIR"
 
-    # Backup current boilerplate
-    cp -r .claude/boilerplate "$BACKUP_DIR/"
+    if [[ "$SELF_HOSTED" == "true" ]]; then
+        # For self-hosted, backup the actual .claude content
+        [[ -d ".claude/agents" ]] && cp -r .claude/agents "$BACKUP_DIR/"
+        [[ -d ".claude/commands" ]] && cp -r .claude/commands "$BACKUP_DIR/"
+        [[ -d ".claude/hooks" ]] && cp -r .claude/hooks "$BACKUP_DIR/"
+    else
+        # Backup current boilerplate subtree
+        [[ -d ".claude/boilerplate" ]] && cp -r .claude/boilerplate "$BACKUP_DIR/"
+    fi
 
     # Backup current version file
     cp .boilerplate-version "$BACKUP_DIR/"
@@ -228,9 +235,15 @@ rollback_changes() {
 
     warn "Rolling back changes..."
 
-    # Restore boilerplate
-    rm -rf .claude/boilerplate
-    cp -r "$BACKUP_DIR/boilerplate" .claude/
+    if [[ "$SELF_HOSTED" == "true" ]]; then
+        # For self-hosted, restore actual .claude content
+        [[ -d "$BACKUP_DIR/agents" ]] && { rm -rf .claude/agents; cp -r "$BACKUP_DIR/agents" .claude/; }
+        [[ -d "$BACKUP_DIR/commands" ]] && { rm -rf .claude/commands; cp -r "$BACKUP_DIR/commands" .claude/; }
+        [[ -d "$BACKUP_DIR/hooks" ]] && { rm -rf .claude/hooks; cp -r "$BACKUP_DIR/hooks" .claude/; }
+    else
+        # Restore boilerplate subtree
+        [[ -d "$BACKUP_DIR/boilerplate" ]] && { rm -rf .claude/boilerplate; cp -r "$BACKUP_DIR/boilerplate" .claude/; }
+    fi
 
     # Restore version file
     cp "$BACKUP_DIR/.boilerplate-version" .
@@ -273,19 +286,31 @@ perform_update() {
 
         # Update agents
         if [[ -d "boilerplate/.claude/agents" ]]; then
-            rsync -av --delete "boilerplate/.claude/agents/" ".claude/agents/" || abort "Failed to sync agents"
+            if command -v rsync >/dev/null 2>&1; then
+                rsync -av --delete "boilerplate/.claude/agents/" ".claude/agents/" || abort "Failed to sync agents"
+            else
+                rm -rf .claude/agents && cp -r "boilerplate/.claude/agents" ".claude/agents" || abort "Failed to sync agents"
+            fi
             success "Agents updated"
         fi
 
         # Update commands
         if [[ -d "boilerplate/.claude/commands" ]]; then
-            rsync -av --delete "boilerplate/.claude/commands/" ".claude/commands/" || abort "Failed to sync commands"
+            if command -v rsync >/dev/null 2>&1; then
+                rsync -av --delete "boilerplate/.claude/commands/" ".claude/commands/" || abort "Failed to sync commands"
+            else
+                rm -rf .claude/commands && cp -r "boilerplate/.claude/commands" ".claude/commands" || abort "Failed to sync commands"
+            fi
             success "Commands updated"
         fi
 
         # Update hooks
         if [[ -d "boilerplate/.claude/hooks" ]]; then
-            rsync -av --delete "boilerplate/.claude/hooks/" ".claude/hooks/" || abort "Failed to sync hooks"
+            if command -v rsync >/dev/null 2>&1; then
+                rsync -av --delete "boilerplate/.claude/hooks/" ".claude/hooks/" || abort "Failed to sync hooks"
+            else
+                rm -rf .claude/hooks && cp -r "boilerplate/.claude/hooks" ".claude/hooks" || abort "Failed to sync hooks"
+            fi
             success "Hooks updated"
         fi
 
