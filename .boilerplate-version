@@ -1,1 +1,10 @@
-1.6.0
+{
+  "version": "v1.6.0",
+  "commit": "569d41e",
+  "date": "2025-09-22",
+  "branch": "main",
+  "repository": "https://github.com/neilinger/cc-boilerplate.git",
+  "initialized_at": "2025-09-22T06:00:00Z",
+  "self_hosted": true,
+  "note": "This is the source cc-boilerplate repository"
+}

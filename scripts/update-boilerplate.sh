@@ -62,8 +62,14 @@ check_requirements() {
         abort "Boilerplate not initialized. Run scripts/init-boilerplate.sh first"
     fi
 
-    if [[ ! -d ".claude/boilerplate" ]]; then
+    # Check if this is the source cc-boilerplate repository
+    if [[ -d "boilerplate" && -f "boilerplate/CLAUDE.template.md" ]]; then
+        info "Detected source cc-boilerplate repository"
+        SELF_HOSTED=true
+    elif [[ ! -d ".claude/boilerplate" ]]; then
         abort "Boilerplate directory not found. Run scripts/init-boilerplate.sh first"
+    else
+        SELF_HOSTED=false
     fi
 }
 
@@ -72,6 +78,7 @@ parse_args() {
     DRY_RUN=false
     FORCE=false
     BRANCH=""
+    SELF_HOSTED=false
 
     while [[ $# -gt 0 ]]; do
         case $1 in
@@ -166,13 +173,27 @@ fetch_remote() {
 
 # Get remote commit info
 get_remote_info() {
-    REMOTE_COMMIT=$(git rev-parse cc-boilerplate/"$BRANCH" 2>/dev/null || abort "Branch $BRANCH not found on remote")
-    REMOTE_COMMIT_SHORT=${REMOTE_COMMIT:0:7}
+    if [[ "$SELF_HOSTED" == "true" ]]; then
+        # For self-hosted (source repo), get latest release tag
+        REMOTE_TAG=$(gh api repos/neilinger/cc-boilerplate/releases/latest --jq '.tag_name' 2>/dev/null || echo "v1.6.0")
+        REMOTE_COMMIT=$(git rev-parse HEAD 2>/dev/null || abort "Cannot get current commit")
+        REMOTE_COMMIT_SHORT=${REMOTE_COMMIT:0:7}
+        info "Self-hosted repository - current version: $CURRENT_VERSION, latest release: $REMOTE_TAG"
 
-    # Check if already up to date
-    if [[ "$CURRENT_COMMIT" == "$REMOTE_COMMIT_SHORT" ]]; then
-        success "Already up to date (commit: $CURRENT_COMMIT)"
-        exit 0
+        # For self-hosted, check if we're ahead of the release tag
+        if [[ "$CURRENT_VERSION" == "$REMOTE_TAG" ]]; then
+            success "Already at latest release version ($CURRENT_VERSION)"
+            exit 0
+        fi
+    else
+        REMOTE_COMMIT=$(git rev-parse cc-boilerplate/"$BRANCH" 2>/dev/null || abort "Branch $BRANCH not found on remote")
+        REMOTE_COMMIT_SHORT=${REMOTE_COMMIT:0:7}
+
+        # Check if already up to date
+        if [[ "$CURRENT_COMMIT" == "$REMOTE_COMMIT_SHORT" ]]; then
+            success "Already up to date (commit: $CURRENT_COMMIT)"
+            exit 0
+        fi
     fi
 }
 
@@ -244,13 +265,52 @@ show_dry_run() {
 
 # Perform the actual update
 perform_update() {
-    info "Updating boilerplate from commit $CURRENT_COMMIT to $REMOTE_COMMIT_SHORT..."
+    if [[ "$SELF_HOSTED" == "true" ]]; then
+        info "Self-hosted repository - updating to latest release version..."
 
-    # Use git subtree pull to update
-    if git subtree pull --prefix=.claude/boilerplate cc-boilerplate "$BRANCH" --squash; then
-        success "Boilerplate updated successfully"
+        # For self-hosted, sync content from boilerplate/ to .claude/
+        info "Syncing boilerplate content to .claude/ directories..."
+
+        # Update agents
+        if [[ -d "boilerplate/.claude/agents" ]]; then
+            rsync -av --delete "boilerplate/.claude/agents/" ".claude/agents/" || abort "Failed to sync agents"
+            success "Agents updated"
+        fi
+
+        # Update commands
+        if [[ -d "boilerplate/.claude/commands" ]]; then
+            rsync -av --delete "boilerplate/.claude/commands/" ".claude/commands/" || abort "Failed to sync commands"
+            success "Commands updated"
+        fi
+
+        # Update hooks
+        if [[ -d "boilerplate/.claude/hooks" ]]; then
+            rsync -av --delete "boilerplate/.claude/hooks/" ".claude/hooks/" || abort "Failed to sync hooks"
+            success "Hooks updated"
+        fi
+
+        # Update CLAUDE.md template if newer
+        if [[ -f "boilerplate/CLAUDE.template.md" ]]; then
+            if [[ ! -f "CLAUDE.md" || "boilerplate/CLAUDE.template.md" -nt "CLAUDE.md" ]]; then
+                cp "boilerplate/CLAUDE.template.md" "CLAUDE.md.new"
+                # Replace placeholder
+                sed -i.bak "s/{{PROJECT_NAME}}/cc-boilerplate/g" "CLAUDE.md.new"
+                rm "CLAUDE.md.new.bak"
+                mv "CLAUDE.md.new" "CLAUDE.md"
+                success "CLAUDE.md updated from template"
+            fi
+        fi
+
+        success "Self-hosted boilerplate content updated successfully"
     else
-        abort "Failed to update boilerplate subtree"
+        info "Updating boilerplate from commit $CURRENT_COMMIT to $REMOTE_COMMIT_SHORT..."
+
+        # Use git subtree pull to update
+        if git subtree pull --prefix=.claude/boilerplate cc-boilerplate "$BRANCH" --squash; then
+            success "Boilerplate updated successfully"
+        else
+            abort "Failed to update boilerplate subtree"
+        fi
     fi
 }
 
@@ -259,18 +319,37 @@ update_version_file() {
     local date
     date=$(date -u +"%Y-%m-%d")
 
-    # Read current version and increment patch version
-    local version_parts
-    IFS='.' read -ra version_parts <<< "$CURRENT_VERSION"
-    local major=${version_parts[0]:-1}
-    local minor=${version_parts[1]:-0}
-    local patch=${version_parts[2]:-0}
+    if [[ "$SELF_HOSTED" == "true" ]]; then
+        # For self-hosted, use the latest release tag
+        local new_version="$REMOTE_TAG"
 
-    # Increment patch version
-    ((patch++))
-    local new_version="$major.$minor.$patch"
+        cat > .boilerplate-version <<EOF
+{
+  "version": "$new_version",
+  "commit": "$REMOTE_COMMIT_SHORT",
+  "date": "$date",
+  "branch": "$BRANCH",
+  "repository": "$REPO_URL",
+  "previous_commit": "$CURRENT_COMMIT",
+  "updated_from": "$CURRENT_VERSION",
+  "self_hosted": true,
+  "note": "This is the source cc-boilerplate repository"
+}
+EOF
+        success "Version updated to $new_version (latest release)"
+    else
+        # Read current version and increment patch version
+        local version_parts
+        IFS='.' read -ra version_parts <<< "$CURRENT_VERSION"
+        local major=${version_parts[0]:-1}
+        local minor=${version_parts[1]:-0}
+        local patch=${version_parts[2]:-0}
 
-    cat > .boilerplate-version <<EOF
+        # Increment patch version
+        ((patch++))
+        local new_version="$major.$minor.$patch"
+
+        cat > .boilerplate-version <<EOF
 {
   "version": "$new_version",
   "commit": "$REMOTE_COMMIT_SHORT",
@@ -281,8 +360,8 @@ update_version_file() {
   "updated_from": "$CURRENT_VERSION"
 }
 EOF
-
-    success "Version updated to $new_version"
+        success "Version updated to $new_version"
+    fi
 }
 
 # Rebuild configurations
@@ -291,7 +370,9 @@ rebuild_configs() {
 
     # Look for build-config.sh in multiple locations
     local build_script=""
-    if [[ -f ".claude/boilerplate/scripts/build-config.sh" ]]; then
+    if [[ "$SELF_HOSTED" == "true" && -f "scripts/build-config.sh" ]]; then
+        build_script="scripts/build-config.sh"
+    elif [[ -f ".claude/boilerplate/scripts/build-config.sh" ]]; then
         build_script=".claude/boilerplate/scripts/build-config.sh"
     elif [[ -f "scripts/build-config.sh" ]]; then
         build_script="scripts/build-config.sh"
@@ -311,8 +392,13 @@ rebuild_configs() {
 update_claude_template() {
     info "Checking for CLAUDE.md template updates..."
 
-    # Check if new template exists in boilerplate
-    if [[ ! -f ".claude/boilerplate/CLAUDE.template.md" ]]; then
+    # Determine template location based on hosting type
+    local template_file=""
+    if [[ "$SELF_HOSTED" == "true" && -f "boilerplate/CLAUDE.template.md" ]]; then
+        template_file="boilerplate/CLAUDE.template.md"
+    elif [[ -f ".claude/boilerplate/CLAUDE.template.md" ]]; then
+        template_file=".claude/boilerplate/CLAUDE.template.md"
+    else
         info "No CLAUDE.template.md found in boilerplate, skipping"
         return 0
     fi
@@ -332,7 +418,7 @@ update_claude_template() {
         info "  - New template saved as: CLAUDE.md.boilerplate"
 
         # Save template separately for manual merge
-        cp .claude/boilerplate/CLAUDE.template.md CLAUDE.md.boilerplate
+        cp "$template_file" CLAUDE.md.boilerplate
 
         # Replace placeholders in the boilerplate version
         if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -355,7 +441,7 @@ update_claude_template() {
         echo ""
     else
         # No existing CLAUDE.md - safe to create from template
-        cp .claude/boilerplate/CLAUDE.template.md CLAUDE.md
+        cp "$template_file" CLAUDE.md
 
         # Replace placeholder with actual project name
         if [[ "$OSTYPE" == "darwin"* ]]; then
