@@ -226,6 +226,40 @@ create_backup() {
     success "Backup created at $BACKUP_DIR"
 }
 
+# Load ignore patterns from .boilerplate-ignore
+load_ignore_patterns() {
+    IGNORE_PATTERNS=()
+    local ignore_file="boilerplate/.boilerplate-ignore"
+
+    # Check if ignore file exists in boilerplate directory first
+    if [[ ! -f "$ignore_file" ]]; then
+        ignore_file=".boilerplate-ignore"
+    fi
+
+    if [[ -f "$ignore_file" ]]; then
+        info "Loading ignore patterns from $ignore_file..."
+        while IFS= read -r line || [[ -n "$line" ]]; do
+            # Skip empty lines and comments
+            [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+            # Remove leading/trailing whitespace
+            line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+            [[ -n "$line" ]] && IGNORE_PATTERNS+=("$line")
+        done < "$ignore_file"
+        info "Loaded ${#IGNORE_PATTERNS[@]} ignore patterns"
+    else
+        info "No .boilerplate-ignore file found - all files will be synced"
+    fi
+}
+
+# Generate rsync exclude arguments from ignore patterns
+get_rsync_excludes() {
+    local excludes=""
+    for pattern in "${IGNORE_PATTERNS[@]}"; do
+        excludes="$excludes --exclude=$pattern"
+    done
+    echo "$excludes"
+}
+
 # Rollback changes
 rollback_changes() {
     if [[ -z "${BACKUP_DIR:-}" || ! -d "$BACKUP_DIR" ]]; then
@@ -284,34 +318,46 @@ perform_update() {
         # For self-hosted, sync content from boilerplate/ to .claude/
         info "Syncing boilerplate content to .claude/ directories..."
 
+        # Load ignore patterns before syncing
+        load_ignore_patterns
+        local excludes
+        excludes=$(get_rsync_excludes)
+
         # Update agents
         if [[ -d "boilerplate/.claude/agents" ]]; then
             if command -v rsync >/dev/null 2>&1; then
-                rsync -av --delete "boilerplate/.claude/agents/" ".claude/agents/" || abort "Failed to sync agents"
+                # Use rsync with exclude patterns, but without --delete to preserve user files
+                eval "rsync -av $excludes \"boilerplate/.claude/agents/\" \".claude/agents/\"" || abort "Failed to sync agents"
             else
+                # For cp fallback, we can't easily exclude patterns, so just copy and warn
+                warn "rsync not available - copying all files without exclude patterns"
                 rm -rf .claude/agents && cp -r "boilerplate/.claude/agents" ".claude/agents" || abort "Failed to sync agents"
             fi
-            success "Agents updated"
+            success "Agents updated (with ignore patterns applied)"
         fi
 
         # Update commands
         if [[ -d "boilerplate/.claude/commands" ]]; then
             if command -v rsync >/dev/null 2>&1; then
-                rsync -av --delete "boilerplate/.claude/commands/" ".claude/commands/" || abort "Failed to sync commands"
+                # Use rsync with exclude patterns, but without --delete to preserve user files
+                eval "rsync -av $excludes \"boilerplate/.claude/commands/\" \".claude/commands/\"" || abort "Failed to sync commands"
             else
+                warn "rsync not available - copying all files without exclude patterns"
                 rm -rf .claude/commands && cp -r "boilerplate/.claude/commands" ".claude/commands" || abort "Failed to sync commands"
             fi
-            success "Commands updated"
+            success "Commands updated (with ignore patterns applied)"
         fi
 
         # Update hooks
         if [[ -d "boilerplate/.claude/hooks" ]]; then
             if command -v rsync >/dev/null 2>&1; then
-                rsync -av --delete "boilerplate/.claude/hooks/" ".claude/hooks/" || abort "Failed to sync hooks"
+                # Use rsync with exclude patterns, but without --delete to preserve user files
+                eval "rsync -av $excludes \"boilerplate/.claude/hooks/\" \".claude/hooks/\"" || abort "Failed to sync hooks"
             else
+                warn "rsync not available - copying all files without exclude patterns"
                 rm -rf .claude/hooks && cp -r "boilerplate/.claude/hooks" ".claude/hooks" || abort "Failed to sync hooks"
             fi
-            success "Hooks updated"
+            success "Hooks updated (with ignore patterns applied)"
         fi
 
         # Update CLAUDE.md template if newer
