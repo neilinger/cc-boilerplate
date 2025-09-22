@@ -1,0 +1,55 @@
+# Boilerplate Ignore Patterns
+# Files and directories that should never be overwritten or deleted during updates
+# Supports gitignore-style patterns (*, **, etc.)
+
+# User's custom commands and scripts
+.claude/commands/devops/**
+.claude/commands/custom/**
+.claude/commands/**/maintenance-*
+
+# User's custom agents
+.claude/agents/custom/**
+.claude/agents/**/user-*
+.claude/agents/**/project-*
+
+# User's custom hooks
+.claude/hooks/custom/**
+.claude/hooks/**/user-*
+.claude/hooks/**/project-*
+
+# User's PRPs and documentation
+PRPs/**/*.md
+docs/user/**
+docs/project/**
+
+# Project-specific configuration
+CLAUDE.md
+.env
+.env.*
+*.project.*
+*.local.*
+
+# User backups and data
+.claude/backups/**
+.claude/data/**
+data/**
+
+# Git and IDE files
+.git/**
+.vscode/**
+.idea/**
+*.swp
+*.swo
+*~
+
+# Python cache and virtual environments
+__pycache__/**
+*.pyc
+*.pyo
+.venv/**
+venv/**
+.pytest_cache/**
+
+# OS files
+.DS_Store
+Thumbs.db
