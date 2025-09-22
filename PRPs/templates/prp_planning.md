@@ -14,14 +14,6 @@ Generate comprehensive Product Requirements Documents (PRDs) with visual diagram
 
 ---
 
-## Goal
-
-**Feature Goal**: Generate comprehensive Product Requirements Documents (PRDs) with visual diagrams from rough ideas
-
-**Deliverable**: Detailed PRD with diagrams, user stories, architecture, and implementation strategy
-
-**Success Definition**: PRD enables direct transition to implementation PRP with clear technical specifications
-
 ## Initial Concept
 
 $ARGUMENTS
@@ -349,43 +341,3 @@ This creates a clean separation:
 - **Implementation PRP**: Technical context for coding
 
 The resulting PRD becomes the `$ARGUMENTS` input for spec-kit workflow via `/specify` command.
-
-## Implementation Blueprint
-
-### PRD Generation Process
-Execute comprehensive planning workflow to transform ideas into implementation-ready PRDs:
-
-```yaml
-prd_phases:
-  idea_expansion:
-    - Context gathering from market and technical research
-    - Initial exploration through web search and codebase analysis
-    - User research and clarification from stakeholders
-
-  prd_structure_generation:
-    - Executive summary with problem/solution/metrics
-    - User stories with scenarios and acceptance criteria
-    - System architecture with component breakdown
-    - Technical specifications with API design and data flow
-    - Implementation strategy with development phases
-
-  challenge_validation:
-    - Devil's advocate analysis of risks and edge cases
-    - Success criteria definition with measurable outcomes
-    - Pre-implementation checklist validation
-
-  output_generation:
-    - Structured PRD with all sections complete
-    - Mermaid diagrams for user flows, architecture, sequences
-    - Implementation phases with clear dependencies
-    - Validation commands for completeness checking
-```
-
-### Implementation Process
-1. **Context Research**: Gather comprehensive market and technical context
-2. **Visual Planning**: Create diagrams for all major flows and architecture
-3. **Story Development**: Write detailed user stories with acceptance criteria
-4. **Technical Design**: Specify APIs, data models, and system components
-5. **Risk Analysis**: Identify challenges and mitigation strategies
-6. **Phase Planning**: Break implementation into logical phases
-7. **Validation**: Ensure PRD completeness and implementation readiness
