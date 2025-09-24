@@ -423,6 +423,7 @@ python tests/test_hook_integration.py
 - **[Serena MCP Integration](docs/reference/serena-mcp.md)** - Semantic coding tools
 - **[TTS System](docs/reference/tts-system.md)** - Audio notification system
 - **[Agent System Reference](docs/reference/agent-system.md)** - Hierarchical orchestration guide
+- **[CLAUDE.md Behavioral Architecture](docs/architecture/claude-md-behavioral-architecture.md)** - Theoretical foundation, CEO model, and architectural constraints
 - **[Synchronization Guide](docs/SYNCHRONIZATION.md)** - Boilerplate update workflow
 
 ### Troubleshooting

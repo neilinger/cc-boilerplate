@@ -179,7 +179,7 @@ def main():
 
         # CEO Role Reminder - inject behavioral nudge (skip for commands)
         if not prompt.startswith('/'):
-            print("\n🚨 CEO RULE: Delegate everything → workflow-orchestrator\n")
+            print("\n🚨 CEO RULE: Delegate everything → specialists directly (flat delegation only)\n")
         
         # Success - prompt will be processed
         sys.exit(0)
