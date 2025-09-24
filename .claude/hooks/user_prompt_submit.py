@@ -178,7 +178,7 @@ def main():
         # Example: print(f"Current time: {datetime.now()}")
 
         # CEO Role Reminder - inject behavioral nudge (skip for commands)
-        if not prompt.startswith('/'):
+        if prompt and isinstance(prompt, str) and not prompt.startswith('/'):
             print("\n🚨 CEO RULE: Delegate everything → specialists directly (flat delegation only)\n")
         
         # Success - prompt will be processed

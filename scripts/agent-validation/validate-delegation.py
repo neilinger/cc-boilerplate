@@ -51,6 +51,8 @@ class DelegationValidator:
         self.available_agents = self._load_available_agents()
         self.delegation_gaps = self._load_delegation_gaps()
 
+        # Pre-compile regex patterns for security
+        self._compile_regex_patterns()
     def _load_available_agents(self) -> Set[str]:
         """Load list of available specialist agents"""
         agents = set()
@@ -75,39 +77,93 @@ class DelegationValidator:
         gaps = []
         try:
             content = gaps_file.read_text()
-            # Extract gap titles using regex
-            gap_pattern = r"### Gap: (.+)"
-            gaps = re.findall(gap_pattern, content)
+            content = self._validate_input(content)
+            # Extract gap titles using regex pattern (will be pre-compiled if available)
+            if hasattr(self, 'gap_pattern'):
+                gaps = self.gap_pattern.findall(content)
+            else:
+                # Fallback for cases where patterns not yet compiled
+                gap_pattern = re.compile(r"### Gap: (.+)")
+                gaps = gap_pattern.findall(content)
+        except FileNotFoundError:
+            print("Warning: Delegation gaps file not found", file=sys.stderr)
+        except PermissionError:
+            print("Warning: Permission denied reading delegation gaps file", file=sys.stderr)
+        except UnicodeDecodeError as e:
+            print(f"Warning: Could not decode delegation gaps file: {e}", file=sys.stderr)
+        except re.error as e:
+            print(f"Warning: Regex error in delegation gaps parsing: {e}", file=sys.stderr)
         except Exception as e:
-            print(f"Warning: Could not load delegation gaps: {e}", file=sys.stderr)
+            print(f"Warning: Unexpected error loading delegation gaps: {e}", file=sys.stderr)
 
         return gaps
 
+    def _compile_regex_patterns(self):
+        """Pre-compile regex patterns for security"""
+        try:
+            self.gap_pattern = re.compile(r"### Gap: (.+)")
+            self.task_pattern = re.compile(r'Task\([^)]*subagent_type\s*=\s*["\']([a-zA-Z0-9_-]+)["\']')
+            self.desc_pattern = re.compile(r'description.*?["\']([^"\']*)["\']')
+        except re.error as e:
+            print(f"Error compiling regex patterns: {e}", file=sys.stderr)
+            # Fallback to safe patterns
+            self.gap_pattern = re.compile(r"### Gap: ([\w\s-]+)")
+            self.task_pattern = re.compile(r'Task\(.*?subagent_type.*?([a-zA-Z0-9_-]+)')
+            self.desc_pattern = re.compile(r'description.*?([\w\s-]+)')
+
+    def _validate_input(self, content: str) -> str:
+        """Validate and sanitize input content"""
+        if not isinstance(content, str):
+            raise ValueError("Input must be a string")
+
+        # Limit content size to prevent DoS
+        max_size = 10 * 1024 * 1024  # 10MB
+        if len(content) > max_size:
+            raise ValueError(f"Input too large: {len(content)} bytes (max: {max_size})")
+
+        return content
     def parse_conversation_log(self, log_content: str) -> List[TaskCall]:
         """Parse conversation log for Task tool invocations"""
         task_calls = []
 
-        # Pattern to match Task tool calls
-        task_pattern = r'Task\([^)]*subagent_type\s*=\s*["\']([a-zA-Z0-9_-]+)["\']'
-        desc_pattern = r'description.*?["\']([^"\']+)["\']'
+        try:
+            # Validate and sanitize input
+            log_content = self._validate_input(log_content)
 
-        # Find all Task tool invocations
-        for match in re.finditer(task_pattern, log_content, re.DOTALL | re.IGNORECASE):
-            agent = match.group(1)
+            # Find all Task tool invocations using pre-compiled patterns
+            for match in self.task_pattern.finditer(log_content):
+                agent = match.group(1)
 
-            # Try to find description in nearby text
-            context = log_content[max(0, match.start()-200):match.end()+200]
-            desc_match = re.search(desc_pattern, context)
-            description = desc_match.group(1) if desc_match else "No description"
+                # Validate agent name format
+                if not re.match(r'^[a-zA-Z0-9_-]+$', agent):
+                    continue  # Skip invalid agent names
 
-            # Check if context was provided
-            context_provided = len(context.strip()) > 100
+                # Try to find description in nearby text
+                start = max(0, match.start()-200)
+                end = min(len(log_content), match.end()+200)
+                context = log_content[start:end]
 
-            task_calls.append(TaskCall(
-                agent=agent,
-                description=description,
-                context_provided=context_provided
-            ))
+                desc_match = self.desc_pattern.search(context)
+                description = desc_match.group(1) if desc_match else "No description"
+
+                # Sanitize description
+                description = description[:200] if description else "No description"
+
+                # Check if context was provided
+                context_provided = len(context.strip()) > 100
+
+                task_calls.append(TaskCall(
+                    agent=agent,
+                    description=description,
+                    context_provided=context_provided
+                ))
+
+        except ValueError as e:
+            print(f"Warning: Input validation error: {e}", file=sys.stderr)
+        except re.error as e:
+            print(f"Warning: Regex processing error: {e}", file=sys.stderr)
+        except Exception as e:
+            print(f"Warning: Unexpected error parsing log: {e}", file=sys.stderr)
 
         return task_calls
 
