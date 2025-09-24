@@ -347,6 +347,168 @@ The named roles create:
 2. Expected interaction patterns
 3. Organizational legitimacy
 
+## Architectural Constraints
+
+### The Fundamental Limitation: Isolated Context Windows
+
+**CRITICAL CONSTRAINT**: Sub-agents in Claude Code operate within isolated context windows and cannot invoke other sub-agents via the Task tool.
+
+```mermaid
+graph TD
+    CEO[CEO<br/>Claude Primary Instance]
+    CEO -->|✅ CAN delegate| Agent1[Agent 1<br/>Isolated Context]
+    CEO -->|✅ CAN delegate| Agent2[Agent 2<br/>Isolated Context]
+    CEO -->|✅ CAN delegate| Agent3[Agent 3<br/>Isolated Context]
+    Agent1 -->|❌ CANNOT delegate| Agent2
+    Agent2 -->|❌ CANNOT delegate| Agent3
+    Agent3 -->|❌ CANNOT delegate| Agent1
+
+    style Agent1 fill:#ffcccc
+    style Agent2 fill:#ffcccc
+    style Agent3 fill:#ffcccc
+```
+
+### Impact on Theoretical Framework
+
+This architectural constraint fundamentally changes how the CEO organizational model operates in practice:
+
+#### Theoretical Ideal (Pre-Constraint Discovery)
+```mermaid
+graph TD
+    CEO[CEO] --> CoS[Chief of Staff<br/>workflow-orchestrator]
+    CoS --> Agent1[python-pro]
+    CoS --> Agent2[react-expert]
+    CoS --> Agent3[security-scanner]
+    Agent1 --> Agent2
+    Agent2 --> Agent3
+```
+
+#### Architectural Reality (Post-Constraint Discovery)
+```mermaid
+graph TD
+    CEO[CEO] --> Agent1[workflow-orchestrator<br/>PLANNER ONLY]
+    CEO --> Agent2[python-pro]
+    CEO --> Agent3[react-expert]
+    CEO --> Agent4[security-scanner]
+    Agent1 -->|Returns YAML Plan| CEO
+    CEO -->|Executes Plan| Agent2
+    CEO -->|Executes Plan| Agent3
+    CEO -->|Executes Plan| Agent4
+```
+
+### MVP Flat Delegation Pattern
+
+**ADAPTATION**: Given the isolated context constraint, the CEO model adapts to a flat delegation pattern:
+
+#### Core Pattern
+1. **CEO Assessment**: Apply contrarian discipline to understand requirements
+2. **Task Decomposition**: Break complex work into specialist-executable units
+3. **Direct Delegation**: Task(specialist-agent) directly from CEO with full context
+4. **Result Integration**: CEO aggregates specialist outputs into cohesive solutions
+5. **Gap Documentation**: Track missing capabilities in `.claude/memory/delegation-gaps.md`
+
+#### Workflow-Orchestrator Role Redefinition
+
+**BEFORE**: Coordinator who delegates to other agents
+**AFTER**: Strategic planner who returns execution plans for CEO implementation
+
+```yaml
+# Workflow-orchestrator output format
+execution_plan:
+  tasks:
+    - id: "T001"
+      agent: "technical-researcher"
+      description: "Research OAuth patterns"
+      dependencies: []
+      context: "Specific requirements..."
+  parallel_groups:
+    - ["T003", "T004"]  # Can run simultaneously
+  delegation_gaps:
+    - task: "Complex validation"
+      recommended_workaround: "Use python-pro + manual review"
+```
+
+### Theoretical Justification for Flat Delegation
+
+#### 1. Constraint-Based Design Excellence
+
+**Research Foundation**: Constraints enhance rather than limit creative problem-solving (Stokes, 2005).
+
+The isolated context constraint forces:
+- **Clearer Communication**: Each delegation must be completely self-contained
+- **Better Decomposition**: Tasks must be broken into truly independent units
+- **Stronger Integration**: CEO must actively coordinate rather than assume coordination happens
+
+#### 2. Command and Control Theory Adaptation
+
+**Military Parallel**:
+- **Traditional**: Command chain (General → Colonel → Captain)
+- **Special Forces**: Direct command (General → Multiple specialized operators)
+
+The flat pattern mirrors special forces organization where direct command-to-specialist communication prevents information degradation through hierarchical layers.
+
+#### 3. Cognitive Load Distribution Benefits
+
+**Advantage**: Direct delegation reduces cognitive overhead
+- No intermediate context translation
+- No coordination handoff failures
+- Clearer accountability chains
+
+### Empirical Validation of Constraint Impact
+
+**Pre-Constraint Discovery Behavior**:
+- CEO would delegate to workflow-orchestrator
+- Workflow-orchestrator would claim to coordinate
+- No actual Task tool invocations occurred
+- "Coordination theater" with high-quality outputs masking lack of delegation
+
+**Post-Constraint Recognition**:
+- Direct specialist delegation patterns emerged
+- Measurable Task tool usage validation via `scripts/agent-validation/validate-delegation.py`
+- Authentic coordination through CEO integration layer
+
+### Implementation Patterns Under Constraints
+
+#### Pattern 1: Sequential Specialist Chain
+```
+CEO → Task(researcher) → CEO integration → Task(architect) → CEO integration → Task(implementer)
+```
+
+#### Pattern 2: Parallel Specialist Coordination
+```
+CEO → [Task(frontend), Task(backend), Task(security)] in parallel → CEO integration
+```
+
+#### Pattern 3: Iterative Refinement
+```
+CEO → Task(analyst) → CEO → Task(implementer) → CEO → Task(validator) → CEO
+```
+
+### Failure Mode Prevention Under Constraints
+
+#### 1. Coordination Theater Prevention
+**Problem**: Agents claiming coordination without capability
+**Solution**: Architectural constraint documentation prevents false claims
+
+#### 2. Context Loss Prevention
+**Problem**: Information degradation through delegation chains
+**Solution**: CEO maintains full context across all specialist interactions
+
+#### 3. Responsibility Diffusion Prevention
+**Problem**: No clear accountability in complex chains
+**Solution**: CEO remains accountable for all coordination decisions
+
+### Strategic Implications
+
+The architectural constraint revelation strengthens rather than weakens the CEO model:
+
+1. **Authentic Leadership**: CEO must actively coordinate rather than delegate coordination
+2. **Clear Boundaries**: Eliminates ambiguity about who can invoke whom
+3. **Simplified Architecture**: Flat delegation is easier to understand and validate
+4. **Better Measurement**: Direct delegation patterns are measurable and verifiable
+
+This constraint-driven design evolution demonstrates how architectural limitations can force better organizational patterns, aligning with the fundamental principle that constraints enhance rather than limit creative problem-solving.
+
 ## Intelligence vs Implementation
 
 ### MCP as Intelligence Gathering
