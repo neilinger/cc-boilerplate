@@ -37,6 +37,17 @@ This document tracks tasks that cannot be effectively delegated to existing spec
 
 **Priority:** Medium
 
+### Gap: Git/Merge Conflict Specialist
+**Needed for:** Complex merge conflict resolution with architectural awareness
+**Current workaround:** Using general technical specialist + detailed specifications
+**Ideal specialist would:**
+- Advanced git conflict resolution (rebase, merge, cherry-pick strategies)
+- Code architecture awareness for intelligent conflict resolution
+- Multi-branch state management and validation
+- Automated conflict testing and verification
+
+**Priority:** High - Critical for release management
+
 ## Gap Tracking Template
 
 ```markdown
@@ -73,8 +84,8 @@ This document tracks tasks that cannot be effectively delegated to existing spec
 
 ## Metrics
 
-- **Total Gaps:** 3
-- **High Priority:** 1
+- **Total Gaps:** 4
+- **High Priority:** 2
 - **Recent Additions:** orchestration-validator (2025-01-24)
 - **Resolution Rate:** 0% (new tracking system)
 

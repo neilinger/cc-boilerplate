@@ -53,7 +53,6 @@ class DelegationValidator:
 
         # Pre-compile regex patterns for security
         self._compile_regex_patterns()
-
     def _load_available_agents(self) -> Set[str]:
         """Load list of available specialist agents"""
         agents = set()
@@ -123,7 +122,6 @@ class DelegationValidator:
             raise ValueError(f"Input too large: {len(content)} bytes (max: {max_size})")
 
         return content
-
     def parse_conversation_log(self, log_content: str) -> List[TaskCall]:
         """Parse conversation log for Task tool invocations"""
         task_calls = []
