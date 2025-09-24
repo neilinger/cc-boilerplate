@@ -254,6 +254,13 @@ merge_documentation() {
             # Also copy to boilerplate staging
             cp -r "$source_dir/PRPs" .claude/boilerplate/
         fi
+
+        # Ensure PRP templates directory is copied regardless of whether PRPs exist
+        if [[ -d "$source_dir/PRPs/templates" ]]; then
+            info "Copying PRP templates..."
+            mkdir -p PRPs/templates
+            cp -r "$source_dir/PRPs/templates/"* PRPs/templates/ 2>/dev/null || true
+        fi
     fi
 
     # Handle docs/adr directory - only add missing boilerplate ADRs

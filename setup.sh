@@ -133,10 +133,10 @@ touch logs/.gitkeep output/.gitkeep
 if [ -f "boilerplate/.boilerplate-manifest.json" ]; then
     if command -v jq >/dev/null 2>&1 && jq -e '.dependencies."spec-kit"' boilerplate/.boilerplate-manifest.json > /dev/null 2>&1; then
         echo "📦 Installing spec-kit..."
-        if [ -f "scripts/install-spec-kit.sh" ]; then
-            ./scripts/install-spec-kit.sh || {
+        if [ -f ".claude/boilerplate/scripts/install-spec-kit.sh" ]; then
+            ./.claude/boilerplate/scripts/install-spec-kit.sh || {
                 echo "⚠️  Spec-kit installation failed but continuing setup"
-                echo "You can install it later by running: ./scripts/install-spec-kit.sh"
+                echo "You can install it later by running: ./.claude/boilerplate/scripts/install-spec-kit.sh"
             }
         else
             echo "⚠️  spec-kit installation script not found"
@@ -145,10 +145,10 @@ if [ -f "boilerplate/.boilerplate-manifest.json" ]; then
 elif [ -f ".boilerplate-manifest.json" ]; then
     if command -v jq >/dev/null 2>&1 && jq -e '.dependencies."spec-kit"' .boilerplate-manifest.json > /dev/null 2>&1; then
         echo "📦 Installing spec-kit..."
-        if [ -f "scripts/install-spec-kit.sh" ]; then
-            ./scripts/install-spec-kit.sh || {
+        if [ -f ".claude/boilerplate/scripts/install-spec-kit.sh" ]; then
+            ./.claude/boilerplate/scripts/install-spec-kit.sh || {
                 echo "⚠️  Spec-kit installation failed but continuing setup"
-                echo "You can install it later by running: ./scripts/install-spec-kit.sh"
+                echo "You can install it later by running: ./.claude/boilerplate/scripts/install-spec-kit.sh"
             }
         else
             echo "⚠️  spec-kit installation script not found"
